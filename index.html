@@ -301,10 +301,40 @@
     .modal-tools a:hover{color:var(--lime)}
     .close{width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;font-size:20px;line-height:1}
     .close:hover{border-color:var(--lime);color:var(--lime)}
-    .inquiry-frame-wrap{position:relative;height:min(720px,calc(92vh - 78px));background:#fff}
-    .inquiry-frame-wrap iframe{position:relative;z-index:1;width:100%;height:100%;border:0;display:block}
-    .frame-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--muted);font-size:14px}
-    .frame-loading[hidden]{display:none}
+    .inq-body{overflow-y:auto;max-height:calc(92vh - 78px);padding:24px;-webkit-overflow-scrolling:touch}
+    .inq-form{display:grid;gap:22px}
+    .inq-intro{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+    .inq-intro em{color:var(--lime);font-style:normal}
+    .inq-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .inq-field{display:grid;gap:8px;min-width:0;border:0;margin:0;padding:0}
+    .inq-field>label,.inq-field>legend{padding:0;font-size:14px;font-weight:700;color:var(--text)}
+    .inq-req{color:var(--lime);margin-left:2px}
+    .inq-field input[type=text],.inq-field input[type=email],.inq-field textarea{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface-2);color:var(--text);font:inherit;font-size:15px;transition:border-color .2s,background .2s}
+    .inq-field textarea{min-height:120px;resize:vertical;line-height:1.6}
+    .inq-field input::placeholder,.inq-field textarea::placeholder{color:var(--subtle)}
+    .inq-field input:focus,.inq-field textarea:focus{outline:none;border-color:var(--lime);background:var(--surface-3)}
+    .inq-chips{display:flex;flex-wrap:wrap;gap:8px}
+    .inq-chip{position:relative}
+    .inq-chip input{position:absolute;opacity:0;width:1px;height:1px}
+    .inq-chip span{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--line-strong);border-radius:999px;font-size:14px;color:var(--text-2);cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+    .inq-chip span:hover{border-color:var(--lime)}
+    .inq-chip input:checked+span{background:var(--lime-soft);border-color:var(--lime);color:var(--lime)}
+    .inq-chip input:focus-visible+span{box-shadow:var(--focus)}
+    .inq-err{min-height:0;margin:0;font-size:13px;color:var(--rose)}
+    .inq-err:empty{display:none}
+    .inq-field.invalid input,.inq-field.invalid textarea{border-color:var(--rose)}
+    .inq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+    .inq-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:4px}
+    .inq-note{margin:0;color:var(--subtle);font-size:13px}
+    .inq-actions .btn[disabled]{opacity:.6;cursor:progress}
+    .inq-status{margin:0;font-size:14px;color:var(--rose)}
+    .inq-status:empty{display:none}
+    .inq-done{display:grid;place-items:center;gap:14px;padding:56px 12px;text-align:center}
+    .inq-done[hidden]{display:none}
+    .inq-done .mark{width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:var(--lime);color:var(--lime-ink);font-size:26px;font-weight:800}
+    .inq-done b{font-size:20px}
+    .inq-done p{margin:0;color:var(--muted);line-height:1.6}
+    @media (max-width:640px){.inq-row{grid-template-columns:1fr}.inq-body{padding:20px 16px}}
     body.modal-open{overflow:hidden}
 
     /* Reveal */
@@ -478,31 +508,31 @@
             <div class="course-meta"><span>BI · VISUALIZATION</span><small>입문 → 포트폴리오</small></div>
             <div class="course-icon" aria-hidden="true"><div class="chart"><i style="height:35%"></i><i style="height:58%"></i><i style="height:82%"></i><i style="height:65%"></i></div></div>
             <div class="course-body"><h3>Tableau 실무 시각화</h3><p>데이터 연결과 계산부터 차트 선택, 대시보드 UX, Tableau Cloud 공유까지 실무 흐름으로 완성합니다.</p></div>
-            <div class="course-foot"><span class="tags">대시보드 프로젝트 포함</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="Tableau 과정 교육 문의">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
+            <div class="course-foot"><span class="tags">대시보드 프로젝트 포함</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="Tableau 과정 교육 문의" data-course="Tableau를 통한 데이터 시각화">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="course-card c-sql reveal" data-category="analysis">
             <div class="course-meta"><span>DATA ANALYSIS</span><small>기초 → 분석 질문</small></div>
             <div class="course-icon" aria-hidden="true"><div class="chart"><i style="height:70%"></i><i style="height:45%"></i><i style="height:88%"></i><i style="height:60%"></i></div></div>
             <div class="course-body"><h3>SQL 데이터 분석</h3><p>문법 암기를 넘어 비즈니스 질문을 데이터 구조로 해석하고, 조회·집계·결합·CTE로 답을 만드는 법을 배웁니다.</p></div>
-            <div class="course-foot"><span class="tags">쿼리 실습 · 케이스 분석</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="SQL 과정 교육 문의">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
+            <div class="course-foot"><span class="tags">쿼리 실습 · 케이스 분석</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="SQL 과정 교육 문의" data-course="SQL 데이터 분석">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="course-card c-python reveal" data-category="analysis">
             <div class="course-meta"><span>DATA ANALYSIS</span><small>코드 → 인사이트</small></div>
             <div class="course-icon" aria-hidden="true"><div class="chart"><i style="height:26%"></i><i style="height:72%"></i><i style="height:52%"></i><i style="height:92%"></i></div></div>
             <div class="course-body"><h3>Python 데이터 워크</h3><p>Python과 pandas로 데이터를 정리하고 탐색하며, 반복 분석을 재현 가능한 코드로 바꾸는 힘을 기릅니다.</p></div>
-            <div class="course-foot"><span class="tags">EDA · 전처리 · 자동화</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="Python 과정 교육 문의">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
+            <div class="course-foot"><span class="tags">EDA · 전처리 · 자동화</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="Python 과정 교육 문의" data-course="Python을 활용한 데이터 분석">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="course-card c-n8n reveal" data-category="automation">
             <div class="course-meta"><span>WORKFLOW · AI</span><small>업무 → 자동화</small></div>
             <div class="course-icon" aria-hidden="true"><div class="chart"><i style="height:45%"></i><i style="height:76%"></i><i style="height:40%"></i><i style="height:86%"></i></div></div>
             <div class="course-body"><h3>n8n 데이터 워크플로우</h3><p>API, 데이터베이스, Google Sheets, 생성형 AI를 연결해 반복 업무를 실행 가능한 워크플로우로 구현합니다.</p></div>
-            <div class="course-foot"><span class="tags">API · DB · AI Agent</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="n8n 과정 교육 문의">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
+            <div class="course-foot"><span class="tags">API · DB · AI Agent</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="n8n 과정 교육 문의" data-course="n8n을 활용한 데이터 워크플로우 구축">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
           </article>
           <article class="course-card c-stat reveal" data-category="analysis">
             <div class="course-meta"><span>STATISTICS</span><small>수치 → 판단</small></div>
             <div class="course-icon" aria-hidden="true"><div class="chart"><i style="height:58%"></i><i style="height:82%"></i><i style="height:70%"></i><i style="height:38%"></i></div></div>
             <div class="course-body"><h3>통계적 의사결정</h3><p>기술통계와 가설검정부터 회귀·실험설계까지, 공식을 외우기보다 불확실성을 읽고 판단하는 법을 익힙니다.</p></div>
-            <div class="course-foot"><span class="tags">가설검정 · 회귀 · 실험</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="통계 과정 교육 문의">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
+            <div class="course-foot"><span class="tags">가설검정 · 회귀 · 실험</span><a class="course-link" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" aria-label="통계 과정 교육 문의" data-course="통계 기반 의사결정">과정 문의 <span class="ico" aria-hidden="true">↗</span></a></div>
           </article>
         </div>
       </div>
@@ -756,9 +786,65 @@
         <button class="close" type="button" data-close-inquiry aria-label="문의창 닫기">×</button>
       </div>
     </div>
-    <div class="inquiry-frame-wrap">
-      <span class="frame-loading" id="inquiryFrameLoading">문의 양식을 불러오는 중…</span>
-      <iframe data-src="https://hote.app.n8n.cloud/form/edu-inquiry" title="데이터 러너즈 교육 문의 양식"></iframe>
+    <div class="inq-body">
+      <form class="inq-form" id="inquiryForm" novalidate>
+        <p class="inq-intro">남겨주신 내용을 확인한 뒤 기재하신 이메일로 회신드립니다. <em>*</em> 표시는 필수 항목입니다.</p>
+        <div class="inq-row">
+          <div class="inq-field">
+            <label for="inq-name">성함 / 소속<span class="inq-req">*</span></label>
+            <input id="inq-name" name="name_org" type="text" placeholder="예: 홍길동 / 데이터러너즈" autocomplete="name" required>
+            <p class="inq-err"></p>
+          </div>
+          <div class="inq-field">
+            <label for="inq-email">회신 받을 이메일<span class="inq-req">*</span></label>
+            <input id="inq-email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
+            <p class="inq-err"></p>
+          </div>
+        </div>
+        <fieldset class="inq-field" data-group="edu_type">
+          <legend>교육 형태<span class="inq-req">*</span></legend>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="edu_type" value="기업•기관 출강"><span>기업•기관 출강</span></label>
+            <label class="inq-chip"><input type="radio" name="edu_type" value="부트캠프•그룹 교육"><span>부트캠프•그룹 교육</span></label>
+            <label class="inq-chip"><input type="radio" name="edu_type" value="개인•소규모 코칭"><span>개인•소규모 코칭</span></label>
+            <label class="inq-chip"><input type="radio" name="edu_type" value="기타"><span>기타</span></label>
+          </div>
+          <p class="inq-err"></p>
+        </fieldset>
+        <fieldset class="inq-field" data-group="courses">
+          <legend>관심 과정<span class="inq-req">*</span> <small style="color:var(--subtle);font-weight:500">복수 선택 가능</small></legend>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="checkbox" name="courses" value="Tableau를 통한 데이터 시각화"><span>Tableau 데이터 시각화</span></label>
+            <label class="inq-chip"><input type="checkbox" name="courses" value="SQL 데이터 분석"><span>SQL 데이터 분석</span></label>
+            <label class="inq-chip"><input type="checkbox" name="courses" value="Python을 활용한 데이터 분석"><span>Python 데이터 분석</span></label>
+            <label class="inq-chip"><input type="checkbox" name="courses" value="n8n을 활용한 데이터 워크플로우 구축"><span>n8n 데이터 워크플로우</span></label>
+            <label class="inq-chip"><input type="checkbox" name="courses" value="통계 기반 의사결정"><span>통계 기반 의사결정</span></label>
+            <label class="inq-chip"><input type="checkbox" name="courses" value="맞춤형 결합 과정"><span>맞춤형 결합 과정</span></label>
+          </div>
+          <p class="inq-err"></p>
+        </fieldset>
+        <div class="inq-field">
+          <label for="inq-headcount">예상 인원<span class="inq-req">*</span></label>
+          <input id="inq-headcount" name="headcount" type="text" placeholder="예: 20명" required>
+          <p class="inq-err"></p>
+        </div>
+        <div class="inq-field">
+          <label for="inq-request">교육 목표와 요청사항</label>
+          <textarea id="inq-request" name="request" placeholder="교육 목표, 희망 일정, 수강생 수준 등을 자유롭게 적어주세요."></textarea>
+        </div>
+        <div class="inq-hp" aria-hidden="true"><label>웹사이트<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="inq-status" id="inquiryStatus" role="alert"></p>
+        <div class="inq-actions">
+          <p class="inq-note">입력하신 정보는 교육 상담 회신에만 사용됩니다.</p>
+          <button class="btn btn-primary" type="submit" id="inquirySubmit">문의 보내기</button>
+        </div>
+      </form>
+      <div class="inq-done" id="inquiryDone" hidden>
+        <span class="mark" aria-hidden="true">✓</span>
+        <b>문의가 접수되었습니다</b>
+        <p>확인 후 기재하신 이메일로 빠르게 회신드리겠습니다.<br>감사합니다.</p>
+        <button class="btn btn-sm" type="button" data-close-inquiry>닫기</button>
+      </div>
     </div>
   </dialog>
 
@@ -810,15 +896,55 @@
       $$('.counter').forEach(el=>co.observe(el));
     }
 
-    /* Inquiry dialog (lazy-loads the form) */
-    const dlg=$('#inquiryDialog'),frame=$('iframe',dlg),loading=$('#inquiryFrameLoading');
+    /* Inquiry dialog: native form posting to the n8n webhook */
+    const dlg=$('#inquiryDialog'),form=$('#inquiryForm'),done=$('#inquiryDone'),statusEl=$('#inquiryStatus'),submitBtn=$('#inquirySubmit');
+    const ENDPOINT='https://hote.app.n8n.cloud/webhook/data-learners-inquiry';
     if(typeof dlg.showModal==='function'){
-      frame.addEventListener('load',()=>{if(frame.src)loading.hidden=true});
-      $$('[data-open-inquiry]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();setMenu(false);if(!frame.src)frame.src=frame.dataset.src;dlg.showModal();document.body.classList.add('modal-open')}));
+      const reset=()=>{form.reset();form.hidden=false;done.hidden=true;statusEl.textContent='';$$('.inq-field',form).forEach(f=>{f.classList.remove('invalid');const e=$('.inq-err',f);if(e)e.textContent=''})};
+      $$('[data-open-inquiry]').forEach(a=>a.addEventListener('click',e=>{
+        e.preventDefault();setMenu(false);
+        if(!done.hidden)reset();
+        const c=a.dataset.course;
+        if(c)$$('input[name=courses]',form).forEach(i=>{if(i.value===c)i.checked=true});
+        dlg.showModal();document.body.classList.add('modal-open');
+        setTimeout(()=>{try{$('#inq-name').focus()}catch(_){}},60);
+      }));
       $$('[data-close-inquiry]').forEach(b=>b.addEventListener('click',()=>dlg.close()));
       dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
       dlg.addEventListener('close',()=>document.body.classList.remove('modal-open'));
     }
+    const setErr=(field,msg)=>{field.classList.toggle('invalid',!!msg);const e=$('.inq-err',field);if(e)e.textContent=msg||''};
+    const validate=()=>{
+      let ok=true,first=null;
+      const need=(el,msg)=>{const f=el.closest('.inq-field');if(!msg){setErr(f,'');return}setErr(f,msg);ok=false;first=first||el};
+      const name=$('#inq-name'),email=$('#inq-email'),hc=$('#inq-headcount');
+      need(name,name.value.trim()?'':'성함과 소속을 입력해주세요.');
+      need(email,!email.value.trim()?'이메일을 입력해주세요.':(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())?'':'올바른 이메일 형식이 아닙니다.'));
+      need(hc,hc.value.trim()?'':'예상 인원을 입력해주세요.');
+      [['edu_type','교육 형태를 선택해주세요.'],['courses','관심 과정을 하나 이상 선택해주세요.']].forEach(([n,m])=>{
+        const fs=$(`[data-group="${n}"]`,form),any=$$(`input[name="${n}"]`,form).some(i=>i.checked);
+        setErr(fs,any?'':m);if(!any){ok=false;first=first||$('input',fs)}
+      });
+      if(first)first.focus();
+      return ok;
+    };
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();statusEl.textContent='';
+      if(!validate())return;
+      const fd=new FormData(form),body=new URLSearchParams();
+      ['name_org','email','edu_type','headcount','request','website'].forEach(k=>body.append(k,(fd.get(k)||'').toString().trim()));
+      body.append('courses',fd.getAll('courses').join(', '));
+      submitBtn.disabled=true;submitBtn.textContent='보내는 중…';
+      try{
+        const r=await fetch(ENDPOINT,{method:'POST',body});
+        if(!r.ok)throw new Error(r.status);
+        form.hidden=true;done.hidden=false;
+      }catch(err){
+        statusEl.innerHTML='전송에 실패했습니다. 잠시 후 다시 시도하시거나 <a href="https://hote.app.n8n.cloud/form/edu-inquiry" target="_blank" rel="noopener" style="color:var(--lime);text-decoration:underline">새 창 양식</a>으로 보내주세요.';
+      }finally{submitBtn.disabled=false;submitBtn.textContent='문의 보내기'}
+    });
+    form.addEventListener('input',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
+    form.addEventListener('change',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
   })();
   </script>
 </body>
