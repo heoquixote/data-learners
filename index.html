@@ -330,7 +330,8 @@
     .inq-status{margin:0;font-size:14px;color:var(--rose)}
     .inq-status:empty{display:none}
     .inq-done{display:grid;place-items:center;gap:14px;padding:56px 12px;text-align:center}
-    .inq-done[hidden]{display:none}
+    .inq-form[hidden],.inq-done[hidden]{display:none}
+    dialog.is-done .modal-tools a{display:none}
     .inq-done .mark{width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:var(--lime);color:var(--lime-ink);font-size:26px;font-weight:800}
     .inq-done b{font-size:20px}
     .inq-done p{margin:0;color:var(--muted);line-height:1.6}
@@ -843,7 +844,6 @@
         <span class="mark" aria-hidden="true">✓</span>
         <b>문의가 접수되었습니다</b>
         <p>확인 후 기재하신 이메일로 빠르게 회신드리겠습니다.<br>감사합니다.</p>
-        <button class="btn btn-sm" type="button" data-close-inquiry>닫기</button>
       </div>
     </div>
   </dialog>
@@ -900,7 +900,7 @@
     const dlg=$('#inquiryDialog'),form=$('#inquiryForm'),done=$('#inquiryDone'),statusEl=$('#inquiryStatus'),submitBtn=$('#inquirySubmit');
     const ENDPOINT='https://hote.app.n8n.cloud/webhook/data-learners-inquiry';
     if(typeof dlg.showModal==='function'){
-      const reset=()=>{form.reset();form.hidden=false;done.hidden=true;statusEl.textContent='';$$('.inq-field',form).forEach(f=>{f.classList.remove('invalid');const e=$('.inq-err',f);if(e)e.textContent=''})};
+      const reset=()=>{form.reset();form.hidden=false;done.hidden=true;dlg.classList.remove('is-done');statusEl.textContent='';$$('.inq-field',form).forEach(f=>{f.classList.remove('invalid');const e=$('.inq-err',f);if(e)e.textContent=''})};
       $$('[data-open-inquiry]').forEach(a=>a.addEventListener('click',e=>{
         e.preventDefault();setMenu(false);
         if(!done.hidden)reset();
@@ -938,7 +938,7 @@
       try{
         const r=await fetch(ENDPOINT,{method:'POST',body});
         if(!r.ok)throw new Error(r.status);
-        form.hidden=true;done.hidden=false;
+        form.hidden=true;done.hidden=false;dlg.classList.add('is-done');$('.inq-body',dlg).scrollTop=0;
       }catch(err){
         statusEl.innerHTML='전송에 실패했습니다. 잠시 후 다시 시도하시거나 <a href="https://hote.app.n8n.cloud/form/edu-inquiry" target="_blank" rel="noopener" style="color:var(--lime);text-decoration:underline">새 창 양식</a>으로 보내주세요.';
       }finally{submitBtn.disabled=false;submitBtn.textContent='문의 보내기'}
