@@ -974,7 +974,8 @@
       const fallback=()=>{if(!reduce)start2d()};
       /* reduced-motion still gets the sculpture, as a single still frame */
       const onStage=i=>nodes.forEach((n,k)=>n.classList.toggle('is-active',k===i));
-      const go=()=>import('./hero3d.js').then(m=>{const ctl=m.start({canvas:cv,host:hv,hero,small,still:reduce,onStage});hero.classList.add('has-3d');hv.classList.add('is-3d');requestAnimationFrame(()=>cv.classList.add('on'));
+      /* bump ?v= whenever hero3d.js changes: it is imported after load, outside a hard reload's cache bypass */
+      const go=()=>import('./hero3d.js?v=20261024-morph').then(m=>{const ctl=m.start({canvas:cv,host:hv,hero,small,still:reduce,onStage});hero.classList.add('has-3d');hv.classList.add('is-3d');requestAnimationFrame(()=>cv.classList.add('on'));
         nodes.forEach((n,i)=>{n.addEventListener('pointerenter',()=>ctl.go(i,true));n.addEventListener('pointerleave',ctl.release)})}).catch(fallback);
       const idle=f=>('requestIdleCallback' in window)?requestIdleCallback(f,{timeout:1200}):setTimeout(f,200);
       if(!gl)fallback();else if(document.readyState==='complete')idle(go);else addEventListener('load',()=>idle(go),{once:true});
