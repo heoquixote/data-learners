@@ -371,6 +371,8 @@
     .hero-visual:after{content:"";position:absolute;inset:-50%;z-index:3;pointer-events:none;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
     .hero-streaks{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;opacity:0;transition:opacity 1.2s var(--ease)}
     .hero-streaks.on{opacity:1}
+    .hero-visual.is-3d{background:none;opacity:1;animation:none!important}
+    .hero-visual.is-3d .hero-streaks{mix-blend-mode:normal}
     .skill-node:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.12) 50%,transparent 70%);transform:translateX(-120%)}
     .skill-node b:after{content:"";display:inline-block;width:5px;height:5px;margin-left:8px;vertical-align:middle;border-radius:50%;background:var(--node,var(--lime));box-shadow:0 0 8px var(--node,var(--lime));animation:blink 2.4s ease-in-out infinite}
     .node-python b:after{animation-delay:-.6s}.node-tableau b:after{animation-delay:-1.2s}.node-auto b:after{animation-delay:-1.8s}
@@ -489,7 +491,7 @@
       html{scroll-behavior:auto}
       *,*:before,*:after{animation:none!important;transition:none!important}
       .motion-ok .reveal{opacity:1;transform:none}
-      .hero-streaks,.hero:before,.hero-visual:before,.hero-visual:after{display:none}
+      .hero-visual:not(.is-3d) .hero-streaks,.hero:before,.hero-visual:before,.hero-visual:after{display:none}
     }
   </style>
   <script>if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion-ok')</script>
@@ -933,9 +935,8 @@
       const show=y>hero.offsetHeight*.6&&!nav.classList.contains('open');cta.classList.toggle('show',show);cta.setAttribute('aria-hidden',!show);$$('a',cta).forEach(a=>a.tabIndex=show?0:-1)};
     addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
 
-    /* Hero motion: Three.js 3D layer (hero3d.js), 2D canvas fallback, pointer/scroll parallax */
+    /* Hero motion: Three.js 3D data sculpture (hero3d.js); runner photo + 2D streaks as fallback */
     const hv=$('.hero-visual'),cv=$('.hero-streaks'),nodes=$$('.skill-node');
-    const tilt=(x,y,s)=>{hv.style.setProperty('--ry',`${(x*5).toFixed(2)}deg`);hv.style.setProperty('--rx',`${(-y*3.5+s*6).toFixed(2)}deg`);hv.style.setProperty('--sy',`${(s*-40).toFixed(1)}px`)};
     const start2d=()=>{
       const ctx=cv.getContext('2d');if(!ctx)return;cv.classList.add('on');
       const COLORS=['200,255,61','102,219,255','245,247,242'];
@@ -964,12 +965,14 @@
       new IntersectionObserver(es=>{inView=es[0].isIntersecting;play(inView)}).observe(hero);
       document.addEventListener('visibilitychange',()=>play(inView));
     };
-    if(!reduce&&cv){
+    if(cv){
       const small=matchMedia('(max-width:960px)').matches;
       const gl=(()=>{try{return !!document.createElement('canvas').getContext('webgl2')}catch(_){return false}})();
-      const go=()=>import('./hero3d.js').then(m=>{m.start({canvas:cv,host:hv,hero,small,onCamera:tilt});requestAnimationFrame(()=>cv.classList.add('on'))}).catch(start2d);
+      const fallback=()=>{if(!reduce)start2d()};
+      /* reduced-motion still gets the sculpture, as a single still frame */
+      const go=()=>import('./hero3d.js').then(m=>{m.start({canvas:cv,host:hv,hero,small,still:reduce});hv.classList.add('is-3d');requestAnimationFrame(()=>cv.classList.add('on'))}).catch(fallback);
       const idle=f=>('requestIdleCallback' in window)?requestIdleCallback(f,{timeout:1200}):setTimeout(f,200);
-      if(!gl)start2d();else if(document.readyState==='complete')idle(go);else addEventListener('load',()=>idle(go),{once:true});
+      if(!gl)fallback();else if(document.readyState==='complete')idle(go);else addEventListener('load',()=>idle(go),{once:true});
     }
     if(!reduce&&matchMedia('(pointer:fine)').matches){
       let pr=0;
