@@ -116,7 +116,8 @@
 
     /* ============ Ticker ============ */
     .ticker{overflow:hidden;border-block:1px solid var(--line);background:var(--bg)}
-    .ticker-track{width:max-content;display:flex;animation:marquee 32s linear infinite}
+    /* 8 identical items: -50% shifts exactly 4 copies (~4000px), wider than 4K viewports. Keep 32s per copy. */
+    .ticker-track{width:max-content;display:flex;animation:marquee 128s linear infinite}
     .ticker-item{height:72px;display:flex;align-items:center;gap:28px;padding-right:28px;color:#dfe5e1;font:650 22px/1 var(--font-en);letter-spacing:-.03em;white-space:nowrap}
     .ticker-item i{width:7px;height:7px;background:var(--lime);transform:rotate(45deg)}
 
@@ -484,6 +485,12 @@
 
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
+        <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
         <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
         <div class="ticker-item">SQL <i></i> PYTHON <i></i> TABLEAU <i></i> STATISTICS <i></i> AI AUTOMATION <i></i> DATA STORYTELLING <i></i></div>
       </div>
