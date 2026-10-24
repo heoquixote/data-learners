@@ -1,217 +1,211 @@
-/* Data Learners · Hero 3D "Data → Insight" sculpture (Three.js)
- * 히어로 오른쪽에 절차적으로 모델링한 3D 데이터 조형물을 렌더링합니다.
- *  - 데이터 필드: 원형으로 배치한 홀로그램 글래스 막대(인스턴싱). 높이가 파동처럼 바뀌는 3D 막대그래프
- *  - 인사이트 코어: 숨 쉬듯 변형되는 지오데식 네트워크(노드 + 엣지) + 프레넬 글로우 구체
- *  - 데이터 플로우: 막대 꼭대기에서 코어로 나선을 그리며 모이는 입자 (데이터 → 인사이트)
- *  - 궤도 링·바닥 레이더 그리드, 포인터·스크롤을 따라가는 카메라
- * 모든 애니메이션은 셰이더에서 시간 uniform으로 계산합니다(프레임당 CPU 작업 최소).
- * still:true(모션 감소)이면 정지 프레임 한 장만 그립니다.
+/* Data Learners · Hero 3D "Skill morph" particles (Three.js)
+ * 입자 하나의 덩어리가 4개 스킬의 형태로 차례대로 모핑합니다.
+ *   0 SQL      → 데이터베이스 실린더        (cyan)
+ *   1 Python   → </> 코드 글리프            (violet)
+ *   2 Tableau  → 3D 막대그래프 + 추세선      (orange)
+ *   3 AI       → 레이어드 신경망            (lime)
+ * 각 형태는 같은 개수의 점으로 샘플링해 attribute 4개로 올리고, 셰이더에서 from→to를 보간합니다.
+ * 전환 중에는 입자마다 지연을 두고 흩어졌다 모이며, 색도 스킬 카드 색으로 바뀝니다.
+ * onStage(i)로 현재 스킬을 알려 카드 하이라이트와 연동하고, go(i)로 특정 형태로 바로 전환할 수 있습니다.
+ * still:true(모션 감소)이면 Tableau 형태의 정지 프레임만 그립니다.
  */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js';
 
-export function start({canvas, host, hero, small, still}) {
-  const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true, powerPreference: 'high-performance'});
+const HOLD = 3.4, MORPH = 1.7;                    // 형태 유지·전환 시간(초)
+const COLORS = [0x66dbff, 0xa896ff, 0xff9a51, 0xc8ff3d];
+
+/* ---------- Shape samplers: each returns N points (Float32Array N*3) ---------- */
+const rnd = (a, b) => a + Math.random() * (b - a);
+const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+function sampleDatabase(N) {
+  const out = new Float32Array(N * 3), r = 1.45, h = 2.3, y0 = -h / 2, bands = [0, 1 / 3, 2 / 3, 1];
+  for (let i = 0; i < N; i++) {
+    const u = Math.random(), a = Math.random() * Math.PI * 2;
+    let x, y, z;
+    if (u < 0.42) {                                // 디스크 경계 링(실린더를 3단으로 나눔)
+      const b = bands[(Math.random() * 4) | 0], rr = r + gauss() * 0.025;
+      x = Math.cos(a) * rr; z = Math.sin(a) * rr; y = y0 + b * h + gauss() * 0.02;
+    } else if (u < 0.78) {                         // 옆면
+      x = Math.cos(a) * r; z = Math.sin(a) * r; y = y0 + Math.random() * h;
+    } else if (u < 0.95) {                         // 윗면
+      const rr = Math.sqrt(Math.random()) * r; x = Math.cos(a) * rr; z = Math.sin(a) * rr; y = y0 + h;
+    } else {                                       // 내부 데이터 먼지
+      const rr = Math.sqrt(Math.random()) * r * 0.9; x = Math.cos(a) * rr; z = Math.sin(a) * rr; y = y0 + Math.random() * h;
+    }
+    out.set([x, y, z], i * 3);
+  }
+  return out;
+}
+
+function sampleGlyph(N, text) {
+  const W = 320, H = 160, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = '700 128px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace';
+  g.fillText(text, W / 2, H / 2 + 4);
+  const d = g.getImageData(0, 0, W, H).data, px = [];
+  for (let y = 0; y < H; y += 1) for (let x = 0; x < W; x += 1) if (d[(y * W + x) * 4 + 3] > 140) px.push(x, y);
+  const out = new Float32Array(N * 3), n = px.length / 2;
+  for (let i = 0; i < N; i++) {
+    const k = ((Math.random() * n) | 0) * 2;
+    out.set([(px[k] + Math.random() - W / 2) / W * 4.6, -(px[k + 1] + Math.random() - H / 2) / W * 4.6, gauss() * 0.12], i * 3);
+  }
+  return out;
+}
+
+function sampleBars(N) {
+  const out = new Float32Array(N * 3), hs = [0.9, 1.45, 1.15, 2.05, 2.75], w = 0.52, base = -1.4;
+  const xs = hs.map((_, i) => (i - 2) * 0.86);
+  const area = hs.map(h => 4 * w * h + 2 * w * w), tot = area.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < N; i++) {
+    const u = Math.random();
+    let x, y, z;
+    if (u < 0.8) {                                  // 막대 표면
+      let r = Math.random() * tot, b = 0; while (r > area[b]) r -= area[b++];
+      const h = hs[b], f = Math.random() * (4 * h + 2 * w), s = rnd(-w / 2, w / 2);
+      if (f < 4 * h) { const side = (f / h) | 0, t = base + (f % h);
+        x = xs[b] + (side === 0 ? -w / 2 : side === 1 ? w / 2 : s); z = side < 2 ? s : (side === 2 ? -w / 2 : w / 2); y = t;
+      } else { x = xs[b] + s; z = rnd(-w / 2, w / 2); y = base + h; }
+    } else if (u < 0.93) {                          // 꼭대기를 잇는 추세선
+      const t = Math.random() * 4, k = Math.min(3, t | 0), f = t - k;
+      x = xs[k] + (xs[k + 1] - xs[k]) * f; y = base + 0.45 + hs[k] + (hs[k + 1] - hs[k]) * f; z = gauss() * 0.03;
+      y += gauss() * 0.02;
+    } else {                                        // 바닥 축
+      x = rnd(-2.2, 2.2); y = base; z = rnd(-0.5, 0.5) * 0.3;
+    }
+    out.set([x, y, z], i * 3);
+  }
+  return out;
+}
+
+function sampleNetwork(N) {
+  const layers = [3, 5, 5, 2], nodes = [];
+  layers.forEach((n, l) => { for (let i = 0; i < n; i++) nodes.push({l, x: (l - 1.5) * 1.3, y: (i - (n - 1) / 2) * 0.68, z: rnd(-0.35, 0.35)}); });
+  const edges = [];
+  nodes.forEach(a => nodes.forEach(b => { if (b.l === a.l + 1) edges.push([a, b]); }));
+  const out = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    let x, y, z;
+    if (Math.random() < 0.38) {                     // 노드: 작은 구 형태로 뭉침
+      const n = nodes[(Math.random() * nodes.length) | 0], r = 0.13 * Math.cbrt(Math.random());
+      const th = Math.random() * Math.PI * 2, ph = Math.acos(rnd(-1, 1));
+      x = n.x + r * Math.sin(ph) * Math.cos(th); y = n.y + r * Math.cos(ph); z = n.z + r * Math.sin(ph) * Math.sin(th);
+    } else {                                        // 엣지
+      const [a, b] = edges[(Math.random() * edges.length) | 0], t = Math.random();
+      x = a.x + (b.x - a.x) * t; y = a.y + (b.y - a.y) * t + gauss() * 0.012; z = a.z + (b.z - a.z) * t;
+    }
+    out.set([x, y, z], i * 3);
+  }
+  return out;
+}
+
+export function start({canvas, host, hero, small, still, onStage}) {
+  const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: false, powerPreference: 'high-performance'});
   renderer.setClearColor(0x000000, 0);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 0.9, 11.5); camera.lookAt(0, 0.1, 0);
+
+  const N = small ? 6000 : 13000;
+  const shapes = [sampleDatabase(N), sampleGlyph(N, '</>'), sampleBars(N), sampleNetwork(N)];
+  const seed = new Float32Array(N * 4);
+  for (let i = 0; i < N; i++) {
+    const th = Math.random() * Math.PI * 2, ph = Math.acos(rnd(-1, 1));
+    seed.set([Math.sin(ph) * Math.cos(th), Math.cos(ph), Math.sin(ph) * Math.sin(th), Math.random()], i * 4);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(shapes[0], 3));
+  shapes.forEach((s, i) => geo.setAttribute('aS' + i, new THREE.BufferAttribute(s, 3)));
+  geo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 4));
 
   const U = {
-    uTime: {value: still ? 6.5 : 0},
-    uRes: {value: new THREE.Vector2(1, 1)},
-    uDpr: {value: 1},
-    uIntro: {value: still ? 1 : 0},
+    uTime: {value: 0}, uProg: {value: 0}, uDpr: {value: 1}, uRes: {value: new THREE.Vector2(1, 1)}, uIntro: {value: still ? 1 : 0},
+    uFrom: {value: new THREE.Vector4(1, 0, 0, 0)}, uTo: {value: new THREE.Vector4(1, 0, 0, 0)},
+    uColA: {value: new THREE.Color(COLORS[0])}, uColB: {value: new THREE.Color(COLORS[0])},
   };
-  const LIME = 'vec3(0.784, 1.0, 0.239)', CYAN = 'vec3(0.4, 0.86, 1.0)';
-  const FADE = `uniform vec2 uRes; uniform float uIntro;
-    float edgeFade(){ vec2 f = gl_FragCoord.xy / uRes; return smoothstep(0.0, 0.3, f.x) * uIntro; }`;
-  const add = (vs, fs) => new THREE.ShaderMaterial({
-    uniforms: U, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, vertexShader: vs, fragmentShader: fs,
-  });
+  const points = new THREE.Points(geo, new THREE.ShaderMaterial({
+    uniforms: U, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexShader: `
+      uniform float uTime, uProg, uDpr; uniform vec4 uFrom, uTo;
+      attribute vec3 aS0, aS1, aS2, aS3; attribute vec4 aSeed;
+      varying float vMix; varying float vA;
+      vec3 pick(vec4 w){ return aS0 * w.x + aS1 * w.y + aS2 * w.z + aS3 * w.w; }
+      void main(){
+        // 입자마다 시작 시점을 조금씩 다르게 → 물결처럼 번지는 전환
+        float t = clamp((uProg - aSeed.w * 0.35) / 0.65, 0.0, 1.0);
+        float e = t < 0.5 ? 4.0 * t * t * t : 1.0 - pow(-2.0 * t + 2.0, 3.0) / 2.0;
+        vec3 p = mix(pick(uFrom), pick(uTo), e);
+        float burst = sin(3.14159 * t);
+        p += aSeed.xyz * burst * (0.55 + aSeed.w * 0.9);                   // 흩어졌다 모임
+        float sw = burst * 1.1;                                            // 전환 중 소용돌이
+        p.xz = mat2(cos(sw), -sin(sw), sin(sw), cos(sw)) * p.xz;
+        p += aSeed.xyz * 0.025 * sin(uTime * (1.2 + aSeed.w * 2.0) + aSeed.w * 30.0);   // 미세한 호흡
+        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        vMix = e;
+        float tw = 0.75 + 0.25 * sin(uTime * 2.3 + aSeed.w * 60.0);
+        vA = tw * (1.0 - burst * 0.35);
+        gl_PointSize = (2.3 + step(0.985, aSeed.w) * 2.8 + burst * 1.2) * uDpr * (11.5 / -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: `
+      uniform vec3 uColA, uColB; uniform vec2 uRes; uniform float uIntro;
+      varying float vMix; varying float vA;
+      void main(){
+        float r = length(gl_PointCoord - 0.5);
+        float a = smoothstep(0.5, 0.0, r) * vA * 1.35 * uIntro;
+        a *= smoothstep(0.0, 0.28, gl_FragCoord.x / uRes.x);
+        vec3 c = mix(mix(uColA, uColB, vMix), vec3(1.0), smoothstep(0.18, 0.0, r) * 0.55);
+        gl_FragColor = vec4(c * a, a);
+      }`,
+  }));
+  points.frustumCulled = false;
+
+  // 형태 뒤에 깔리는 은은한 컬러 헤일로
+  const halo = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), new THREE.ShaderMaterial({
+    uniforms: U, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: `uniform vec3 uColA, uColB; uniform float uProg, uIntro; uniform vec2 uRes; varying vec2 vUv;
+      void main(){ float r = length(vUv - 0.5) * 2.0; float a = exp(-r * r * 4.0) * 0.1 * uIntro * smoothstep(0.0, 0.28, gl_FragCoord.x / uRes.x);
+        vec3 c = mix(uColA, uColB, smoothstep(0.2, 0.9, uProg)); gl_FragColor = vec4(c * a, a); }`,
+  }));
+  halo.position.z = -2.5;
 
   const world = new THREE.Group();
-  scene.add(world);
+  world.add(points);
+  scene.add(halo, world);
 
-  /* ---------- Data field: holographic glass bars ---------- */
-  const R = 2.7, step = small ? 0.36 : 0.3, bw = step * 0.58;
-  const cells = [];
-  for (let x = -R; x <= R + 1e-6; x += step) for (let z = -R; z <= R + 1e-6; z += step) {
-    if (Math.hypot(x, z) <= R) cells.push(x, z, Math.random());
-  }
-  const box = new THREE.BoxGeometry(bw, 1, bw); box.translate(0, 0.5, 0);
-  const barGeo = new THREE.InstancedBufferGeometry().copy(box);
-  barGeo.instanceCount = cells.length / 3;
-  barGeo.setAttribute('aCell', new THREE.InstancedBufferAttribute(new Float32Array(cells), 3));
-  const HEIGHT = `
-    float barH(vec2 c, float s, float t){
-      float r = length(c);
-      float wave = 0.5 + 0.5 * sin(r * 1.9 - t * 1.15);
-      float crs = 0.55 + 0.45 * sin(c.x * 1.4 + t * 0.55) * cos(c.y * 1.2 - t * 0.42);
-      float h = (0.18 + 1.75 * wave * crs) * (1.0 - r / ${R.toFixed(2)} * 0.6);
-      return h * (0.85 + 0.3 * s);
-    }`;
-  const bars = new THREE.Mesh(barGeo, add(
-    `uniform float uTime; attribute vec3 aCell; ${HEIGHT}
-     varying vec3 vN; varying vec3 vV; varying vec2 vUv; varying float vY; varying float vH;
-     void main(){
-       float h = barH(aCell.xy, aCell.z, uTime);
-       vec3 p = position * vec3(1.0, h, 1.0) + vec3(aCell.x, 0.0, aCell.y);
-       vec4 mv = modelViewMatrix * vec4(p, 1.0);
-       vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz);
-       vUv = uv; vY = position.y; vH = clamp(h / 1.6, 0.0, 1.0);
-       gl_Position = projectionMatrix * mv;
-     }`,
-    `${FADE} varying vec3 vN; varying vec3 vV; varying vec2 vUv; varying float vY; varying float vH;
-     void main(){
-       vec3 accent = mix(${CYAN}, ${LIME}, smoothstep(0.25, 0.85, vH));
-       float fres = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.2);
-       vec2 e = min(vUv, 1.0 - vUv);
-       float edge = 1.0 - smoothstep(0.0, 0.07, min(e.x, e.y));      // 유리 모서리 하이라이트
-       float top = step(0.98, vY);                                        // 윗면 캡
-       float body = 0.06 + 0.22 * vY;                                     // 아래는 어둡고 위로 갈수록 밝게
-       float lift = 0.35 + 0.65 * vH;                                   // 키 큰 막대일수록 강조
-       float a = (body * 0.8 + fres * 0.35 + edge * 0.45 * lift + top * (0.2 + 0.8 * vH * vH)) * edgeFade();
-       gl_FragColor = vec4(accent * a, a);
-     }`));
-  bars.frustumCulled = false;
-  world.add(bars);
-
-  /* ---------- Floor: radar grid under the field ---------- */
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), add(
-    `varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-    `${FADE} uniform float uTime; varying vec2 vP;
-     float line(float v, float w){ float d = fwidth(v); return 1.0 - smoothstep(w * d, (w + 1.0) * d, abs(fract(v - 0.5) - 0.5)); }
-     void main(){
-       float r = length(vP), ang = atan(vP.y, vP.x);
-       float rings = line(r * 2.2, 0.6) * 0.5;
-       float spokes = line(ang / 6.2832 * 24.0, 0.6) * 0.25 * smoothstep(0.6, 1.4, r);
-       float sweep = pow(max(0.0, cos(ang - uTime * 0.6)), 24.0) * 0.6;   // 레이더 스윕
-       float glow = exp(-r * 1.1) * 0.35;
-       float fall = 1.0 - smoothstep(2.6, 4.4, r);
-       float a = ((rings + spokes) * (0.55 + sweep) + glow + sweep * 0.12) * fall * edgeFade();
-       gl_FragColor = vec4(mix(${CYAN}, ${LIME}, 0.55) * a, a);
-     }`));
-  floor.rotation.x = -Math.PI / 2; floor.position.y = -0.01;
-  world.add(floor);
-
-  /* ---------- Insight core: breathing geodesic network ---------- */
-  const CORE_Y = 2.85, CORE_R = 0.95;
-  const core = new THREE.Group(); core.position.y = CORE_Y; world.add(core);
-  const MORPH = `uniform float uTime;
-    vec3 morph(vec3 p){ float k = 1.0 + 0.11 * sin(dot(p, vec3(3.1, 2.7, 1.9)) + uTime * 1.3) + 0.05 * sin(p.y * 6.0 - uTime * 2.0); return p * k; }`;
-  const ico = new THREE.IcosahedronGeometry(CORE_R, small ? 2 : 3);
-  core.add(new THREE.LineSegments(new THREE.WireframeGeometry(ico), add(
-    `${MORPH} varying float vF; void main(){ vec3 p = morph(position); vec4 mv = modelViewMatrix * vec4(p, 1.0);
-       vF = 0.35 + 0.65 * smoothstep(-1.0, 1.0, normalize(p).y); gl_Position = projectionMatrix * mv; }`,
-    `${FADE} varying float vF; void main(){ float a = 0.42 * vF * edgeFade(); gl_FragColor = vec4(${LIME} * a, a); }`)));
-  // 노드: 지오데식 꼭짓점(중복 제거)
-  const seen = new Map(), pos = ico.attributes.position;
-  for (let i = 0; i < pos.count; i++) {
-    const k = `${pos.getX(i).toFixed(3)},${pos.getY(i).toFixed(3)},${pos.getZ(i).toFixed(3)}`;
-    if (!seen.has(k)) seen.set(k, [pos.getX(i), pos.getY(i), pos.getZ(i), Math.random()]);
-  }
-  const nodeArr = [...seen.values()];
-  const nodeGeo = new THREE.BufferGeometry();
-  nodeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(nodeArr.flatMap(v => v.slice(0, 3))), 3));
-  nodeGeo.setAttribute('aS', new THREE.BufferAttribute(new Float32Array(nodeArr.map(v => v[3])), 1));
-  core.add(new THREE.Points(nodeGeo, add(
-    `${MORPH} uniform float uDpr; attribute float aS; varying float vA;
-     void main(){ vec4 mv = modelViewMatrix * vec4(morph(position), 1.0);
-       float pulse = pow(0.5 + 0.5 * sin(uTime * (1.5 + aS * 2.0) + aS * 40.0), 6.0);
-       vA = 0.45 + pulse * 0.9;
-       gl_PointSize = (4.0 + pulse * 7.0 + step(0.93, aS) * 5.0) * uDpr * (11.0 / -mv.z);
-       gl_Position = projectionMatrix * mv; }`,
-    `${FADE} varying float vA; void main(){ float r = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, r) * vA * edgeFade();
-       gl_FragColor = vec4(mix(${LIME}, vec3(1.0), 0.35) * a, a); }`)));
-  // 프레넬 글로우 셸 + 중심 광원
-  core.add(new THREE.Mesh(new THREE.SphereGeometry(CORE_R * 0.86, 48, 32), add(
-    `varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0);
-       vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
-    `${FADE} varying vec3 vN; varying vec3 vV;
-     void main(){ float f = pow(1.0 - max(dot(vN, vV), 0.0), 3.0); float a = (f * 1.5 + 0.06) * edgeFade();
-       gl_FragColor = vec4(mix(${CYAN}, ${LIME}, f) * a, a); }`)));
-  // 코어 발광(블룸 대용): 항상 카메라를 향하는 평면
-  const glow = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 5.2), add(
-    `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-    `${FADE} uniform float uTime; varying vec2 vUv;
-     void main(){ float r = length(vUv - 0.5) * 2.0; float b = 1.0 + 0.08 * sin(uTime * 1.3);
-       float a = (exp(-r * r * 22.0) * 0.9 + exp(-r * r * 5.0) * 0.28 + exp(-r * 2.6) * 0.08) * b * edgeFade();
-       gl_FragColor = vec4(mix(${LIME}, vec3(1.0), exp(-r * r * 30.0) * 0.6) * a, a); }`));
-  scene.add(glow);
-
-  /* ---------- Orbit rings ---------- */
-  const ringMat = add(
-    `uniform float uTime, uDpr; attribute float aA; varying float vA;
-     void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0);
-       vA = 0.4 + 0.9 * pow(0.5 + 0.5 * sin(aA * 3.0 - uTime * 1.6), 8.0);       // 링을 따라 흐르는 하이라이트
-       gl_PointSize = (2.2 + vA * 3.2) * uDpr * (11.0 / -mv.z); gl_Position = projectionMatrix * mv; }`,
-    `${FADE} varying float vA; void main(){ float r = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, r) * vA * edgeFade();
-       gl_FragColor = vec4(mix(${CYAN}, vec3(1.0), 0.3) * a, a); }`);
-  const rings = [[1.55, 0.35, 0.2], [1.95, -0.5, 1.1], [2.35, 0.15, 2.2]].map(([rad, tilt, rot]) => {
-    const n = small ? 140 : 260, p = new Float32Array(n * 3), a = new Float32Array(n);
-    for (let i = 0; i < n; i++) { const t = i / n * Math.PI * 2; p.set([Math.cos(t) * rad, 0, Math.sin(t) * rad], i * 3); a[i] = t; }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3)); g.setAttribute('aA', new THREE.BufferAttribute(a, 1));
-    const ring = new THREE.Group(); ring.rotation.set(tilt, rot, tilt * 0.6);
-    const m = new THREE.Points(g, ringMat); ring.add(m); core.add(ring); return m;
-  });
-
-  /* ---------- Data flow: particles rising from bars into the core ---------- */
-  const F = small ? 220 : 520, fs = new Float32Array(F * 4);
-  for (let i = 0; i < F; i++) {
-    const c = (Math.random() * (cells.length / 3)) | 0;
-    fs.set([cells[c * 3], cells[c * 3 + 1], cells[c * 3 + 2], Math.random()], i * 4);
-  }
-  const flowGeo = new THREE.BufferGeometry();
-  flowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(F * 3), 3));
-  flowGeo.setAttribute('aSeed', new THREE.BufferAttribute(fs, 4));
-  const flow = new THREE.Points(flowGeo, add(
-    `uniform float uTime, uDpr; attribute vec4 aSeed; ${HEIGHT} varying float vA; varying float vL;
-     void main(){
-       float life = fract(aSeed.w + uTime * (0.09 + aSeed.z * 0.06));
-       float e = life * life * (3.0 - 2.0 * life);
-       float h = barH(aSeed.xy, aSeed.z, uTime);
-       vec3 a = vec3(aSeed.x, h + 0.05, aSeed.y), b = vec3(0.0, ${CORE_Y.toFixed(2)}, 0.0);
-       vec3 p = mix(a, b, e);
-       float sw = (1.0 - e) * 0.9 * sin(e * 3.1416);                     // 코어 쪽으로 나선을 그리며 수렴
-       float ang = e * 5.0 + aSeed.w * 6.2832;
-       p.xz += vec2(cos(ang), sin(ang)) * sw;
-       vec4 mv = modelViewMatrix * vec4(p, 1.0);
-       vA = smoothstep(0.0, 0.12, life) * (1.0 - smoothstep(0.8, 1.0, life)); vL = e;
-       gl_PointSize = (3.0 + 3.0 * (1.0 - e)) * uDpr * (11.0 / -mv.z);
-       gl_Position = projectionMatrix * mv;
-     }`,
-    `${FADE} varying float vA; varying float vL; void main(){ float r = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, r) * vA * 1.2 * edgeFade();
-       gl_FragColor = vec4(mix(${CYAN}, ${LIME}, vL) * a, a); }`));
-  flow.frustumCulled = false;
-  world.add(flow);
-
-  /* ---------- Ambient dust ---------- */
-  const D = small ? 160 : 380, dp = new Float32Array(D * 3);
-  for (let i = 0; i < D; i++) dp.set([(Math.random() - 0.5) * 16, Math.random() * 7 - 1.5, (Math.random() - 0.5) * 12 - 2], i * 3);
-  const dustGeo = new THREE.BufferGeometry(); dustGeo.setAttribute('position', new THREE.BufferAttribute(dp, 3));
-  const dust = new THREE.Points(dustGeo, add(
-    `uniform float uTime, uDpr; varying float vA; void main(){
-       vec3 p = position; p.y = mod(position.y + uTime * 0.12 + 1.5, 7.0) - 1.5;   // 천천히 떠오름
-       vec4 mv = modelViewMatrix * vec4(p, 1.0);
-       vA = 0.35 + 0.35 * sin(uTime * 1.7 + position.z * 9.0);
-       gl_PointSize = 1.8 * uDpr * (11.0 / -mv.z); gl_Position = projectionMatrix * mv; }`,
-    `${FADE} varying float vA; void main(){ float r = length(gl_PointCoord - 0.5); float a = smoothstep(0.5, 0.0, r) * vA * 0.6 * edgeFade();
-       gl_FragColor = vec4(vec3(0.85, 0.95, 0.9) * a, a); }`));
-  dust.frustumCulled = false;
-  scene.add(dust);
-
-  /* ---------- Sizing & framing ---------- */
-  const size = () => {
-    const W = host.offsetWidth, H = host.offsetHeight;                // transform 영향 없는 레이아웃 크기
-    if (!W || !H) return;
-    const dpr = Math.min(devicePixelRatio || 1, small ? 1.5 : 1.75);
-    renderer.setPixelRatio(dpr); renderer.setSize(W, H, false);
-    camera.aspect = W / H; camera.updateProjectionMatrix();
-    U.uRes.value.set(W * dpr, H * dpr); U.uDpr.value = dpr;
-    world.position.x = small ? 0 : 0.55;                              // 데스크톱은 헤드라인 반대편으로 살짝 밀기
+  /* ---------- Stage control ---------- */
+  const W4 = i => new THREE.Vector4(i === 0 ? 1 : 0, i === 1 ? 1 : 0, i === 2 ? 1 : 0, i === 3 ? 1 : 0);
+  let cur = still ? 2 : 0, next = cur, phase = 'hold', clock = 0, pinned = false;
+  const setStage = (from, to) => {
+    U.uFrom.value.copy(W4(from)); U.uTo.value.copy(W4(to));
+    U.uColA.value.setHex(COLORS[from]); U.uColB.value.setHex(COLORS[to]);
+  };
+  setStage(cur, cur);
+  onStage && onStage(cur);
+  const go = (i, pin) => {
+    if (pin !== undefined) pinned = pin;            // 카드에 마우스를 올린 동안은 자동 전환을 멈춤
+    if (still || i === next) return;
+    if (phase === 'morph') cur = next;              // 전환 도중이면 현재 목표에서 다시 출발
+    next = i; setStage(cur, next); U.uProg.value = 0; phase = 'morph'; clock = 0; onStage && onStage(next);
   };
 
-  /* ---------- Camera ---------- */
-  const cam = {x: 0, y: 0, tx: 0, ty: 0, s: 0};
+  /* ---------- Sizing ---------- */
+  const size = () => {
+    const w = host.offsetWidth, h = host.offsetHeight;
+    if (!w || !h) return;
+    const dpr = Math.min(devicePixelRatio || 1, small ? 1.5 : 1.75);
+    renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    U.uRes.value.set(w * dpr, h * dpr); U.uDpr.value = dpr;
+    world.position.x = small ? 0 : 0.35; halo.position.x = world.position.x;
+    world.position.y = small ? -0.1 : 0.15;
+    world.scale.setScalar(small ? 0.92 : 0.9);
+  };
+
+  /* ---------- Pointer / scroll ---------- */
+  const cam = {x: 0, y: 0, tx: 0, ty: 0};
   if (!still && matchMedia('(pointer:fine)').matches) {
     hero.addEventListener('pointermove', e => {
       const r = hero.getBoundingClientRect();
@@ -219,34 +213,32 @@ export function start({canvas, host, hero, small, still}) {
     });
     hero.addEventListener('pointerleave', () => { cam.tx = 0; cam.ty = 0; });
   }
-  let spin = 0.6;
   const draw = dt => {
     const k = 1 - Math.exp(-dt * 3);
     cam.x += (cam.tx - cam.x) * k; cam.y += (cam.ty - cam.y) * k;
-    const s = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1)));
-    cam.s += (s - cam.s) * (still ? 1 : k);
-    spin += dt * 0.14;
-    world.rotation.y = spin + cam.x * 0.5;
-    core.rotation.y = -spin * 1.6; core.rotation.x = Math.sin(spin * 0.7) * 0.15;
-    rings.forEach((r, i) => { r.rotation.y += dt * (0.18 + i * 0.07) * (i % 2 ? -1 : 1); });
-    const dist = (small ? 13.5 : 12.2) - cam.s * 2.5;
-    camera.position.set(0, 3.0 + cam.y * 1.6 + cam.s * 1.2, dist);
-    camera.lookAt(0, 1.15 - cam.s * 0.4, 0);
-    core.getWorldPosition(glow.position); glow.quaternion.copy(camera.quaternion);
+    const t = U.uTime.value, s = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1)));
+    world.rotation.y = (still ? -0.25 : Math.sin(t * 0.32) * 0.38) + cam.x * 0.5;   // 형태가 읽히도록 회전은 좌우 흔들림으로 제한
+    world.rotation.x = 0.12 + cam.y * 0.3 + s * 0.3;
     renderer.render(scene, camera);
   };
 
   size();
   let rs; addEventListener('resize', () => { clearTimeout(rs); rs = setTimeout(() => { size(); if (still) draw(0); }, 150); });
-  if (still) { draw(0); return {renderer}; }
+  const release = () => { pinned = false; clock = 0; };
+  if (still) { draw(0); return {go, release}; }
 
   /* ---------- Loop (paused off-screen / hidden tab) ---------- */
   let running = false, raf = 0, last = 0, intro = 0;
   const frame = now => {
     raf = 0; if (!running) return;
     const dt = Math.min(0.05, (now - (last || now)) / 1000); last = now;
-    U.uTime.value += dt;
-    intro = Math.min(1, intro + dt / 1.8); U.uIntro.value = intro * intro * (3 - 2 * intro);
+    U.uTime.value += dt; clock += dt;
+    intro = Math.min(1, intro + dt / 1.6); U.uIntro.value = intro * intro * (3 - 2 * intro);
+    if (phase === 'hold' && clock > HOLD && !pinned) go((cur + 1) % 4);
+    else if (phase === 'morph') {
+      U.uProg.value = Math.min(1, clock / MORPH);
+      if (U.uProg.value >= 1) { cur = next; setStage(cur, cur); U.uProg.value = 0; phase = 'hold'; clock = 0; }
+    }
     draw(dt);
     raf = requestAnimationFrame(frame);
   };
@@ -255,5 +247,5 @@ export function start({canvas, host, hero, small, still}) {
   new IntersectionObserver(es => { inView = es[0].isIntersecting; play(); }).observe(hero);
   document.addEventListener('visibilitychange', play);
   play();
-  return {renderer};
+  return {go, release};
 }
