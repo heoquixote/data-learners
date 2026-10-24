@@ -2,7 +2,7 @@
 
 > 허진성 강사가 운영하는 실무 데이터 교육입니다. SQL, Python, Tableau, 통계, 머신러닝, n8n 기반 AI 업무자동화를 기업·기관 맞춤 출강, 부트캠프, 그룹 교육, Tableau 워크숍으로 가르칩니다. 허진성은 2026–2027 Tableau Ambassador이자 2026–2027 n8n Ambassador이며, Salesforce Tableau Certified Instructor로 Tableau 공인과정을 운영했고, 『태블로를 활용한 데이터 시각화』 저자입니다.
 
-교육 방식은 LBL(Lecture-Based Learning)로 개념과 도구를 익힌 뒤 PBL(Project-Based Learning)로 실제 데이터 프로젝트와 포트폴리오를 완성하는 4단계(개념 → 툴 실습 → 프로젝트 → 멘토링)입니다. 누적 수강생 1,000명 이상, 기업·기관 교육 50회 이상, 내일배움캠프 QAQC 과정 대시보드 학습 NPS 93.5를 기록했습니다.
+교육 방식은 LBL(Lecture-Based Learning)로 개념과 도구를 익힌 뒤 PBL(Project-Based Learning)로 실제 데이터 프로젝트와 포트폴리오를 완성하는 4단계(개념 → 툴 실습 → 프로젝트 → 멘토링)입니다. 누적 수강생 1,000명 이상, 기업·기관 교육 50회 이상, K-Digital Training 내일배움캠프 QAQC 과정 대시보드 주차 NPS 93.5(역대 최고 수준 만족도)를 기록했습니다.
 
 ## 교육 과정
 
