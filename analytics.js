@@ -91,8 +91,8 @@
     $$('.course-card').forEach(c=>co.observe(c));
   }
 
-  /* 스크롤 깊이: 25/50/75/90/100% 각 1회 */
-  const marks=[25,50,75,90,100],sent=new Set();let tick=false;
+  /* 스크롤 깊이: 25/50/75/100% 각 1회 (90%는 향상된 측정의 기본 scroll 이벤트가 담당) */
+  const marks=[25,50,75,100],sent=new Set();let tick=false;
   const onScroll=()=>{
     tick=false;
     const max=document.documentElement.scrollHeight-innerHeight;if(max<=0)return;
