@@ -1,0 +1,123 @@
+/* Data Learners · GA4 analytics
+ * 측정 ID는 index.html의 <meta name="ga-measurement-id">에서 읽습니다.
+ * 플레이스홀더(G-XXXXXXXXXX)이거나 비어 있으면 gtag를 로드하지 않습니다.
+ * ?ga_debug=1 을 붙이면 GA DebugView로 전송하고 콘솔에도 이벤트를 출력합니다.
+ * 폼 입력값(이름·이메일 등 개인정보)은 어떤 이벤트에도 담지 않습니다.
+ */
+(()=>{
+  const meta=document.querySelector('meta[name="ga-measurement-id"]');
+  const ID=(meta&&meta.content||'').trim();
+  const enabled=/^G-[A-Z0-9]+$/.test(ID)&&ID!=='G-XXXXXXXXXX';
+  const debug=/[?&]ga_debug=1\b/.test(location.search);
+
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=window.gtag||function(){dataLayer.push(arguments)};
+  if(enabled){
+    const s=document.createElement('script');
+    s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(ID);
+    document.head.appendChild(s);
+    gtag('js',new Date());
+    gtag('config',ID,debug?{debug_mode:true}:{});
+  }
+
+  const track=(name,params={})=>{
+    if(debug)console.info('[ga]',name,params);
+    if(enabled)gtag('event',name,params);
+  };
+  window.dlTrack=track;
+
+  const $$=(s,c=document)=>[...c.querySelectorAll(s)];
+  const txt=el=>el?(el.innerText||el.textContent):"";
+  const clean=t=>(t||'').replace(/[↗↘]/g,'').replace(/\s+/g,' ').trim().slice(0,100);
+  const where=el=>{
+    if(el.closest('#siteNav'))return 'nav';
+    if(el.closest('#mobileCta'))return 'mobile_cta';
+    if(el.closest('footer'))return 'footer';
+    if(el.closest('#inquiryDialog'))return 'inquiry_dialog';
+    const s=el.closest('section[id]');return s?s.id:'other';
+  };
+  const linkType=u=>{
+    const h=u.hostname.replace(/^www\./,'');
+    if(h==='wikidocs.net')return /\/profile\//.test(u.pathname)?'wikidocs_profile':'wikidocs_book';
+    if(h.endsWith('linkedin.com'))return 'linkedin';
+    if(h==='public.tableau.com')return 'tableau_public';
+    if(h==='github.com')return 'github';
+    if(h.endsWith('n8n.cloud'))return 'inquiry_form';
+    return 'other';
+  };
+
+  /* 클릭: CTA(문의·과정 이동), 외부 링크 */
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href]');if(!a)return;
+    const loc=where(a),text=clean(a.textContent);
+    if(a.hasAttribute('data-open-inquiry')){
+      track('cta_click',{cta_type:'inquiry',cta_text:text,cta_location:loc,course_name:a.dataset.course||'(none)'});
+      return;
+    }
+    let u;try{u=new URL(a.href,location.href)}catch(_){return}
+    if(u.origin===location.origin&&u.pathname===location.pathname&&u.hash){
+      if(a.classList.contains('btn'))track('cta_click',{cta_type:'navigation',cta_text:text,cta_location:loc,link_target:u.hash.slice(1)});
+      else if(a.closest('#navLinks, .footer-links'))track('nav_click',{link_target:u.hash.slice(1),cta_location:loc});
+      return;
+    }
+    if(u.origin!==location.origin){
+      const book=a.classList.contains('book-card')?clean(txt($$('h3',a)[0])):'';
+      track('outbound_click',{link_type:linkType(u),link_domain:u.hostname,link_url:u.href.slice(0,100),cta_location:loc,book_title:book||'(none)'});
+    }
+  },true);
+
+  /* 과정 필터 */
+  $$('.filter[data-filter]').forEach(b=>b.addEventListener('click',()=>track('course_filter',{filter_value:b.dataset.filter})));
+
+  if('IntersectionObserver' in window){
+    /* 섹션 노출: 화면 중앙선을 지나간 섹션을 페이지당 1회 기록 */
+    const so=new IntersectionObserver(es=>es.forEach(en=>{
+      if(!en.isIntersecting)return;so.unobserve(en.target);
+      track('section_view',{section_id:en.target.id});
+    }),{rootMargin:'-45% 0px -50% 0px'});
+    $$('main section[id]').forEach(s=>so.observe(s));
+
+    /* 과정 카드 노출: 카드 60% 이상이 1초 이상 보이면 1회 기록 */
+    const timers=new Map();
+    const co=new IntersectionObserver(es=>es.forEach(en=>{
+      const c=en.target;
+      if(en.isIntersecting&&!c.hidden){
+        if(!timers.has(c))timers.set(c,setTimeout(()=>{
+          co.unobserve(c);
+          track('course_view',{course_name:clean(txt($$('h3',c)[0])),course_category:c.dataset.category||'(none)'});
+        },1000));
+      }else{clearTimeout(timers.get(c));timers.delete(c)}
+    }),{threshold:.6});
+    $$('.course-card').forEach(c=>co.observe(c));
+  }
+
+  /* 스크롤 깊이: 25/50/75/90/100% 각 1회 */
+  const marks=[25,50,75,90,100],sent=new Set();let tick=false;
+  const onScroll=()=>{
+    tick=false;
+    const max=document.documentElement.scrollHeight-innerHeight;if(max<=0)return;
+    const pct=Math.round(scrollY/max*100);
+    marks.forEach(m=>{if(pct>=m&&!sent.has(m)){sent.add(m);track('scroll_depth',{percent_scrolled:m})}});
+  };
+  addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});
+
+  /* 문의 퍼널: 모달 열림 → 입력 시작 → 제출 성공(generate_lead) / 실패 */
+  const dlg=document.getElementById('inquiryDialog'),form=document.getElementById('inquiryForm');
+  const done=document.getElementById('inquiryDone'),status=document.getElementById('inquiryStatus');
+  if(dlg&&form&&done&&'MutationObserver' in window){
+    let started=false;
+    new MutationObserver(()=>{if(dlg.open){started=false;track('inquiry_open',{})}}).observe(dlg,{attributes:true,attributeFilter:['open']});
+    form.addEventListener('input',()=>{if(!started){started=true;track('inquiry_start',{})}});
+    form.addEventListener('submit',()=>{track('inquiry_submit_attempt',{})});
+    new MutationObserver(()=>{
+      if(done.hidden)return;
+      const fd=new FormData(form);
+      track('generate_lead',{
+        edu_type:(fd.get('edu_type')||'(none)').toString(),
+        course_name:fd.getAll('courses').join(', ').slice(0,100)||'(none)',
+        course_count:fd.getAll('courses').length
+      });
+    }).observe(done,{attributes:true,attributeFilter:['hidden']});
+    if(status)new MutationObserver(()=>{if(status.textContent.includes('전송에 실패'))track('inquiry_error',{})}).observe(status,{childList:true,subtree:true});
+  }
+})();
