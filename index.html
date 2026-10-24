@@ -366,10 +366,11 @@
     .motion-ok .reveal.visible{opacity:1;transform:none}
 
     /* ============ Hero motion ============ */
-    .hero-visual{transform-origin:62% 48%;translate:var(--hx,0) var(--hy,0);transition:translate 1.2s var(--ease)}
+    .hero-visual{transform-origin:62% 48%;transform:perspective(1600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--sy,0px))}
     .hero-visual:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(200,255,61,.08) 46%,rgba(255,255,255,.14) 50%,rgba(102,219,255,.08) 54%,transparent 62%);background-size:260% 100%;background-position:120% 0;mix-blend-mode:screen;opacity:0}
     .hero-visual:after{content:"";position:absolute;inset:-50%;z-index:3;pointer-events:none;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-    .hero-streaks{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}
+    .hero-streaks{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;opacity:0;transition:opacity 1.2s var(--ease)}
+    .hero-streaks.on{opacity:1}
     .skill-node:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.12) 50%,transparent 70%);transform:translateX(-120%)}
     .skill-node b:after{content:"";display:inline-block;width:5px;height:5px;margin-left:8px;vertical-align:middle;border-radius:50%;background:var(--node,var(--lime));box-shadow:0 0 8px var(--node,var(--lime));animation:blink 2.4s ease-in-out infinite}
     .node-python b:after{animation-delay:-.6s}.node-tableau b:after{animation-delay:-1.2s}.node-auto b:after{animation-delay:-1.8s}
@@ -932,10 +933,12 @@
       const show=y>hero.offsetHeight*.6&&!nav.classList.contains('open');cta.classList.toggle('show',show);cta.setAttribute('aria-hidden',!show);$$('a',cta).forEach(a=>a.tabIndex=show?0:-1)};
     addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
 
-    /* Hero motion: light streaks canvas + pointer parallax */
-    const hv=$('.hero-visual'),cv=$('.hero-streaks');
-    if(!reduce&&cv&&cv.getContext){
-      const ctx=cv.getContext('2d'),COLORS=['200,255,61','102,219,255','245,247,242'];
+    /* Hero motion: Three.js 3D layer (hero3d.js), 2D canvas fallback, pointer/scroll parallax */
+    const hv=$('.hero-visual'),cv=$('.hero-streaks'),nodes=$$('.skill-node');
+    const tilt=(x,y,s)=>{hv.style.setProperty('--ry',`${(x*5).toFixed(2)}deg`);hv.style.setProperty('--rx',`${(-y*3.5+s*6).toFixed(2)}deg`);hv.style.setProperty('--sy',`${(s*-40).toFixed(1)}px`)};
+    const start2d=()=>{
+      const ctx=cv.getContext('2d');if(!ctx)return;cv.classList.add('on');
+      const COLORS=['200,255,61','102,219,255','245,247,242'];
       let W=0,H=0,dpr=1,parts=[],running=false,last=0,raf=0;
       const spawn=(p,init)=>{const fast=Math.random()<.35;
         p.x=W*(.3+Math.random()*.2);p.y=H*(.32+Math.random()*.46);
@@ -943,7 +946,7 @@
         p.v=(fast?.5:.16)+Math.random()*.3;p.vy=(Math.random()-.5)*.02;
         p.len=(fast?90:30)+Math.random()*120;p.w=fast?1.2:.7+Math.random()*.8;
         p.c=COLORS[Math.random()<.55?0:Math.random()<.7?1:2];p.a=0;p.max=.25+Math.random()*.55;p.life=0;return p};
-      const size=()=>{const r=hv.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,1.75);W=r.width;H=r.height;
+      const size=()=>{dpr=Math.min(devicePixelRatio||1,1.75);W=hv.offsetWidth;H=hv.offsetHeight;
         cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
         const n=Math.round(Math.min(110,Math.max(40,W*H/9000)));parts=Array.from({length:n},()=>spawn({},true))};
       const frame=t=>{raf=0;if(!running)return;const dt=Math.min(48,t-(last||t));last=t;
@@ -960,14 +963,20 @@
       let inView=true;
       new IntersectionObserver(es=>{inView=es[0].isIntersecting;play(inView)}).observe(hero);
       document.addEventListener('visibilitychange',()=>play(inView));
+    };
+    if(!reduce&&cv){
+      const small=matchMedia('(max-width:960px)').matches;
+      const gl=(()=>{try{return !!document.createElement('canvas').getContext('webgl2')}catch(_){return false}})();
+      const go=()=>import('./hero3d.js').then(m=>{m.start({canvas:cv,host:hv,hero,small,onCamera:tilt});requestAnimationFrame(()=>cv.classList.add('on'))}).catch(start2d);
+      const idle=f=>('requestIdleCallback' in window)?requestIdleCallback(f,{timeout:1200}):setTimeout(f,200);
+      if(!gl)start2d();else if(document.readyState==='complete')idle(go);else addEventListener('load',()=>idle(go),{once:true});
     }
     if(!reduce&&matchMedia('(pointer:fine)').matches){
-      const nodes=$$('.skill-node');let pr=0;
+      let pr=0;
       hero.addEventListener('pointermove',e=>{if(pr)return;pr=requestAnimationFrame(()=>{pr=0;
         const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-        hv.style.setProperty('--hx',`${(-x*18).toFixed(1)}px`);hv.style.setProperty('--hy',`${(-y*12).toFixed(1)}px`);
         nodes.forEach((n,i)=>{const d=14+i%2*10;n.style.setProperty('--px',`${(x*d).toFixed(1)}px`);n.style.setProperty('--py',`${(y*d).toFixed(1)}px`)})})});
-      hero.addEventListener('pointerleave',()=>{[hv,...nodes].forEach(el=>['--hx','--hy','--px','--py'].forEach(k=>el.style.removeProperty(k)))});
+      hero.addEventListener('pointerleave',()=>nodes.forEach(el=>['--px','--py'].forEach(k=>el.style.removeProperty(k))));
     }
 
     /* Mobile menu */
