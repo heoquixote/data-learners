@@ -193,7 +193,7 @@
     .track-key.is-pbl{color:var(--cyan)}
 
     /* Outcomes */
-    .outcome-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line)}
+    .outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
     .outcome{position:relative;min-height:220px;padding:28px;display:flex;flex-direction:column;border-right:1px solid var(--line);overflow:hidden}
     .outcome:last-child{border-right:0}
     .outcome strong{color:var(--lime);font:650 clamp(44px,4.6vw,66px)/1 var(--font-en);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
@@ -412,9 +412,6 @@
       .method-step:nth-child(2){border-right:0}
       .method-step:nth-child(3){padding-left:0;border-top:1px solid var(--line)}
       .method-step:nth-child(4){border-top:1px solid var(--line)}
-      .outcome-grid{grid-template-columns:repeat(2,1fr)}
-      .outcome:nth-child(2){border-right:0}
-      .outcome:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .career-grid{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:960px){
@@ -461,6 +458,7 @@
       .method-step h3{margin-top:20px}
       .outcome-grid{grid-template-columns:1fr 1fr}
       .outcome{min-height:170px;padding:20px}
+      .outcome:first-child{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line)}
       .outcome>span{font-size:15px}
       .book-grid{grid-template-columns:1fr}
       .book-card.featured{grid-column:auto;display:flex}
@@ -637,8 +635,7 @@
         <div class="outcome-grid reveal">
           <div class="outcome"><strong><span class="counter" data-target="1000">1,000</span><small>+</small></strong><span>누적 수강생</span><p>부트캠프 · 기업 · 대학 · 공인과정</p></div>
           <div class="outcome"><strong><span class="counter" data-target="50">50</span><small>회+</small></strong><span>기업·기관 교육</span><p>맞춤형 출강 · Tableau · 데이터 시각화</p></div>
-          <div class="outcome"><strong><span class="counter" data-target="4">4</span><small>곳+</small></strong><span>강의 플랫폼</span><p>TeamSparta · Codeit · BDAI · Trailhead Academy</p></div>
-          <div class="outcome"><strong><span class="counter" data-target="7">7</span><small>권</small></strong><span>WikiDocs 실무 학습서</span><p>Tableau · SQL · Python · 통계 · AI 등</p></div>
+          <div class="outcome"><strong><span class="counter" data-target="4">4</span><small>곳+</small></strong><span>학부생·취준생 교육</span><p>대학 · 부트캠프 · 취업 연계 실무 과정</p></div>
         </div>
       </div>
     </section>
