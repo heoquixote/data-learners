@@ -193,7 +193,7 @@
     .track-key.is-pbl{color:var(--cyan)}
 
     /* Outcomes */
-    .outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+    .outcome-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line)}
     .outcome{position:relative;min-height:220px;padding:28px;display:flex;flex-direction:column;border-right:1px solid var(--line);overflow:hidden}
     .outcome:last-child{border-right:0}
     .outcome strong{color:var(--lime);font:650 clamp(44px,4.6vw,66px)/1 var(--font-en);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
@@ -425,6 +425,9 @@
       .method-step:nth-child(2){border-right:0}
       .method-step:nth-child(3){padding-left:0;border-top:1px solid var(--line)}
       .method-step:nth-child(4){border-top:1px solid var(--line)}
+      .outcome-grid{grid-template-columns:repeat(2,1fr)}
+      .outcome:nth-child(2){border-right:0}
+      .outcome:nth-child(-n+2){border-bottom:1px solid var(--line)}
       .career-grid{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:960px){
@@ -471,7 +474,6 @@
       .method-step h3{margin-top:20px}
       .outcome-grid{grid-template-columns:1fr 1fr}
       .outcome{min-height:170px;padding:20px}
-      .outcome:first-child{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line)}
       .outcome>span{font-size:15px}
       .book-grid{grid-template-columns:1fr}
       .book-card.featured{grid-column:auto;display:flex}
@@ -649,6 +651,7 @@
           <div class="outcome"><strong><span class="counter" data-target="1000">1,000</span><small>+</small></strong><span>누적 수강생</span><p>부트캠프 · 기업 · 대학 · 공인과정</p></div>
           <div class="outcome"><strong><span class="counter" data-target="50">50</span><small>회+</small></strong><span>기업·기관 교육</span><p>맞춤형 출강 · Tableau · 데이터 시각화</p></div>
           <div class="outcome"><strong><span class="counter" data-target="4">4</span><small>곳+</small></strong><span>학부생·취준생 교육</span><p>대학 · 부트캠프 · 취업 연계 실무 과정</p></div>
+          <div class="outcome"><strong><span class="counter" data-target="93.5">93.5</span><small>NPS</small></strong><span>대시보드 학습 NPS</span><p>내일배움캠프 QAQC 과정 · 역대 최고 수준</p></div>
         </div>
       </div>
     </section>
@@ -1018,7 +1021,7 @@
 
     /* Counters: final values live in the HTML; animate only when motion is OK */
     if(!reduce&&'IntersectionObserver' in window){
-      const run=el=>{const t=+el.dataset.target,s=performance.now(),d=1200;const tick=n=>{const p=Math.min(1,(n-s)/d);el.textContent=Math.round(t*(1-Math.pow(1-p,3))).toLocaleString('ko-KR');if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
+      const run=el=>{const t=+el.dataset.target,dec=(el.dataset.target.split('.')[1]||'').length,s=performance.now(),d=1200;const tick=n=>{const p=Math.min(1,(n-s)/d);el.textContent=(t*(1-Math.pow(1-p,3))).toLocaleString('ko-KR',{minimumFractionDigits:dec,maximumFractionDigits:dec});if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)};
       const co=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){run(en.target);co.unobserve(en.target)}}),{threshold:.6});
       $$('.counter').forEach(el=>co.observe(el));
     }
