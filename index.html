@@ -258,90 +258,6 @@
         }
       },
       {
-        "@type": "Book",
-        "name": "Learners School : SQL 기초",
-        "url": "https://wikidocs.net/book/19579",
-        "description": "비즈니스 질문을 데이터 구조로 해석하고 SQL로 표현하는 실습형 입문서입니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
-        "@type": "Book",
-        "name": "Learners School : 통계 기초",
-        "url": "https://wikidocs.net/book/19643",
-        "description": "데이터의 불확실성을 읽고 추정, 검정, 회귀, 실험 설계를 의사결정으로 연결합니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
-        "@type": "Book",
-        "name": "Learners School : 컴퓨터 사이언스 기초",
-        "url": "https://wikidocs.net/book/20709",
-        "description": "소프트웨어, 데이터베이스, 프로그래밍 언어, 정보 시스템의 핵심 원칙을 정리합니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
-        "@type": "Book",
-        "name": "Learners School : 머신러닝 기초",
-        "url": "https://wikidocs.net/book/20662",
-        "description": "문제 정의와 지표 해석부터 모델의 실패와 대안까지 10강으로 완성하는 입문 과정입니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
-        "@type": "Book",
-        "name": "n8n을 활용한 데이터 워크플로우 구축",
-        "url": "https://wikidocs.net/book/19600",
-        "description": "반복 업무를 자동화 문제로 바꾸고 n8n 워크플로우로 구현하는 과정을 다룹니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
-        "@type": "Book",
-        "name": "Learners School : Python 기초",
-        "url": "https://wikidocs.net/book/20351",
-        "description": "기초 문법의 동작 원리를 이해하고 데이터 처리와 자동화의 첫걸음까지 이어갑니다.",
-        "inLanguage": "ko",
-        "author": {
-          "@id": "https://heoquixote.github.io/data-learners/#person"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "WikiDocs"
-        }
-      },
-      {
         "@type": "FAQPage",
         "@id": "https://heoquixote.github.io/data-learners/#faq",
         "mainEntity": [
@@ -586,7 +502,6 @@
 
     /* Books */
     .books-head .btn{justify-self:end}
-    .books-actions{justify-self:end;display:flex;flex-wrap:wrap;gap:10px}
     .book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .book-card{--book-accent:var(--lime);position:relative;min-height:440px;padding:24px;display:flex;flex-direction:column;border:1px solid var(--line);background:linear-gradient(150deg,rgba(255,255,255,.035),transparent 45%),var(--surface);overflow:hidden;transition:transform .3s var(--ease),border-color .3s}
     .book-card.featured{grid-column:span 2;display:grid;grid-template-columns:minmax(150px,190px) 1fr;grid-template-rows:auto 1fr auto;column-gap:36px}
@@ -803,7 +718,6 @@
       .hero:after,.hero:before,.scroll-cue{display:none}
       .section-head,.instructor-layout,.faq-layout,.inquiry-grid{grid-template-columns:1fr}
       .books-head .btn{justify-self:start}
-      .books-actions{justify-self:start}
       .instructor-visual{max-width:560px;width:100%}
       .social-links{grid-template-columns:1fr}
     }
@@ -1049,10 +963,7 @@
             <h2 class="h2" id="books-title">수업에서 끝나지 않는<br>7개의 실무 학습서</h2>
             <p class="lead" style="margin-top:20px;max-width:600px">Tableau부터 SQL, Python, 통계, 머신러닝, 자동화, 컴퓨터 사이언스까지. 교육에서 다룬 핵심을 언제든 다시 학습할 수 있도록 실무 흐름으로 정리했습니다.</p>
           </div>
-          <div class="books-actions">
-            <a class="btn" href="https://wikidocs.net/blog/@datalearners" target="_blank" rel="noopener">WikiDocs 블로그 <span class="ico" aria-hidden="true">↗</span></a>
-            <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기 <span class="ico" aria-hidden="true">↗</span></a>
-          </div>
+          <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기 <span class="ico" aria-hidden="true">↗</span></a>
         </header>
         <div class="book-grid reveal">
           <a class="book-card featured" style="--book-accent:#c8ff3d" href="https://wikidocs.net/book/19534" target="_blank" rel="noopener">

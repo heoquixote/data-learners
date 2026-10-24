@@ -1,6 +1,6 @@
 # 데이터 러너즈 (Data Learners)
 
-> 허진성 강사가 운영하는 실무 데이터 교육입니다. SQL, Python, Tableau, 통계, 머신러닝, n8n 기반 AI 업무자동화를 기업·기관 맞춤 출강, 부트캠프, 그룹 교육, Tableau 워크숍으로 가르칩니다. 허진성은 2026–2027 Tableau Ambassador이자 2026–2027 n8n Ambassador이며, Salesforce Tableau Certified Instructor로 Tableau 공인과정을 운영했고, 『태블로를 활용한 데이터 시각화』를 비롯한 실무 학습서 7종을 WikiDocs에 집필했습니다.
+> 허진성 강사가 운영하는 실무 데이터 교육입니다. SQL, Python, Tableau, 통계, 머신러닝, n8n 기반 AI 업무자동화를 기업·기관 맞춤 출강, 부트캠프, 그룹 교육, Tableau 워크숍으로 가르칩니다. 허진성은 2026–2027 Tableau Ambassador이자 2026–2027 n8n Ambassador이며, Salesforce Tableau Certified Instructor로 Tableau 공인과정을 운영했고, 『태블로를 활용한 데이터 시각화』 저자입니다.
 
 교육 방식은 LBL(Lecture-Based Learning)로 개념과 도구를 익힌 뒤 PBL(Project-Based Learning)로 실제 데이터 프로젝트와 포트폴리오를 완성하는 4단계(개념 → 툴 실습 → 프로젝트 → 멘토링)입니다. 누적 수강생 1,000명 이상, 기업·기관 교육 50회 이상, 내일배움캠프 QAQC 과정 대시보드 학습 NPS 93.5를 기록했습니다.
 
@@ -18,15 +18,9 @@
 - 기업 임직원 교육: 잡코리아, NHN, CJ프레시웨이, LG전자, 삼성화재, 삼성생명, 삼성물산, LG 서브원, 중앙일보, 세스코, 트라이씨클, W컨셉, F&F, 백패커 등
 - 교육기관·대학·공인과정: 팀스파르타, 코드잇, BDAI, 청년사관학교(SeSAC), 데이터브릿지, 국민대학교, 롯데GRS, Trailhead Academy(Tableau 공인과정 TTD101·TTD201)
 
-## 저서 (WikiDocs)
+## 저서
 
 - [태블로를 활용한 데이터 시각화](https://wikidocs.net/book/19534)
-- [n8n을 활용한 데이터 워크플로우 구축](https://wikidocs.net/book/19600)
-- [Learners School : SQL 기초](https://wikidocs.net/book/19579)
-- [Learners School : Python 기초](https://wikidocs.net/book/20351)
-- [Learners School : 통계 기초](https://wikidocs.net/book/19643)
-- [Learners School : 머신러닝 기초](https://wikidocs.net/book/20662)
-- [Learners School : 컴퓨터 사이언스 기초](https://wikidocs.net/book/20709)
 
 ## 문의와 프로필
 
