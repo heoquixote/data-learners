@@ -69,6 +69,10 @@
   /* 과정 필터 */
   $$('.filter[data-filter]').forEach(b=>b.addEventListener('click',()=>track('course_filter',{filter_value:b.dataset.filter})));
 
+  /* 후기 필터·더 보기 */
+  $$('.rv-filter[data-rv-filter]').forEach(b=>b.addEventListener('click',()=>track('review_filter',{filter_value:b.dataset.rvFilter})));
+  $$('#reviewMore').forEach(b=>b.addEventListener('click',()=>track('review_more',{})));
+
   if('IntersectionObserver' in window){
     /* 섹션 노출: 화면 중앙선을 지나간 섹션을 페이지당 1회 기록 */
     const so=new IntersectionObserver(es=>es.forEach(en=>{
