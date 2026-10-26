@@ -55,6 +55,14 @@
       return;
     }
     let u;try{u=new URL(a.href,location.href)}catch(_){return}
+    if(a.hasAttribute('download')){
+      track('file_download',{file_name:u.pathname.split('/').pop(),link_url:u.href.slice(0,100),cta_location:loc});
+      return;
+    }
+    if(u.origin===location.origin&&u.pathname!==location.pathname){
+      track('subsite_click',{link_target:u.pathname,cta_text:text,cta_location:loc});
+      return;
+    }
     if(u.origin===location.origin&&u.pathname===location.pathname&&u.hash){
       if(a.classList.contains('btn'))track('cta_click',{cta_type:'navigation',cta_text:text,cta_location:loc,link_target:u.hash.slice(1)});
       else if(a.closest('#navLinks, .footer-links'))track('nav_click',{link_target:u.hash.slice(1),cta_location:loc});
