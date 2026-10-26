@@ -55,8 +55,9 @@
       return;
     }
     let u;try{u=new URL(a.href,location.href)}catch(_){return}
+    /* 다운로드: 향상된 측정이 .pdf 클릭을 file_download로 자동 기록하므로 중복을 피해 별도 이름으로 보냄 */
     if(a.hasAttribute('download')){
-      track('file_download',{file_name:u.pathname.split('/').pop(),link_url:u.href.slice(0,100),cta_location:loc});
+      track('brochure_download',{file_name:u.pathname.split('/').pop(),cta_text:text,cta_location:loc});
       return;
     }
     if(u.origin===location.origin&&u.pathname!==location.pathname){
