@@ -24,7 +24,7 @@
   <meta name="msvalidate.01" content=""> -->
   <!-- GA4: 측정 ID(G-로 시작)를 content에 넣으면 수집이 시작됩니다. 이벤트 정의는 analytics.js -->
   <meta name="ga-measurement-id" content="G-TGHBH58LMZ">
-  <script src="analytics.js?v=2" defer></script>
+  <script src="analytics.js?v=3" defer></script>
   <!-- 구조화 데이터: 화면의 과정·저서·FAQ 문구를 바꾸면 여기도 함께 맞춥니다 -->
   <script type="application/ld+json">
   {
@@ -486,6 +486,46 @@
     .outcome>span{margin-top:auto;padding-top:28px;font-size:16px;font-weight:650}
     .outcome p{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.6}
 
+    /* Learner voices */
+    .rv-scores{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin-bottom:28px}
+    .rv-score{padding:22px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;min-width:0}
+    .rv-score:last-child{border-right:0}
+    .rv-score strong{color:var(--lime);font:650 clamp(30px,3vw,40px)/1 var(--font-en);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+    .rv-score strong small{font-size:.42em;letter-spacing:0;margin-left:4px;color:var(--muted);font-weight:600}
+    .rv-score span{font-size:14px;font-weight:650;color:var(--text)}
+    .rv-score p{color:var(--muted);font-size:12.5px;line-height:1.5}
+    .rv-filter{min-height:42px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--text-2);font-size:14px;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+    .rv-filter:hover{border-color:rgba(255,255,255,.4);color:var(--text)}
+    .rv-filter[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:#0b0d0c}
+    .rv-filter .count,.rv-more .count{font:600 12px/1 var(--font-en);opacity:.6}
+    .rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+    .rv-card{display:flex;flex-direction:column;gap:18px;padding:24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);transition:border-color .25s}
+    .rv-card:hover{border-color:var(--line-strong)}
+    .rv-card[hidden],.rv-more[hidden]{display:none}
+    .rv-tag{align-self:flex-start;padding:4px 9px;border-radius:4px;background:rgba(102,219,255,.1);color:var(--cyan);font:600 11.5px/1.2 var(--font-ko);letter-spacing:.02em}
+    .rv-card blockquote{margin:0;color:var(--text);font-size:16px;line-height:1.75;font-weight:500;text-wrap:pretty}
+    .rv-card blockquote:before{content:"\201C";display:block;height:22px;color:var(--lime);font:700 40px/1 var(--font-en)}
+    .rv-who{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:14px;border-top:1px solid var(--line)}
+    .rv-who div{min-width:0;color:var(--muted);font-size:12.5px;line-height:1.55}
+    .rv-who b{display:block;color:var(--text-2);font-size:13.5px;font-weight:600}
+    .rv-metric{flex:none;color:var(--lime);font:600 12px/1.4 var(--font-en);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+    .rv-card.is-summary{border-style:dashed}
+    .rv-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-top:24px}
+    .rv-note{color:var(--subtle);font-size:12.5px}
+    .rv-more{min-height:44px;padding:0 20px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--text-2);font-size:14px;font-weight:600}
+    .rv-more:hover{border-color:rgba(255,255,255,.4);color:var(--text)}
+    @media (max-width:1100px){.rv-grid{grid-template-columns:repeat(2,1fr)}.rv-scores{grid-template-columns:repeat(2,1fr)}.rv-score:nth-child(2){border-right:0}.rv-score:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+    @media (max-width:640px){
+      .rv-scores{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(var(--gutter)*-1);border-inline:0;scrollbar-width:none}
+      .rv-scores::-webkit-scrollbar{display:none}
+      .rv-score{flex:0 0 44%;scroll-snap-align:start;padding:18px 16px;border-bottom:0!important;border-right:1px solid var(--line)!important}
+      .rv-filter{flex:none}
+      .rv-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:calc(var(--gutter)*-1);padding:2px var(--gutter) 10px;scroll-padding-inline:var(--gutter);scrollbar-width:none}
+      .rv-grid::-webkit-scrollbar{display:none}
+      .rv-card{flex:0 0 84%;scroll-snap-align:start;padding:20px}
+      .rv-more{display:none}
+    }
+
     /* Instructor */
     .instructor-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,6vw,88px);align-items:center}
     .instructor-visual{position:relative;aspect-ratio:4/5;max-height:680px;overflow:hidden;background:#24292c;clip-path:polygon(0 0,calc(100% - 36px) 0,100% 36px,100% 100%,0 100%)}
@@ -701,6 +741,11 @@
     @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}}
 
     /* ============ Responsive ============ */
+    @media (max-width:1080px) and (min-width:961px){
+      .nav-inner{gap:16px}
+      .nav-links a:not(.btn),.nav-more-toggle{padding:10px 7px!important;font-size:14px}
+      .nav-links .btn{margin-left:6px}
+    }
     @media (max-width:1100px){
       .nav-links a:not(.btn),.nav-more-toggle{padding:10px}
       .nav-links .btn-sm{padding:0 12px}
@@ -807,6 +852,7 @@
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
       <nav class="nav-links" id="navLinks" aria-label="주요 메뉴">
         <a href="#courses">교육과정</a>
+        <a href="#reviews">수강후기</a>
         <a href="#instructor">강사소개</a>
         <a href="#books">저서</a>
         <a href="#career">교육이력</a>
@@ -958,13 +1004,87 @@
       </div>
     </section>
 
+    <section class="section" id="reviews" aria-labelledby="reviews-title">
+      <div class="shell">
+        <header class="section-head reveal">
+          <div>
+            <p class="eyebrow">04 · Learner Voices</p>
+            <h2 class="h2" id="reviews-title">숫자 뒤에 있는<br><span class="accent">수강생의 목소리.</span></h2>
+          </div>
+          <p class="lead">부트캠프 수강생부터 기업 실무자, Tableau 공인과정 수강생까지. 교육이 끝난 뒤 만족도 조사에 남겨 주신 실제 피드백을 정리했습니다.</p>
+        </header>
+        <div class="rv-scores reveal">
+          <div class="rv-score"><strong>93.5<small>NPS</small></strong><span>KDT QAQC 4기</span><p>31명 전원 응답</p></div>
+          <div class="rv-score"><strong>9.61<small>/10</small></strong><span>라이브 세션 추천도</span><p>KDT QAQC 2기</p></div>
+          <div class="rv-score"><strong>9.17<small>/10</small></strong><span>강사와의 소통</span><p>BDA 부트캠프 2기 · 41명 응답</p></div>
+          <div class="rv-score"><strong>4.92<small>/5</small></strong><span>강사 평가 평균</span><p>Tableau 공인과정 TTD101</p></div>
+        </div>
+        <div class="filters reveal" role="group" aria-label="학습자 유형 필터">
+          <button class="rv-filter" type="button" data-rv-filter="all" aria-pressed="true">전체 <span class="count">9</span></button>
+          <button class="rv-filter" type="button" data-rv-filter="bootcamp" aria-pressed="false">부트캠프 · 취업 준비 <span class="count">6</span></button>
+          <button class="rv-filter" type="button" data-rv-filter="corporate" aria-pressed="false">기업 실무자 <span class="count">3</span></button>
+        </div>
+        <div class="rv-grid reveal" id="reviewGrid" aria-live="polite">
+          <article class="rv-card" data-category="bootcamp">
+            <span class="rv-tag">몰입도</span>
+            <blockquote>꼭 필요한 핵심 포인트만 빠르고 쉽고 재미있게 가르쳐 주셔서 좋았습니다.</blockquote>
+            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+          </article>
+          <article class="rv-card" data-category="corporate">
+            <span class="rv-tag">쉬운 설명</span>
+            <blockquote>처음 듣는 내용인데도 쉽게 알 수 있게 설명해 주셨고, 굉장히 친절하셨습니다.</blockquote>
+            <div class="rv-who"><div><b>기업 실무자 · Tableau 공인과정</b>TTD101 · Trailhead Academy · 2024</div><span class="rv-metric">강사 평가<br>4.92/5</span></div>
+          </article>
+          <article class="rv-card" data-category="corporate">
+            <span class="rv-tag">실무 적용</span>
+            <blockquote>업무와 직접 연계해 활용할 방안을 생각해 볼 수 있었고, 따라 하기에 어렵지 않아서 좋았습니다.</blockquote>
+            <div class="rv-who"><div><b>F&amp;B 기업 구매전략팀</b>Tableau 초급 과정 · 2024</div><span class="rv-metric">강사만족도<br>5/5</span></div>
+          </article>
+          <article class="rv-card" data-category="bootcamp">
+            <span class="rv-tag">실습 구조</span>
+            <blockquote>미니 과제와 본 과제가 연결되어 있어 툴에 익숙해지고 개념을 이해하는 데 큰 도움이 되었습니다.</blockquote>
+            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+          </article>
+          <article class="rv-card" data-category="bootcamp">
+            <span class="rv-tag">자신감</span>
+            <blockquote>태블로를 다루는 데 있어서 자신감이 생겼습니다.</blockquote>
+            <div class="rv-who"><div><b>데이터 분석 부트캠프 수강생</b>데이터 분석 7기 심화반 · 내일배움캠프 · 2025</div><span class="rv-metric">학습 자료<br>4.75/5</span></div>
+          </article>
+          <article class="rv-card is-summary" data-category="bootcamp">
+            <span class="rv-tag">몰입도</span>
+            <blockquote>참여를 이끌어 가며 수업하셔서 지루하지 않고 재미있게 들을 수 있었습니다.</blockquote>
+            <div class="rv-who"><div><b>대학생 · 취업 준비생</b>Tableau Bootcamp 2기 · BDA · 2026 · 만족도 리포트 요약</div><span class="rv-metric">강사 소통<br>9.17/10</span></div>
+          </article>
+          <article class="rv-card" data-category="bootcamp" data-extra>
+            <span class="rv-tag">입문자</span>
+            <blockquote>태블로는 처음이었지만 자세히 알려주셔서 과정을 잘 따라갈 수 있었습니다.</blockquote>
+            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+          </article>
+          <article class="rv-card" data-category="corporate" data-extra>
+            <span class="rv-tag">질의응답</span>
+            <blockquote>커리큘럼에 있는 내용 외에도 부연 설명과 질의응답을 성실히 해 주셨습니다.</blockquote>
+            <div class="rv-who"><div><b>기업 실무자 · Tableau 공인과정</b>TTD101 · Trailhead Academy · 2024</div><span class="rv-metric">강사 평가<br>4.92/5</span></div>
+          </article>
+          <article class="rv-card" data-category="bootcamp" data-extra>
+            <span class="rv-tag">세심한 진행</span>
+            <blockquote>너무 어렵지 않고, 모두 따라오도록 체크하면서 진행해 주셨습니다.</blockquote>
+            <div class="rv-who"><div><b>데이터 분석 부트캠프 수강생</b>데이터 분석 7기 심화반 · 내일배움캠프 · 2025</div><span class="rv-metric">학습 자료<br>4.75/5</span></div>
+          </article>
+        </div>
+        <div class="rv-foot">
+          <p class="rv-note">각 기관 공식 만족도 조사에서 발췌했으며, 개인 식별 정보는 제외했습니다.</p>
+          <button class="rv-more" type="button" id="reviewMore" aria-controls="reviewGrid" hidden>후기 더 보기 <span class="count">+3</span></button>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="instructor" aria-labelledby="instructor-title">
       <div class="shell instructor-layout">
         <div class="instructor-visual reveal">
           <img src="instructor.webp" alt="데이터 러너즈 허진성 강사" width="560" height="700" loading="lazy" decoding="async">
         </div>
         <div class="instructor-copy reveal">
-          <p class="eyebrow">04 · Instructor</p>
+          <p class="eyebrow">05 · Instructor</p>
           <h2 class="h2 instructor-title" id="instructor-title">데이터로 생각하는 힘을<br>가르치는 강사 <span class="accent">허진성</span>입니다.</h2>
           <p class="lead">데이터 분석과 BI 엔지니어링의 실무 경험을 교육 언어로 구조화합니다. 기능 사용법에 머무르지 않고, 문제를 정의하고 분석 기준을 세우며 결과를 설득력 있게 전달하는 방법을 가르칩니다.</p>
           <div class="ambassadors">
@@ -989,7 +1109,7 @@
       <div class="shell">
         <header class="section-head books-head reveal">
           <div>
-            <p class="eyebrow">05 · Books &amp; Library</p>
+            <p class="eyebrow">06 · Books &amp; Library</p>
             <h2 class="h2" id="books-title">수업에서 끝나지 않는<br>7개의 실무 학습서</h2>
             <p class="lead" style="margin-top:20px;max-width:600px">Tableau부터 SQL, Python, 통계, 머신러닝, 자동화, 컴퓨터 사이언스까지. 교육에서 다룬 핵심을 언제든 다시 학습할 수 있도록 실무 흐름으로 정리했습니다.</p>
           </div>
@@ -1053,7 +1173,7 @@
       <div class="shell">
         <header class="section-head reveal">
           <div>
-            <p class="eyebrow">06 · Education Career</p>
+            <p class="eyebrow">07 · Education Career</p>
             <h2 class="h2" id="career-title">현장에서 검증된<br>데이터 교육 경험</h2>
           </div>
           <p class="lead">부트캠프와 대학, 기업 실무자 교육, Tableau 공인과정까지 다양한 학습자와 조직을 대상으로 데이터 분석·시각화 교육을 진행했습니다.</p>
@@ -1106,7 +1226,7 @@
         <div class="inquiry-box reveal">
           <div class="inquiry-grid">
             <div>
-              <p class="eyebrow">07 · Education Inquiry</p>
+              <p class="eyebrow">08 · Education Inquiry</p>
               <h2 class="h2" id="inquiry-title">교육 대상과 목표에 맞는<br><span class="accent">커리큘럼을 설계합니다.</span></h2>
               <p class="lead">기업·기관 출강, 부트캠프, 그룹 코칭, Tableau 워크숍 등 학습자의 수준과 업무 환경에 맞춰 교육 내용과 실습을 구성합니다. 문의 폼으로 교육 대상과 목표를 전달해 주세요.</p>
               <div class="inquiry-actions">
@@ -1128,7 +1248,7 @@
     <section class="section" id="faq" aria-labelledby="faq-title">
       <div class="shell faq-layout">
         <div class="reveal">
-          <p class="eyebrow">08 · FAQ</p>
+          <p class="eyebrow">09 · FAQ</p>
           <h2 class="h2" id="faq-title">교육 전<br>자주 묻는 질문</h2>
         </div>
         <div class="faq-list reveal">
@@ -1148,6 +1268,7 @@
       <nav class="footer-links" aria-label="하단 메뉴">
         <a href="#courses">CURRICULUM</a>
         <a href="#method">SYSTEM</a>
+        <a href="#reviews">REVIEWS</a>
         <a href="#instructor">INSTRUCTOR</a>
         <a href="#books">BOOKS</a>
         <a href="#career">CAREER</a>
@@ -1316,7 +1437,7 @@
     const links=$$('#navLinks a[href^="#"]');
     if('IntersectionObserver' in window){
       const spy=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){links.forEach(l=>l.toggleAttribute('aria-current',false));const l=links.find(l=>l.hash==='#'+en.target.id);if(l)l.setAttribute('aria-current','true')}}),{rootMargin:'-45% 0px -50% 0px'});
-      ['courses','instructor','books','career','faq'].forEach(id=>{const el=document.getElementById(id);el&&spy.observe(el)});
+      ['courses','reviews','instructor','books','career','faq'].forEach(id=>{const el=document.getElementById(id);el&&spy.observe(el)});
     }
 
     /* Reveal */
@@ -1332,6 +1453,25 @@
       const key=btn.dataset.filter;grid.classList.toggle('is-filtered',key!=='all');
       $$('.course-card',grid).forEach(c=>c.hidden=key!=='all'&&c.dataset.category!==key);
     }));
+
+    /* Review filter: first 6 cards by default, the rest behind "더 보기" */
+    const rvGrid=$('#reviewGrid'),rvMore=$('#reviewMore');
+    if(rvGrid){
+      let rvKey='all',rvOpen=false;
+      const rvMobile=matchMedia('(max-width:640px)');
+      const rvRender=()=>{
+        const open=rvOpen||rvMobile.matches;
+        $$('.rv-card',rvGrid).forEach(c=>c.hidden=(rvKey!=='all'&&c.dataset.category!==rvKey)||(rvKey==='all'&&!open&&c.hasAttribute('data-extra')));
+        rvMore.hidden=rvKey!=='all'||open;
+      };
+      $$('.rv-filter').forEach(btn=>btn.addEventListener('click',()=>{
+        $$('.rv-filter').forEach(b=>b.setAttribute('aria-pressed',b===btn));
+        rvKey=btn.dataset.rvFilter;rvGrid.scrollLeft=0;rvRender();
+      }));
+      rvMore.addEventListener('click',()=>{rvOpen=true;rvRender()});
+      rvMobile.addEventListener?.('change',rvRender);
+      rvRender();
+    }
 
     /* Counters: final values live in the HTML; animate only when motion is OK */
     if(!reduce&&'IntersectionObserver' in window){
