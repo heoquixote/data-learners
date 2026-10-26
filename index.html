@@ -272,14 +272,6 @@
           },
           {
             "@type": "Question",
-            "name": "온라인과 오프라인 모두 진행하나요?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "교육 목적과 인원에 따라 온라인 실시간, 오프라인 워크숍, 혼합형 교육으로 진행할 수 있습니다. 세부 방식은 문의 단계에서 협의합니다."
-            }
-          },
-          {
-            "@type": "Question",
             "name": "비전공자나 데이터 입문자도 들을 수 있나요?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -288,34 +280,10 @@
           },
           {
             "@type": "Question",
-            "name": "우리 회사 업무 데이터로 실습할 수 있나요?",
+            "name": "온라인과 오프라인 모두 진행하나요?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "가능합니다. 업무 맥락에 맞는 데이터와 케이스로 실습을 구성합니다. 보안상 원본 데이터를 공유하기 어렵다면 구조가 같은 샘플 데이터로 대체하는 방식도 협의할 수 있습니다."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "짧은 특강이나 워크숍도 가능한가요?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "가능합니다. Tableau 입문부터 레이아웃·Prep 개선까지 실무 대시보드 중심의 단기 워크숍과 주제별 특강을 운영합니다. 정규 과정이나 부트캠프 형태의 장기 과정도 함께 진행합니다."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "자격증 대비 과정도 있나요?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "경영정보시각화능력, ADsP 대비 과정을 구성할 수 있습니다. ADsP는 시대에듀 수험서 집필 경험을 바탕으로 교재와 연계해 진행합니다."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "교육이 끝나면 어떤 결과물이 남나요?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "LBL 강의 후 PBL 프로젝트를 수행하고, 단계별 피드백으로 대시보드·분석 리포트·자동화 워크플로우 같은 실무형 결과물을 완성합니다. 교육 후에는 7권의 실무 학습서로 복습할 수 있습니다."
+              "text": "교육 목적과 인원에 따라 온라인 실시간, 오프라인 워크숍, 혼합형 교육으로 진행할 수 있습니다. 세부 방식은 문의 단계에서 협의합니다."
             }
           },
           {
@@ -554,32 +522,33 @@
     .rv-filter:hover{border-color:rgba(255,255,255,.4);color:var(--text)}
     .rv-filter[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:#0b0d0c}
     .rv-filter .count,.rv-more .count{font:600 12px/1 var(--font-en);opacity:.6}
-    .rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
-    .rv-card{display:flex;flex-direction:column;gap:18px;padding:24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);transition:border-color .25s}
-    .rv-card:hover{border-color:var(--line-strong)}
+    .rv-grid{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+    .rv-card{display:grid;grid-template-columns:140px minmax(0,1fr) 230px 84px;align-items:center;gap:24px;padding:20px 4px;border-bottom:1px solid var(--line);transition:background .2s}
+    .rv-card:hover{background:rgba(255,255,255,.02)}
     .rv-card[hidden],.rv-more[hidden]{display:none}
-    .rv-tag{align-self:flex-start;padding:4px 9px;border-radius:4px;background:rgba(102,219,255,.1);color:var(--cyan);font:600 11.5px/1.2 var(--font-ko);letter-spacing:.02em}
-    .rv-card blockquote{margin:0;color:var(--text);font-size:16px;line-height:1.75;font-weight:500;text-wrap:pretty}
-    .rv-card blockquote:before{content:"\201C";display:block;height:22px;color:var(--lime);font:700 40px/1 var(--font-en)}
-    .rv-who{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:14px;border-top:1px solid var(--line)}
-    .rv-who div{min-width:0;color:var(--muted);font-size:12.5px;line-height:1.55}
-    .rv-who b{display:block;color:var(--text-2);font-size:13.5px;font-weight:600}
-    .rv-metric{flex:none;color:var(--lime);font:600 12px/1.4 var(--font-en);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-    .rv-card.is-summary{border-style:dashed}
+    .rv-platform{justify-self:start;padding:5px 10px;border:1px solid var(--line-strong);border-radius:999px;color:var(--text-2);font:600 12px/1.2 var(--font-en);white-space:nowrap}
+    .rv-card blockquote{margin:0;color:var(--text);font-size:16px;line-height:1.6;font-weight:500;text-wrap:pretty}
+    .rv-card blockquote:before{content:"\201C";margin-right:4px;color:var(--lime);font:700 18px/1 var(--font-en)}
+    .rv-card blockquote:after{content:"\201D";margin-left:2px;color:var(--lime);font:700 18px/1 var(--font-en)}
+    .rv-src{min-width:0;color:var(--muted);font-size:12.5px;line-height:1.5}
+    .rv-src b{display:block;color:var(--text-2);font-size:13px;font-weight:600}
+    .rv-metric{color:var(--lime);font:650 15px/1.2 var(--font-en);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+    .rv-metric small{display:block;margin-bottom:3px;color:var(--muted);font:500 11.5px/1.2 var(--font-ko)}
     .rv-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-top:24px}
     .rv-note{color:var(--subtle);font-size:12.5px}
     .rv-more{min-height:44px;padding:0 20px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--text-2);font-size:14px;font-weight:600}
     .rv-more:hover{border-color:rgba(255,255,255,.4);color:var(--text)}
-    @media (max-width:1100px){.rv-grid{grid-template-columns:repeat(2,1fr)}.rv-scores{grid-template-columns:repeat(2,1fr)}.rv-score:nth-child(2){border-right:0}.rv-score:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+    @media (max-width:1100px){.rv-card{grid-template-columns:130px minmax(0,1fr) 92px}.rv-src{grid-column:2;grid-row:2}.rv-scores{grid-template-columns:repeat(2,1fr)}.rv-score:nth-child(2){border-right:0}.rv-score:nth-child(-n+2){border-bottom:1px solid var(--line)}}
     @media (max-width:640px){
       .rv-scores{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(var(--gutter)*-1);border-inline:0;scrollbar-width:none}
       .rv-scores::-webkit-scrollbar{display:none}
       .rv-score{flex:0 0 44%;scroll-snap-align:start;padding:18px 16px;border-bottom:0!important;border-right:1px solid var(--line)!important}
       .rv-filter{flex:none}
-      .rv-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:calc(var(--gutter)*-1);padding:2px var(--gutter) 10px;scroll-padding-inline:var(--gutter);scrollbar-width:none}
-      .rv-grid::-webkit-scrollbar{display:none}
-      .rv-card{flex:0 0 84%;scroll-snap-align:start;padding:20px}
-      .rv-more{display:none}
+      .rv-card{grid-template-columns:1fr auto;gap:10px 12px;padding:18px 0}
+      .rv-platform{grid-column:1;grid-row:1}
+      .rv-metric{grid-column:2;grid-row:1}
+      .rv-card blockquote{grid-column:1/-1;grid-row:2;font-size:15px}
+      .rv-src{grid-column:1/-1;grid-row:3}
     }
 
     /* Instructor */
@@ -1227,49 +1196,58 @@
         </div>
         <div class="rv-grid reveal" id="reviewGrid" aria-live="polite">
           <article class="rv-card" data-category="bootcamp">
-            <span class="rv-tag">몰입도</span>
+            <span class="rv-platform">TeamSparta</span>
             <blockquote>꼭 필요한 핵심 포인트만 빠르고 쉽고 재미있게 가르쳐 주셔서 좋았습니다.</blockquote>
-            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+            <span class="rv-src"><b>비전공 부트캠프 수강생</b>내일배움캠프 QAQC 2기 태블로 세션 · 2025</span>
+            <span class="rv-metric"><small>추천도</small>9.61/10</span>
           </article>
           <article class="rv-card" data-category="corporate">
-            <span class="rv-tag">쉬운 설명</span>
+            <span class="rv-platform">Trailhead Academy</span>
             <blockquote>처음 듣는 내용인데도 쉽게 알 수 있게 설명해 주셨고, 굉장히 친절하셨습니다.</blockquote>
-            <div class="rv-who"><div><b>기업 실무자 · Tableau 공인과정</b>TTD101 · Trailhead Academy · 2024</div><span class="rv-metric">강사 평가<br>4.92/5</span></div>
+            <span class="rv-src"><b>기업 실무자 · Tableau 공인과정</b>TTD101 · 2024</span>
+            <span class="rv-metric"><small>강사 평가</small>4.92/5</span>
           </article>
           <article class="rv-card" data-category="corporate">
-            <span class="rv-tag">실무 적용</span>
+            <span class="rv-platform">기업 출강</span>
             <blockquote>업무와 직접 연계해 활용할 방안을 생각해 볼 수 있었고, 따라 하기에 어렵지 않아서 좋았습니다.</blockquote>
-            <div class="rv-who"><div><b>F&amp;B 기업 구매전략팀</b>Tableau 초급 과정 · 2024</div><span class="rv-metric">강사만족도<br>5/5</span></div>
+            <span class="rv-src"><b>F&amp;B 기업 구매전략팀</b>Tableau 초급 과정 · 2024</span>
+            <span class="rv-metric"><small>강사만족도</small>5/5</span>
           </article>
           <article class="rv-card" data-category="bootcamp">
-            <span class="rv-tag">실습 구조</span>
+            <span class="rv-platform">TeamSparta</span>
             <blockquote>미니 과제와 본 과제가 연결되어 있어 툴에 익숙해지고 개념을 이해하는 데 큰 도움이 되었습니다.</blockquote>
-            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+            <span class="rv-src"><b>비전공 부트캠프 수강생</b>내일배움캠프 QAQC 2기 태블로 세션 · 2025</span>
+            <span class="rv-metric"><small>추천도</small>9.61/10</span>
           </article>
           <article class="rv-card" data-category="bootcamp">
-            <span class="rv-tag">자신감</span>
+            <span class="rv-platform">TeamSparta</span>
             <blockquote>태블로를 다루는 데 있어서 자신감이 생겼습니다.</blockquote>
-            <div class="rv-who"><div><b>데이터 분석 부트캠프 수강생</b>데이터 분석 7기 심화반 · 내일배움캠프 · 2025</div><span class="rv-metric">학습 자료<br>4.75/5</span></div>
+            <span class="rv-src"><b>데이터 분석 부트캠프 수강생</b>내일배움캠프 데이터 분석 7기 심화반 · 2025</span>
+            <span class="rv-metric"><small>학습 자료</small>4.75/5</span>
           </article>
           <article class="rv-card is-summary" data-category="bootcamp">
-            <span class="rv-tag">몰입도</span>
+            <span class="rv-platform">BDA</span>
             <blockquote>참여를 이끌어 가며 수업하셔서 지루하지 않고 재미있게 들을 수 있었습니다.</blockquote>
-            <div class="rv-who"><div><b>대학생 · 취업 준비생</b>Tableau Bootcamp 2기 · BDA · 2026 · 만족도 리포트 요약</div><span class="rv-metric">강사 소통<br>9.17/10</span></div>
+            <span class="rv-src"><b>대학생 · 취업 준비생</b>Tableau Bootcamp 2기 · 2026</span>
+            <span class="rv-metric"><small>강사 소통</small>9.17/10</span>
           </article>
           <article class="rv-card" data-category="bootcamp" data-extra>
-            <span class="rv-tag">입문자</span>
+            <span class="rv-platform">TeamSparta</span>
             <blockquote>태블로는 처음이었지만 자세히 알려주셔서 과정을 잘 따라갈 수 있었습니다.</blockquote>
-            <div class="rv-who"><div><b>비전공 부트캠프 수강생</b>QAQC 2기 태블로 세션 · TeamSparta · 2025</div><span class="rv-metric">추천도<br>9.61/10</span></div>
+            <span class="rv-src"><b>비전공 부트캠프 수강생</b>내일배움캠프 QAQC 2기 태블로 세션 · 2025</span>
+            <span class="rv-metric"><small>추천도</small>9.61/10</span>
           </article>
           <article class="rv-card" data-category="corporate" data-extra>
-            <span class="rv-tag">질의응답</span>
+            <span class="rv-platform">Trailhead Academy</span>
             <blockquote>커리큘럼에 있는 내용 외에도 부연 설명과 질의응답을 성실히 해 주셨습니다.</blockquote>
-            <div class="rv-who"><div><b>기업 실무자 · Tableau 공인과정</b>TTD101 · Trailhead Academy · 2024</div><span class="rv-metric">강사 평가<br>4.92/5</span></div>
+            <span class="rv-src"><b>기업 실무자 · Tableau 공인과정</b>TTD101 · 2024</span>
+            <span class="rv-metric"><small>강사 평가</small>4.92/5</span>
           </article>
           <article class="rv-card" data-category="bootcamp" data-extra>
-            <span class="rv-tag">세심한 진행</span>
+            <span class="rv-platform">TeamSparta</span>
             <blockquote>너무 어렵지 않고, 모두 따라오도록 체크하면서 진행해 주셨습니다.</blockquote>
-            <div class="rv-who"><div><b>데이터 분석 부트캠프 수강생</b>데이터 분석 7기 심화반 · 내일배움캠프 · 2025</div><span class="rv-metric">학습 자료<br>4.75/5</span></div>
+            <span class="rv-src"><b>데이터 분석 부트캠프 수강생</b>내일배움캠프 데이터 분석 7기 심화반 · 2025</span>
+            <span class="rv-metric"><small>학습 자료</small>4.75/5</span>
           </article>
         </div>
         <div class="rv-foot">
@@ -1311,12 +1289,8 @@
         </div>
         <div class="faq-list reveal">
           <details><summary>기업·기관 대상 맞춤 교육이 가능한가요?<span class="plus" aria-hidden="true">+</span></summary><p>가능합니다. 교육 대상, 업무 데이터, 목표 역량, 교육 시간에 맞춰 사례와 실습을 설계합니다. Tableau, SQL, Python, n8n 단독 과정과 결합 과정 모두 구성할 수 있습니다.</p></details>
-          <details><summary>온라인과 오프라인 모두 진행하나요?<span class="plus" aria-hidden="true">+</span></summary><p>교육 목적과 인원에 따라 온라인 실시간, 오프라인 워크숍, 혼합형 교육으로 진행할 수 있습니다. 세부 방식은 문의 단계에서 협의합니다.</p></details>
           <details><summary>비전공자나 데이터 입문자도 들을 수 있나요?<span class="plus" aria-hidden="true">+</span></summary><p>네, 비전공자 대상 교육도 진행합니다. 사전 수준을 확인해 난이도를 조정하고, 핵심 개념을 업무 맥락에 연결한 뒤 툴 실습과 프로젝트로 넘어가는 순서로 진행합니다.</p></details>
-          <details><summary>우리 회사 업무 데이터로 실습할 수 있나요?<span class="plus" aria-hidden="true">+</span></summary><p>가능합니다. 업무 맥락에 맞는 데이터와 케이스로 실습을 구성합니다. 보안상 원본 데이터를 공유하기 어렵다면 구조가 같은 샘플 데이터로 대체하는 방식도 협의할 수 있습니다.</p></details>
-          <details><summary>짧은 특강이나 워크숍도 가능한가요?<span class="plus" aria-hidden="true">+</span></summary><p>가능합니다. Tableau 입문부터 레이아웃·Prep 개선까지 실무 대시보드 중심의 단기 워크숍과 주제별 특강을 운영합니다. 정규 과정이나 부트캠프 형태의 장기 과정도 함께 진행합니다.</p></details>
-          <details><summary>자격증 대비 과정도 있나요?<span class="plus" aria-hidden="true">+</span></summary><p>경영정보시각화능력, ADsP 대비 과정을 구성할 수 있습니다. ADsP는 시대에듀 수험서 집필 경험을 바탕으로 교재와 연계해 진행합니다.</p></details>
-          <details><summary>교육이 끝나면 어떤 결과물이 남나요?<span class="plus" aria-hidden="true">+</span></summary><p>LBL 강의 후 PBL 프로젝트를 수행하고, 단계별 피드백으로 대시보드·분석 리포트·자동화 워크플로우 같은 실무형 결과물을 완성합니다. 교육 후에는 7권의 실무 학습서로 복습할 수 있습니다.</p></details>
+          <details><summary>온라인과 오프라인 모두 진행하나요?<span class="plus" aria-hidden="true">+</span></summary><p>교육 목적과 인원에 따라 온라인 실시간, 오프라인 워크숍, 혼합형 교육으로 진행할 수 있습니다. 세부 방식은 문의 단계에서 협의합니다.</p></details>
           <details><summary>교육 비용은 어떻게 정해지나요?<span class="plus" aria-hidden="true">+</span></summary><p>교육 대상과 인원, 교육 시간, 과정 구성(단독·결합), 맞춤 실습 범위에 따라 달라집니다. 문의를 남겨주시면 조건에 맞춰 안내드립니다.</p></details>
           <details><summary>문의하면 어떻게 진행되나요?<span class="plus" aria-hidden="true">+</span></summary><p>문의 양식에 교육 대상, 인원, 목표 역량을 남겨주시면 요구 진단 후 과정 설계와 실습 구성안을 회신드립니다. 내부 검토용 자료가 필요하면 상단의 기업소개서를 내려받으실 수 있습니다.</p></details>
         </div>
@@ -1523,18 +1497,16 @@
     const rvGrid=$('#reviewGrid'),rvMore=$('#reviewMore');
     if(rvGrid){
       let rvKey='all',rvOpen=false;
-      const rvMobile=matchMedia('(max-width:640px)');
       const rvRender=()=>{
-        const open=rvOpen||rvMobile.matches;
+        const open=rvOpen;
         $$('.rv-card',rvGrid).forEach(c=>c.hidden=(rvKey!=='all'&&c.dataset.category!==rvKey)||(rvKey==='all'&&!open&&c.hasAttribute('data-extra')));
         rvMore.hidden=rvKey!=='all'||open;
       };
       $$('.rv-filter').forEach(btn=>btn.addEventListener('click',()=>{
         $$('.rv-filter').forEach(b=>b.setAttribute('aria-pressed',b===btn));
-        rvKey=btn.dataset.rvFilter;rvGrid.scrollLeft=0;rvRender();
+        rvKey=btn.dataset.rvFilter;rvRender();
       }));
       rvMore.addEventListener('click',()=>{rvOpen=true;rvRender()});
-      rvMobile.addEventListener?.('change',rvRender);
       rvRender();
     }
 
