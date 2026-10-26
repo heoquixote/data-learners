@@ -63,8 +63,6 @@
     .btn-primary{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
     .btn-primary:hover{background:#d6ff6a;border-color:#d6ff6a;box-shadow:0 10px 30px rgba(200,255,61,.22)}
     .btn-sm{--h:42px;padding:0 16px;font-size:14px}
-    .btn .ico{font:500 17px/1 var(--font-en);transition:transform .2s var(--ease)}
-    .btn:hover .ico{transform:translate(2px,-2px)}
 
     /* ============ Nav ============ */
     .run-progress{position:fixed;inset:0 0 auto;z-index:120;height:2px;pointer-events:none}
@@ -439,7 +437,6 @@
     @media (max-width:1100px){
       .nav-links a:not(.btn),.nav-more-toggle{padding:10px}
       .nav-links .btn-sm{padding:0 12px}
-      .nav-links .btn-sm .ico{display:none}
       .course-card{grid-column:span 3}
       .book-grid{grid-template-columns:repeat(2,1fr)}
       .method-list{grid-template-columns:repeat(2,1fr)}
@@ -462,7 +459,6 @@
       .nav-links .btn{margin:20px 0 0;--h:52px}
       .nav-links .btn+.btn{margin:10px 0 0}
       .nav-links .btn-sm{padding:0 22px}
-      .nav-links .btn-sm .ico{display:inline}
       .nav-more-toggle{width:100%;padding:22px 0 6px;color:var(--muted);font:600 12px/1 var(--font-en);letter-spacing:.16em;cursor:default;pointer-events:none}
       .nav-more-toggle .caret{display:none}
       .nav-more-menu,.nav-more:hover .nav-more-menu{position:static;min-width:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1;visibility:visible;transform:none;transition:none}
@@ -556,8 +552,8 @@
             <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small><span class="ico" aria-hidden="true">→</span></a>
           </div>
         </div>
-        <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서 <span class="ico" aria-hidden="true">↓</span></a>
-        <a class="btn btn-primary btn-sm" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+        <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서</a>
+        <a class="btn btn-primary btn-sm" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의</a>
       </nav>
     </div>
   </header>
@@ -571,8 +567,8 @@
           <h1><span class="ln ln-outline"><span class="ln-in">배운 것을</span></span><em class="ln"><span class="ln-in">실력으로,</span></em><span class="ln ln-solid"><span class="ln-in">실력을 결과로.</span></span></h1>
           <p class="hero-lead">데이터 러너즈는 SQL, Python, Tableau, 통계, AI 자동화를 실제 업무 문제와 프로젝트 중심으로 가르칩니다. 개념 이해에서 구현·설명·결과물까지, 학습이 실무 역량으로 전환되는 과정을 설계합니다.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#courses">교육과정 보기 <span class="ico" aria-hidden="true">↘</span></a>
-            <a class="btn" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">맞춤 교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+            <a class="btn btn-primary" href="#courses">교육과정 보기</a>
+            <a class="btn" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">맞춤 교육 문의</a>
           </div>
           <div class="pace-board">
             <div><b>05</b><small>핵심 데이터 스킬</small></div>
@@ -730,7 +726,7 @@
             <h2 class="h2" id="books-title">수업에서 끝나지 않는<br>7개의 실무 학습서</h2>
             <p class="lead" style="margin-top:20px;max-width:600px">Tableau부터 SQL, Python, 통계, 머신러닝, 자동화, 컴퓨터 사이언스까지. 교육에서 다룬 핵심을 언제든 다시 학습할 수 있도록 실무 흐름으로 정리했습니다.</p>
           </div>
-          <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기 <span class="ico" aria-hidden="true">↗</span></a>
+          <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기</a>
         </header>
         <div class="book-grid reveal">
           <a class="book-card featured" style="--book-accent:#c8ff3d" href="https://wikidocs.net/book/19534" target="_blank" rel="noopener">
@@ -898,7 +894,7 @@
 
   <div class="mobile-cta" id="mobileCta" aria-hidden="true">
     <a class="btn" href="#courses" tabindex="-1">교육과정</a>
-    <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" tabindex="-1">교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+    <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" tabindex="-1">교육 문의</a>
   </div>
 
   <dialog id="inquiryDialog" aria-labelledby="inquiryDialogTitle">
