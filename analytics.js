@@ -34,6 +34,7 @@
     if(el.closest('#mobileCta'))return 'mobile_cta';
     if(el.closest('footer'))return 'footer';
     if(el.closest('#inquiryDialog'))return 'inquiry_dialog';
+    if(el.closest('#brochureDialog'))return 'brochure_dialog';
     const s=el.closest('section[id]');return s?s.id:'other';
   };
   const linkType=u=>{
@@ -54,10 +55,15 @@
       track('cta_click',{cta_type:'inquiry',cta_text:text,cta_location:loc,course_name:a.dataset.course||'(none)'});
       return;
     }
+    /* 소개서 버튼은 신청 모달을 연다. 실제 파일 다운로드는 모달 안 링크 클릭(data-from=원래 위치)으로 기록 */
+    if(a.hasAttribute('data-open-brochure')){
+      track('cta_click',{cta_type:'brochure',cta_text:text,cta_location:loc});
+      if('showModal' in document.createElement('dialog'))return;
+    }
     let u;try{u=new URL(a.href,location.href)}catch(_){return}
     /* 다운로드: 향상된 측정이 .pdf 클릭을 file_download로 자동 기록하므로 중복을 피해 별도 이름으로 보냄 */
     if(a.hasAttribute('download')){
-      track('brochure_download',{file_name:u.pathname.split('/').pop(),cta_text:text,cta_location:loc});
+      track('brochure_download',{file_name:u.pathname.split('/').pop(),cta_text:text,cta_location:a.dataset.from||loc});
       return;
     }
     if(u.origin===location.origin&&u.pathname!==location.pathname){
@@ -126,11 +132,24 @@
       if(done.hidden)return;
       const fd=new FormData(form);
       track('generate_lead',{
+        lead_type:'inquiry',
         edu_type:(fd.get('edu_type')||'(none)').toString(),
         course_name:fd.getAll('courses').join(', ').slice(0,100)||'(none)',
         course_count:fd.getAll('courses').length
       });
     }).observe(done,{attributes:true,attributeFilter:['hidden']});
     if(status)new MutationObserver(()=>{if(status.textContent.includes('전송에 실패'))track('inquiry_error',{})}).observe(status,{childList:true,subtree:true});
+  }
+
+  /* 소개서 퍼널: 모달 열림 → 제출 시도 → 제출 성공(generate_lead, lead_type=brochure) / 실패 */
+  const bDlg=document.getElementById('brochureDialog'),bForm=document.getElementById('brochureForm');
+  const bDone=document.getElementById('brochureDone'),bStatus=document.getElementById('brochureStatus');
+  if(bDlg&&bForm&&bDone&&'MutationObserver' in window){
+    new MutationObserver(()=>{if(bDlg.open)track('brochure_open',{})}).observe(bDlg,{attributes:true,attributeFilter:['open']});
+    bForm.addEventListener('submit',()=>{track('brochure_submit_attempt',{})});
+    new MutationObserver(()=>{
+      if(!bDone.hidden)track('generate_lead',{lead_type:'brochure',cta_location:document.getElementById('brochureFile').dataset.from||'(none)'});
+    }).observe(bDone,{attributes:true,attributeFilter:['hidden']});
+    if(bStatus)new MutationObserver(()=>{if(bStatus.textContent.includes('전송에 실패'))track('brochure_error',{})}).observe(bStatus,{childList:true,subtree:true});
   }
 })();

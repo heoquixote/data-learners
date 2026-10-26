@@ -24,7 +24,7 @@
   <meta name="msvalidate.01" content=""> -->
   <!-- GA4: 측정 ID(G-로 시작)를 content에 넣으면 수집이 시작됩니다. 이벤트 정의는 analytics.js -->
   <meta name="ga-measurement-id" content="G-TGHBH58LMZ">
-  <script src="analytics.js?v=3" defer></script>
+  <script src="analytics.js?v=4" defer></script>
   <!-- 구조화 데이터: 화면의 과정·저서·FAQ 문구를 바꾸면 여기도 함께 맞춥니다 -->
   <script type="application/ld+json">
   {
@@ -703,6 +703,9 @@
     .inq-done .mark{width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:var(--lime);color:var(--lime-ink);font-size:26px;font-weight:800}
     .inq-done b{font-size:20px}
     .inq-done p{margin:0;color:var(--muted);line-height:1.6}
+    #brochureDialog{width:min(520px,calc(100% - 24px))}
+    #brochureDialog .inq-row{grid-template-columns:1fr}
+    .inq-done .inq-file{margin-top:6px;color:var(--lime);font-size:14px;text-decoration:underline;text-underline-offset:3px}
     @media (max-width:640px){.inq-row{grid-template-columns:1fr}.inq-body{padding:20px 16px}}
     body.modal-open{overflow:hidden}
 
@@ -879,7 +882,7 @@
             <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small></a>
           </div>
         </div>
-        <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서</a>
+        <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-open-brochure>기업소개서</a>
         <a class="btn btn-primary btn-sm" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의</a>
       </nav>
     </div>
@@ -894,7 +897,7 @@
           <h1><span class="ln ln-outline"><span class="ln-in">배운 것을</span></span><em class="ln"><span class="ln-in">실력으로,</span></em><span class="ln ln-solid"><span class="ln-in">실력을 결과로.</span></span></h1>
           <p class="hero-lead">데이터러너즈는 SQL, Python, Tableau, 통계, AI 자동화를 실제 업무 문제와 프로젝트 중심으로 가르칩니다. 개념 이해에서 구현·설명·결과물까지, 학습이 실무 역량으로 전환되는 과정을 설계합니다.</p>
           <div class="hero-actions">
-            <a class="btn" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서 다운로드</a>
+            <a class="btn" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-open-brochure>기업소개서 다운로드</a>
             <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의</a>
           </div>
         </div>
@@ -1278,7 +1281,7 @@
         <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener">WIKIDOCS</a>
         <a href="/runners-buildup/">RUNNERS BUILD-UP</a>
         <a href="/kdt-monitoring/">KDT MONITOR</a>
-        <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">BROCHURE</a>
+        <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-open-brochure>BROCHURE</a>
         <a href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">CONTACT ↗</a>
       </nav>
     </div>
@@ -1355,6 +1358,44 @@
         <span class="mark" aria-hidden="true">✓</span>
         <b>문의가 접수되었습니다</b>
         <p>확인 후 기재하신 이메일로 빠르게 회신드리겠습니다.<br>감사합니다.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="brochureDialog" aria-labelledby="brochureDialogTitle">
+    <div class="modal-head">
+      <b id="brochureDialogTitle">기업소개서 다운로드</b>
+      <div class="modal-tools">
+        <button class="close" type="button" data-close-brochure aria-label="다운로드 창 닫기">×</button>
+      </div>
+    </div>
+    <div class="inq-body">
+      <form class="inq-form" id="brochureForm" novalidate>
+        <p class="inq-intro">아래 정보를 남겨주시면 바로 PDF를 내려받으실 수 있습니다. <em>*</em> 표시는 필수 항목입니다.</p>
+        <div class="inq-row">
+          <div class="inq-field">
+            <label for="br-name">성함 / 소속<span class="inq-req">*</span></label>
+            <input id="br-name" name="name_org" type="text" placeholder="예: 홍길동 / 데이터러너즈" autocomplete="name" required>
+            <p class="inq-err"></p>
+          </div>
+          <div class="inq-field">
+            <label for="br-email">회신 받을 이메일<span class="inq-req">*</span></label>
+            <input id="br-email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
+            <p class="inq-err"></p>
+          </div>
+        </div>
+        <div class="inq-hp" aria-hidden="true"><label>웹사이트<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="inq-status" id="brochureStatus" role="alert"></p>
+        <div class="inq-actions">
+          <p class="inq-note">입력하신 정보는 교육 상담 안내에만 사용됩니다.</p>
+          <button class="btn btn-primary" type="submit" id="brochureSubmit">소개서 받기</button>
+        </div>
+      </form>
+      <div class="inq-done" id="brochureDone" hidden>
+        <span class="mark" aria-hidden="true">✓</span>
+        <b>다운로드를 시작합니다</b>
+        <p>데이터러너즈 기업소개서를 내려받고 있습니다.<br>교육 관련 문의는 언제든 편하게 남겨주세요.</p>
+        <a class="inq-file" id="brochureFile" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">다운로드가 시작되지 않으면 여기를 눌러주세요</a>
       </div>
     </div>
   </dialog>
@@ -1505,6 +1546,50 @@
     });
     form.addEventListener('input',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
     form.addEventListener('change',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
+
+    /* Brochure: short lead form (name/org + email) → n8n webhook → PDF download */
+    const bDlg=$('#brochureDialog'),bForm=$('#brochureForm'),bDone=$('#brochureDone'),bStatus=$('#brochureStatus'),bSubmit=$('#brochureSubmit'),bFile=$('#brochureFile');
+    const B_ENDPOINT='https://hote.app.n8n.cloud/webhook/data-learners-brochure',B_KEY='dl_brochure_ok';
+    const bWhere=a=>a.closest('#siteNav')?'nav':a.closest('footer')?'footer':(a.closest('section[id]')||{}).id||'other';
+    const bRemembered=()=>{try{return localStorage.getItem(B_KEY)==='1'}catch(_){return false}};
+    const bStart=from=>{bFile.dataset.from=from;bFile.click()};
+    let bFrom='other';
+    if(typeof bDlg.showModal==='function'){
+      $$('[data-open-brochure]').forEach(a=>a.addEventListener('click',e=>{
+        e.preventDefault();setMenu(false);
+        bFrom=bWhere(a);
+        if(bRemembered()){bStart(bFrom);return}
+        bForm.reset();bForm.hidden=false;bDone.hidden=true;bDlg.classList.remove('is-done');bStatus.textContent='';
+        $$('.inq-field',bForm).forEach(f=>setErr(f,''));
+        bDlg.showModal();document.body.classList.add('modal-open');
+        setTimeout(()=>{try{$('#br-name').focus()}catch(_){}},60);
+      }));
+      $$('[data-close-brochure]').forEach(b=>b.addEventListener('click',()=>bDlg.close()));
+      bDlg.addEventListener('click',e=>{if(e.target===bDlg)bDlg.close()});
+      bDlg.addEventListener('close',()=>document.body.classList.remove('modal-open'));
+    }
+    bForm.addEventListener('submit',async e=>{
+      e.preventDefault();bStatus.textContent='';
+      const name=$('#br-name'),email=$('#br-email');let first=null;
+      const chk=(el,msg)=>{setErr(el.closest('.inq-field'),msg);if(msg)first=first||el};
+      chk(name,name.value.trim()?'':'성함과 소속을 입력해주세요.');
+      chk(email,!email.value.trim()?'이메일을 입력해주세요.':(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())?'':'올바른 이메일 형식이 아닙니다.'));
+      if(first){first.focus();return}
+      const fd=new FormData(bForm),body=new URLSearchParams();
+      ['name_org','email','website'].forEach(k=>body.append(k,(fd.get(k)||'').toString().trim()));
+      body.append('location',bFrom);body.append('page',location.href);
+      bSubmit.disabled=true;bSubmit.textContent='확인 중…';
+      try{
+        const r=await fetch(B_ENDPOINT,{method:'POST',body});
+        if(!r.ok)throw new Error(r.status);
+        try{localStorage.setItem(B_KEY,'1')}catch(_){}
+        bForm.hidden=true;bDone.hidden=false;bDlg.classList.add('is-done');
+        bStart(bFrom);
+      }catch(err){
+        bStatus.innerHTML='정보 전송에 실패했습니다. 잠시 후 다시 시도하시거나 <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-from="'+bFrom+'" style="color:var(--lime);text-decoration:underline">바로 내려받기</a>를 눌러주세요.';
+      }finally{bSubmit.disabled=false;bSubmit.textContent='소개서 받기'}
+    });
+    bForm.addEventListener('input',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
   })();
   </script>
 </body>
