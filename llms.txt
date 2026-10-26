@@ -6,12 +6,12 @@
 
 ## 교육 과정
 
-- [Tableau 실무 시각화](https://heoquixote.github.io/data-learners/#courses): 데이터 연결과 계산, 차트 선택, 대시보드 UX, Tableau Cloud 공유. 대시보드 프로젝트 포함
-- [n8n 데이터 워크플로우](https://heoquixote.github.io/data-learners/#courses): API, 데이터베이스, Google Sheets, 생성형 AI를 연결한 업무 자동화와 AI Agent
-- [SQL 데이터 분석](https://heoquixote.github.io/data-learners/#courses): 비즈니스 질문을 조회·집계·결합·CTE로 해결
-- [Python 데이터 워크](https://heoquixote.github.io/data-learners/#courses): pandas 기반 전처리, EDA, 반복 분석 자동화
-- [통계적 의사결정](https://heoquixote.github.io/data-learners/#courses): 기술통계, 가설검정, 회귀, 실험설계
-- [머신러닝 실무 모델링](https://heoquixote.github.io/data-learners/#courses): 문제 정의, 피처 설계, 분류·회귀 모델, 평가지표 해석
+- [Tableau 실무 시각화](https://www.data-learners.com/#courses): 데이터 연결과 계산, 차트 선택, 대시보드 UX, Tableau Cloud 공유. 대시보드 프로젝트 포함
+- [n8n 데이터 워크플로우](https://www.data-learners.com/#courses): API, 데이터베이스, Google Sheets, 생성형 AI를 연결한 업무 자동화와 AI Agent
+- [SQL 데이터 분석](https://www.data-learners.com/#courses): 비즈니스 질문을 조회·집계·결합·CTE로 해결
+- [Python 데이터 워크](https://www.data-learners.com/#courses): pandas 기반 전처리, EDA, 반복 분석 자동화
+- [통계적 의사결정](https://www.data-learners.com/#courses): 기술통계, 가설검정, 회귀, 실험설계
+- [머신러닝 실무 모델링](https://www.data-learners.com/#courses): 문제 정의, 피처 설계, 분류·회귀 모델, 평가지표 해석
 
 ## 교육 이력
 

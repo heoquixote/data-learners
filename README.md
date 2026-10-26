@@ -2,4 +2,15 @@
 
 SQL, Python, Tableau, 통계, AI 자동화를 실무 프로젝트로 배우는 데이터 교육 사이트.
 
-- 사이트: https://heoquixote.github.io/data-learners/
+- 사이트: https://www.data-learners.com/
+
+## 연결된 사이트
+
+| 메뉴 | 주소 | 출처 |
+|---|---|---|
+| 위키독스 | https://data-learners.wikidocs.net/ | 외부 |
+| 러너즈빌드업 | https://www.data-learners.com/runners-buildup/ | `heoquixote/runners-buildup` 저장소의 Pages |
+| KDT 모니터링 | https://www.data-learners.com/kdt-monitoring/ | `heoquixote/kdt-monitoring` 저장소의 Pages |
+| 기업소개서 | `/assets/data-learners-brochure.pdf` | 이 저장소 |
+
+하위 경로는 이 저장소가 계정의 사용자 사이트(`heoquixote.github.io`)이기 때문에 GitHub Pages가 같은 계정의 프로젝트 사이트를 커스텀 도메인 아래에 자동으로 서빙하는 방식입니다. 기업소개서를 바꿀 때는 같은 파일명으로 덮어쓰면 됩니다.
