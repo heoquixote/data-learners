@@ -412,11 +412,6 @@
     .hero h1 .ln-solid{color:var(--text)}
     .hero-lead{max-width:540px;margin-top:28px;color:var(--text-2);font-size:clamp(16px,1.35vw,18px);line-height:1.8}
     .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-    .pace-board{display:flex;width:min(540px,100%);margin-top:40px;border-top:1px solid var(--line)}
-    .pace-board div{flex:1;padding:16px 16px 0;border-left:1px solid var(--line)}
-    .pace-board div:first-child{padding-left:0;border:0}
-    .pace-board b{display:block;color:var(--lime);font:700 26px/1 var(--font-en);letter-spacing:-.02em}
-    .pace-board small{display:block;margin-top:8px;color:var(--muted);font-size:13px;line-height:1.4}
     .hero-system{position:relative;height:560px}
     .skill-node{position:absolute;min-width:150px;padding:12px 16px 12px 14px;border:1px solid var(--line-strong);border-left:3px solid var(--node,var(--lime));border-radius:var(--r-sm);background:rgba(5,6,7,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 14px 34px rgba(0,0,0,.4),-6px 0 22px -10px var(--node,var(--lime));translate:var(--px,0) var(--py,0);transition:translate .9s var(--ease);overflow:hidden;animation:float 5s ease-in-out infinite}
     .skill-node b{display:block;font:650 13px/1.2 var(--font-en);letter-spacing:.04em}
@@ -737,7 +732,6 @@
     .motion-ok .hero-kicker{animation:fadeUp .9s var(--ease) .1s both}
     .motion-ok .hero-lead{animation:fadeUp .9s var(--ease) .8s both}
     .motion-ok .hero-actions{animation:fadeUp .9s var(--ease) .95s both}
-    .motion-ok .pace-board{animation:fadeUp .9s var(--ease) 1.1s both}
     .motion-ok .skill-node{animation:nodeIn 1.1s var(--ease) both,float 6s ease-in-out infinite}
     .motion-ok .skill-node:after{animation:nodeScan 6s ease-in-out infinite}
     .motion-ok .node-sql{animation-delay:1s,0s}.motion-ok .node-sql:after{animation-delay:2.4s}
@@ -814,9 +808,6 @@
       .logo small{display:none}
       .hero h1{font-size:clamp(42px,13vw,60px)}
       .hero-actions .btn{flex:1 1 100%}
-      .pace-board div{padding-inline:12px}
-      .pace-board b{font-size:22px}
-      .pace-board small{font-size:12px}
       .hero-system{height:360px}
       .hero-visual{height:360px;right:-20%;width:140%}
       .skill-node{min-width:0;padding:9px 12px 9px 10px}
@@ -903,11 +894,6 @@
           <div class="hero-actions">
             <a class="btn" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서 다운로드</a>
             <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의</a>
-          </div>
-          <div class="pace-board">
-            <div><b>05</b><small>핵심 데이터 스킬</small></div>
-            <div><b>04</b><small>단계 학습 시스템</small></div>
-            <div><b>1,000+</b><small>누적 수강생</small></div>
           </div>
         </div>
         <div class="hero-system" aria-hidden="true">
@@ -1135,9 +1121,9 @@
         <div class="career-group reveal">
           <div class="career-group-head"><h3>교육기관 · 대학 · 공인과정</h3><span>09</span></div>
           <ul class="career-grid">
-            <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/teamsparta.png)"></i></span><span>TeamSparta</span></h4><p>데이터 분석 과정 7기 · 11기</p><strong>데이터 분석 실무 교육</strong></li>
             <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/teamsparta.png)"></i></span><span>TeamSparta</span></h4><p>QAQC 과정 6기 · 8기</p><strong>데이터 분석 및 시각화 실무 교육</strong></li>
             <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/codeit.png)"></i></span><span>Codeit</span></h4><p>데이터 분석 과정 11기</p><strong>데이터 분석 실무 교육</strong></li>
+            <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/teamsparta.png)"></i></span><span>TeamSparta</span></h4><p>데이터 분석 과정 7기 · 11기</p><strong>데이터 분석 실무 교육</strong></li>
             <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/bdai.png)"></i></span><span>BDAI</span></h4><p>데이터 분석가 과정 1·2·3기</p><strong>데이터 시각화 실무 교육</strong></li>
             <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/sesac.png)"></i></span><span>청년사관학교 강동캠퍼스 <small>· Salesforce CRM101 · S.T.A Track</small></span></h4><strong>Tableau 실무 특강</strong></li>
             <li class="career-item"><h4><span class="pl-tile pl-tile--mark" aria-hidden="true"><i class="pl-img" style="--m:url(/assets/logos/sesac.png)"></i></span><span>청년취업사관학교 강북캠퍼스</span></h4><strong>데이터 현업 특강</strong></li>
