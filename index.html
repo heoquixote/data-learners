@@ -90,12 +90,11 @@
     .nav-more:hover .nav-more-toggle,.nav-more.open .nav-more-toggle{color:var(--text)}
     .nav-more:hover .caret,.nav-more.open .caret{transform:rotate(180deg)}
     .nav-more:hover .nav-more-menu,.nav-more.open .nav-more-menu{opacity:1;visibility:visible;transform:none;transition:opacity .18s,transform .2s var(--ease)}
-    .nav-links .nav-more-menu a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 12px;padding:12px 14px;border-radius:var(--r-sm);color:var(--text)}
+    .nav-links .nav-more-menu a{display:grid;gap:2px;padding:12px 14px;border-radius:var(--r-sm);color:var(--text)}
     .nav-links .nav-more-menu a:after{display:none}
     .nav-links .nav-more-menu a:hover,.nav-links .nav-more-menu a:focus-visible{background:rgba(255,255,255,.05)}
     .nav-more-menu b{font-size:15px;font-weight:700}
-    .nav-more-menu small{grid-column:1;color:var(--muted);font-size:12.5px;font-weight:500}
-    .nav-more-menu .ico{grid-row:1/3;grid-column:2;color:var(--lime);font:500 16px/1 var(--font-en)}
+    .nav-more-menu small{color:var(--muted);font-size:12.5px;font-weight:500}
     .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:transparent;position:relative}
     .menu-toggle span{position:absolute;left:12px;right:12px;height:2px;background:var(--text);transition:transform .25s var(--ease),opacity .2s}
     .menu-toggle span:nth-child(1){top:15px}.menu-toggle span:nth-child(2){top:21px}.menu-toggle span:nth-child(3){top:27px}
@@ -547,9 +546,9 @@
         <div class="nav-more">
           <button class="nav-more-toggle" type="button" aria-expanded="false" aria-controls="navMore">바로가기 <span class="caret" aria-hidden="true">▾</span></button>
           <div class="nav-more-menu" id="navMore">
-            <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener"><b>위키독스</b><small>교재 · 강의 자료</small><span class="ico" aria-hidden="true">↗</span></a>
-            <a href="/runners-buildup/"><b>러너즈빌드업</b><small>풀고 바로 채점받는 문제 풀이</small><span class="ico" aria-hidden="true">→</span></a>
-            <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small><span class="ico" aria-hidden="true">→</span></a>
+            <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener"><b>위키독스</b><small>교재 · 강의 자료</small></a>
+            <a href="/runners-buildup/"><b>러너즈빌드업</b><small>풀고 바로 채점받는 문제 풀이</small></a>
+            <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small></a>
           </div>
         </div>
         <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서</a>
@@ -883,10 +882,10 @@
         <a href="#instructor">INSTRUCTOR</a>
         <a href="#books">BOOKS</a>
         <a href="#career">CAREER</a>
-        <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener">WIKIDOCS ↗</a>
+        <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener">WIKIDOCS</a>
         <a href="/runners-buildup/">RUNNERS BUILD-UP</a>
         <a href="/kdt-monitoring/">KDT MONITOR</a>
-        <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">BROCHURE ↓</a>
+        <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">BROCHURE</a>
         <a href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">CONTACT ↗</a>
       </nav>
     </div>
