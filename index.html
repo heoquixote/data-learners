@@ -8,7 +8,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Data Learners | 실무 데이터 교육">
   <meta property="og:description" content="SQL, Python, Tableau, 통계, AI 자동화를 실무 프로젝트로 배우는 데이터 교육">
-  <meta property="og:url" content="https://heoquixote.github.io/data-learners/">
+  <meta property="og:url" content="https://www.data-learners.com/">
   <meta property="og:locale" content="ko_KR">
   <title>Data Learners | Learn · Build · Apply</title>
   <!-- GA4: 측정 ID(G-로 시작)를 content에 넣으면 수집이 시작됩니다. 이벤트 정의는 analytics.js -->
@@ -63,8 +63,6 @@
     .btn-primary{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
     .btn-primary:hover{background:#d6ff6a;border-color:#d6ff6a;box-shadow:0 10px 30px rgba(200,255,61,.22)}
     .btn-sm{--h:42px;padding:0 16px;font-size:14px}
-    .btn .ico{font:500 17px/1 var(--font-en);transition:transform .2s var(--ease)}
-    .btn:hover .ico{transform:translate(2px,-2px)}
 
     /* ============ Nav ============ */
     .run-progress{position:fixed;inset:0 0 auto;z-index:120;height:2px;pointer-events:none}
@@ -83,6 +81,21 @@
     .nav-links a[aria-current="true"]{color:var(--text)}
     .nav-links a[aria-current="true"]:after,.nav-links a:not(.btn):hover:after{transform:scaleX(1)}
     .nav-links .btn{margin-left:12px}
+    .nav-links .btn+.btn{margin-left:8px}
+    .nav-more{position:relative}
+    .nav-more-toggle{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;background:transparent;color:var(--text-2);font:inherit;font-size:15px;font-weight:550;cursor:pointer;transition:color .2s}
+    .nav-more-toggle .caret{font-size:11px;transition:transform .2s var(--ease)}
+    .nav-more-menu{position:absolute;top:calc(100% + 10px);right:0;min-width:272px;padding:8px;border:1px solid var(--line-strong);border-radius:var(--r-md);background:rgba(11,13,14,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 24px 50px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .2s var(--ease),visibility 0s .2s}
+    .nav-more-menu:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+    .nav-more:hover .nav-more-toggle,.nav-more.open .nav-more-toggle{color:var(--text)}
+    .nav-more:hover .caret,.nav-more.open .caret{transform:rotate(180deg)}
+    .nav-more:hover .nav-more-menu,.nav-more.open .nav-more-menu{opacity:1;visibility:visible;transform:none;transition:opacity .18s,transform .2s var(--ease)}
+    .nav-links .nav-more-menu a{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 12px;padding:12px 14px;border-radius:var(--r-sm);color:var(--text)}
+    .nav-links .nav-more-menu a:after{display:none}
+    .nav-links .nav-more-menu a:hover,.nav-links .nav-more-menu a:focus-visible{background:rgba(255,255,255,.05)}
+    .nav-more-menu b{font-size:15px;font-weight:700}
+    .nav-more-menu small{grid-column:1;color:var(--muted);font-size:12.5px;font-weight:500}
+    .nav-more-menu .ico{grid-row:1/3;grid-column:2;color:var(--lime);font:500 16px/1 var(--font-en)}
     .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:transparent;position:relative}
     .menu-toggle span{position:absolute;left:12px;right:12px;height:2px;background:var(--text);transition:transform .25s var(--ease),opacity .2s}
     .menu-toggle span:nth-child(1){top:15px}.menu-toggle span:nth-child(2){top:21px}.menu-toggle span:nth-child(3){top:27px}
@@ -462,7 +475,8 @@
 
     /* ============ Responsive ============ */
     @media (max-width:1100px){
-      .nav-links a:not(.btn){padding:10px}
+      .nav-links a:not(.btn),.nav-more-toggle{padding:10px}
+      .nav-links .btn-sm{padding:0 12px}
       .course-card{grid-column:span 3}
       .book-grid{grid-template-columns:repeat(2,1fr)}
       .method-list{grid-template-columns:repeat(2,1fr)}
@@ -483,6 +497,14 @@
       .nav-links a:not(.btn):after{display:none}
       .nav-links a[aria-current="true"]{color:var(--lime)}
       .nav-links .btn{margin:20px 0 0;--h:52px}
+      .nav-links .btn+.btn{margin:10px 0 0}
+      .nav-links .btn-sm{padding:0 22px}
+      .nav-more-toggle{width:100%;padding:22px 0 6px;color:var(--muted);font:600 12px/1 var(--font-en);letter-spacing:.16em;cursor:default;pointer-events:none}
+      .nav-more-toggle .caret{display:none}
+      .nav-more-menu,.nav-more:hover .nav-more-menu{position:static;min-width:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:1;visibility:visible;transform:none;transition:none}
+      .nav-more-menu:before{display:none}
+      .nav-links .nav-more-menu a{padding:14px 0;border-radius:0}
+      .nav-links .nav-more-menu a:hover{background:none}
       .hero{min-height:auto;padding:calc(var(--nav-h) + 48px) 0 0;display:block}
       .hero-layout{display:block}
       .hero-visual{top:auto;bottom:0;right:-10%;width:120%;height:440px;opacity:.7;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 86%,transparent);mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 86%,transparent)}
@@ -563,7 +585,16 @@
         <a href="#books">저서</a>
         <a href="#career">교육이력</a>
         <a href="#faq">FAQ</a>
-        <a class="btn btn-primary btn-sm" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+        <div class="nav-more">
+          <button class="nav-more-toggle" type="button" aria-expanded="false" aria-controls="navMore">바로가기 <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-more-menu" id="navMore">
+            <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener"><b>위키독스</b><small>교재 · 강의 자료</small><span class="ico" aria-hidden="true">↗</span></a>
+            <a href="/runners-buildup/"><b>러너즈빌드업</b><small>풀고 바로 채점받는 문제 풀이</small><span class="ico" aria-hidden="true">→</span></a>
+            <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small><span class="ico" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">기업소개서</a>
+        <a class="btn btn-primary btn-sm" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">교육 문의</a>
       </nav>
     </div>
   </header>
@@ -577,8 +608,8 @@
           <h1><span class="ln ln-outline"><span class="ln-in">배운 것을</span></span><em class="ln"><span class="ln-in">실력으로,</span></em><span class="ln ln-solid"><span class="ln-in">실력을 결과로.</span></span></h1>
           <p class="hero-lead">데이터 러너즈는 SQL, Python, Tableau, 통계, AI 자동화를 실제 업무 문제와 프로젝트 중심으로 가르칩니다. 개념 이해에서 구현·설명·결과물까지, 학습이 실무 역량으로 전환되는 과정을 설계합니다.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#courses">교육과정 보기 <span class="ico" aria-hidden="true">↘</span></a>
-            <a class="btn" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">맞춤 교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+            <a class="btn btn-primary" href="#courses">교육과정 보기</a>
+            <a class="btn" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">맞춤 교육 문의</a>
           </div>
           <div class="pace-board">
             <div><b>05</b><small>핵심 데이터 스킬</small></div>
@@ -810,7 +841,7 @@
             <h2 class="h2" id="books-title">수업에서 끝나지 않는<br>7개의 실무 학습서</h2>
             <p class="lead" style="margin-top:20px;max-width:600px">Tableau부터 SQL, Python, 통계, 머신러닝, 자동화, 컴퓨터 사이언스까지. 교육에서 다룬 핵심을 언제든 다시 학습할 수 있도록 실무 흐름으로 정리했습니다.</p>
           </div>
-          <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기 <span class="ico" aria-hidden="true">↗</span></a>
+          <a class="btn" href="https://wikidocs.net/profile/info/book/35484" target="_blank" rel="noopener">WikiDocs 전체 보기</a>
         </header>
         <div class="book-grid reveal">
           <a class="book-card featured" style="--book-accent:#c8ff3d" href="https://wikidocs.net/book/19534" target="_blank" rel="noopener">
@@ -968,6 +999,10 @@
         <a href="#instructor">INSTRUCTOR</a>
         <a href="#books">BOOKS</a>
         <a href="#career">CAREER</a>
+        <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener">WIKIDOCS ↗</a>
+        <a href="/runners-buildup/">RUNNERS BUILD-UP</a>
+        <a href="/kdt-monitoring/">KDT MONITOR</a>
+        <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf">BROCHURE ↓</a>
         <a href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">CONTACT ↗</a>
       </nav>
     </div>
@@ -975,7 +1010,7 @@
 
   <div class="mobile-cta" id="mobileCta" aria-hidden="true">
     <a class="btn" href="#courses" tabindex="-1">교육과정</a>
-    <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" tabindex="-1">교육 문의 <span class="ico" aria-hidden="true">↗</span></a>
+    <a class="btn btn-primary" href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener" tabindex="-1">교육 문의</a>
   </div>
 
   <dialog id="inquiryDialog" aria-labelledby="inquiryDialogTitle">
@@ -1116,6 +1151,14 @@
     toggle.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));
     $$('#navLinks a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
     addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){setMenu(false);toggle.focus()}});
+
+    /* 바로가기 dropdown (desktop: hover + click/keyboard) */
+    const more=$('.nav-more'),moreBtn=$('.nav-more-toggle');
+    const setMore=open=>{more.classList.toggle('open',open);moreBtn.setAttribute('aria-expanded',open)};
+    moreBtn.addEventListener('click',()=>setMore(!more.classList.contains('open')));
+    more.addEventListener('focusout',e=>{if(!more.contains(e.relatedTarget))setMore(false)});
+    document.addEventListener('click',e=>{if(!more.contains(e.target))setMore(false)});
+    addEventListener('keydown',e=>{if(e.key==='Escape'&&more.classList.contains('open')){setMore(false);moreBtn.focus()}});
 
     /* Scrollspy */
     const links=$$('#navLinks a[href^="#"]');
