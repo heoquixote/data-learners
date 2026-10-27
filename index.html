@@ -696,6 +696,22 @@
     .inq-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:4px}
     .inq-note{margin:0;color:var(--subtle);font-size:13px}
     .inq-actions .btn[disabled]{opacity:.6;cursor:progress}
+    .inq-consent{display:grid;gap:10px;padding:14px 16px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface-2)}
+    .inq-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:var(--text);cursor:pointer}
+    .inq-check input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--lime);cursor:pointer}
+    .inq-check b{color:var(--lime);font-weight:700}
+    .inq-check small{color:var(--subtle);font-size:13px}
+    .inq-terms{border:0;font-size:13px;color:var(--muted)}
+    .inq-terms summary{display:inline-block;min-height:0;padding:0 0 0 28px;font-size:13px;font-weight:500;color:var(--text-2);text-decoration:underline;text-underline-offset:3px}
+    .inq-terms summary:after{content:" ▾"}
+    .inq-terms[open] summary:after{content:" ▴"}
+    .inq-terms table{width:100%;margin-top:10px;border-collapse:collapse;font-size:13px;line-height:1.55}
+    .inq-terms th,.inq-terms td{padding:8px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}
+    .inq-terms th{width:84px;color:var(--text-2);font-weight:600;background:var(--surface-3);white-space:nowrap}
+    .inq-terms p{max-width:none;margin:8px 0 0;padding:0;font-size:13px;line-height:1.6;color:var(--muted)}
+    .inq-terms table{margin-top:10px}
+    .inq-terms a{color:var(--lime);text-decoration:underline}
+    .inq-field.invalid .inq-consent{border-color:var(--rose)}
     .inq-status{margin:0;font-size:14px;color:var(--rose)}
     .inq-status:empty{display:none}
     .inq-done{display:grid;place-items:center;gap:14px;padding:56px 12px;text-align:center}
@@ -1284,6 +1300,7 @@
         <a href="/kdt-monitoring/">KDT MONITOR</a>
         <a href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-open-brochure>BROCHURE</a>
         <a href="https://hote.app.n8n.cloud/form/edu-inquiry" data-open-inquiry target="_blank" rel="noopener">CONTACT ↗</a>
+        <a href="/privacy/">개인정보처리방침</a>
       </nav>
     </div>
   </footer>
@@ -1348,10 +1365,26 @@
           <label for="inq-request">교육 목표와 요청사항</label>
           <textarea id="inq-request" name="request" placeholder="교육 목표, 희망 일정, 수강생 수준 등을 자유롭게 적어주세요."></textarea>
         </div>
+        <div class="inq-field" data-consent>
+          <div class="inq-consent">
+            <label class="inq-check"><input type="checkbox" id="inq-agree" name="privacy_agree" value="Y" required><span><b>[필수]</b> 개인정보 수집·이용에 동의합니다.</span></label>
+            <details class="inq-terms">
+              <summary>수집·이용 내용 보기</summary>
+              <table>
+                <tr><th>수집 목적</th><td>교육 문의 확인 및 상담 회신</td></tr>
+                <tr><th>수집 항목</th><td>성함·소속, 이메일, 교육 형태, 관심 과정, 예상 인원, 문의 내용</td></tr>
+                <tr><th>보유 기간</th><td>문의 처리 완료 후 1년간 보관 후 파기 (동의 철회 시 지체 없이 파기)</td></tr>
+              </table>
+              <p>귀하는 개인정보 수집·이용에 동의하지 않을 권리가 있습니다. 다만 동의하지 않으시면 문의 접수 및 회신이 어렵습니다. 자세한 내용은 <a href="/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>을 확인해주세요.</p>
+            </details>
+            <label class="inq-check"><input type="checkbox" name="marketing_agree" value="Y"><span>교육 과정·특강 소식 등 <b>광고성 정보 이메일 수신</b>에 동의합니다. <small>(선택)</small></span></label>
+          </div>
+          <p class="inq-err"></p>
+        </div>
         <div class="inq-hp" aria-hidden="true"><label>웹사이트<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <p class="inq-status" id="inquiryStatus" role="alert"></p>
         <div class="inq-actions">
-          <p class="inq-note">입력하신 정보는 교육 상담 회신에만 사용됩니다.</p>
+          <p class="inq-note">입력하신 정보는 동의하신 목적 외에는 사용하지 않습니다.</p>
           <button class="btn btn-primary" type="submit" id="inquirySubmit">문의 보내기</button>
         </div>
       </form>
@@ -1385,10 +1418,26 @@
             <p class="inq-err"></p>
           </div>
         </div>
+        <div class="inq-field" data-consent>
+          <div class="inq-consent">
+            <label class="inq-check"><input type="checkbox" id="br-agree" name="privacy_agree" value="Y" required><span><b>[필수]</b> 개인정보 수집·이용에 동의합니다.</span></label>
+            <details class="inq-terms">
+              <summary>수집·이용 내용 보기</summary>
+              <table>
+                <tr><th>수집 목적</th><td>기업소개서 제공 및 다운로드 신청 이력 관리</td></tr>
+                <tr><th>수집 항목</th><td>성함·소속, 이메일</td></tr>
+                <tr><th>보유 기간</th><td>수집일로부터 1년간 보관 후 파기 (동의 철회 시 지체 없이 파기)</td></tr>
+              </table>
+              <p>귀하는 개인정보 수집·이용에 동의하지 않을 권리가 있습니다. 다만 동의하지 않으시면 기업소개서 다운로드가 제한됩니다. 자세한 내용은 <a href="/privacy/" target="_blank" rel="noopener">개인정보처리방침</a>을 확인해주세요.</p>
+            </details>
+            <label class="inq-check"><input type="checkbox" name="marketing_agree" value="Y"><span>교육 과정·특강 소식 등 <b>광고성 정보 이메일 수신</b>에 동의합니다. <small>(선택)</small></span></label>
+          </div>
+          <p class="inq-err"></p>
+        </div>
         <div class="inq-hp" aria-hidden="true"><label>웹사이트<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <p class="inq-status" id="brochureStatus" role="alert"></p>
         <div class="inq-actions">
-          <p class="inq-note">입력하신 정보는 교육 상담 안내에만 사용됩니다.</p>
+          <p class="inq-note">입력하신 정보는 동의하신 목적 외에는 사용하지 않습니다.</p>
           <button class="btn btn-primary" type="submit" id="brochureSubmit">소개서 받기</button>
         </div>
       </form>
@@ -1523,10 +1572,12 @@
       need(name,name.value.trim()?'':'성함과 소속을 입력해주세요.');
       need(email,!email.value.trim()?'이메일을 입력해주세요.':(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())?'':'올바른 이메일 형식이 아닙니다.'));
       need(hc,hc.value.trim()?'':'예상 인원을 입력해주세요.');
+      const ag=$('#inq-agree');
       [['edu_type','교육 형태를 선택해주세요.'],['courses','관심 과정을 하나 이상 선택해주세요.']].forEach(([n,m])=>{
         const fs=$(`[data-group="${n}"]`,form),any=$$(`input[name="${n}"]`,form).some(i=>i.checked);
         setErr(fs,any?'':m);if(!any){ok=false;first=first||$('input',fs)}
       });
+      need(ag,ag.checked?'':'개인정보 수집·이용에 동의해주세요.');
       if(first)first.focus();
       return ok;
     };
@@ -1536,6 +1587,7 @@
       const fd=new FormData(form),body=new URLSearchParams();
       ['name_org','email','edu_type','headcount','request','website'].forEach(k=>body.append(k,(fd.get(k)||'').toString().trim()));
       body.append('courses',fd.getAll('courses').join(', '));
+      body.append('privacy_agree',fd.get('privacy_agree')?'Y':'N');body.append('marketing_agree',fd.get('marketing_agree')?'Y':'N');
       submitBtn.disabled=true;submitBtn.textContent='보내는 중…';
       try{
         const r=await fetch(ENDPOINT,{method:'POST',body});
@@ -1575,10 +1627,12 @@
       const chk=(el,msg)=>{setErr(el.closest('.inq-field'),msg);if(msg)first=first||el};
       chk(name,name.value.trim()?'':'성함과 소속을 입력해주세요.');
       chk(email,!email.value.trim()?'이메일을 입력해주세요.':(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())?'':'올바른 이메일 형식이 아닙니다.'));
+      const ag=$('#br-agree');chk(ag,ag.checked?'':'개인정보 수집·이용에 동의해주세요.');
       if(first){first.focus();return}
       const fd=new FormData(bForm),body=new URLSearchParams();
       ['name_org','email','website'].forEach(k=>body.append(k,(fd.get(k)||'').toString().trim()));
       body.append('location',bFrom);body.append('page',location.href);
+      body.append('privacy_agree',fd.get('privacy_agree')?'Y':'N');body.append('marketing_agree',fd.get('marketing_agree')?'Y':'N');
       bSubmit.disabled=true;bSubmit.textContent='확인 중…';
       try{
         const r=await fetch(B_ENDPOINT,{method:'POST',body});
@@ -1591,6 +1645,7 @@
       }finally{bSubmit.disabled=false;bSubmit.textContent='소개서 받기'}
     });
     bForm.addEventListener('input',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
+    bForm.addEventListener('change',e=>{const f=e.target.closest('.inq-field');if(f&&f.classList.contains('invalid'))setErr(f,'')});
   })();
   </script>
 </body>
