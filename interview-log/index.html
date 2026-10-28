@@ -343,7 +343,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
         <div class="error-msg" id="formError" hidden></div>
         <div class="actions">
           <button class="btn" type="submit" id="submitBtn">면담 로그 생성</button>
-          <span class="hint">자막 파일은 30초 안팎, 녹음 파일은 길이에 따라 1~5분 걸립니다.</span>
+          <span class="hint">자막 파일은 30초 안팎, 녹음 파일은 길이에 따라 3~10분 걸립니다.</span>
         </div>
       </div>
     </form>
@@ -461,7 +461,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
   var API = 'https://hote.app.n8n.cloud/webhook/dl/';
   var MAX_MB = 16;
   var POLL_MS = 4000;
-  var TIMEOUT_MS = 8 * 60 * 1000;
+  var TIMEOUT_MS = 15 * 60 * 1000;
 
   var state = { token: null, name: '', email: '', file: null, timer: null, poll: null, started: 0 };
 
@@ -638,7 +638,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
   });
 
   function pollJob(jobId) {
-    if (Date.now() - state.started > TIMEOUT_MS) { failProgress('처리 시간이 8분을 넘었습니다. 잠시 후 데이터 테이블에서 결과를 확인하거나 자막 파일로 다시 시도해 주세요.'); return; }
+    if (Date.now() - state.started > TIMEOUT_MS) { failProgress('처리 시간이 15분을 넘었습니다. 잠시 후 면담 기록 탭에서 결과를 확인하거나 자막 파일로 다시 시도해 주세요.'); return; }
     state.poll = setTimeout(function () {
       post('job', { token: state.token, jobId: jobId }).then(function (d) {
         if (d._status === 401) { logout('로그인이 만료되었습니다. 다시 로그인해 주세요.'); return; }
