@@ -93,6 +93,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
 .btn:disabled { opacity: .55; cursor: not-allowed; }
 .btn-ghost:hover:not(:disabled) { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.22); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(255,255,255,.22); }
+.btn-danger-ghost { background: transparent; color: var(--risk); border: 1px solid rgba(255,122,146,.4); }
+.btn-danger-ghost:hover:not(:disabled) { background: var(--risk-soft); border-color: var(--risk); }
+.btn-danger { background: var(--risk); color: #1a0508; }
+.btn-danger:hover:not(:disabled) { background: #ff95a8; }
+.detail-actions { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.confirm-box { border: 1px solid rgba(255,122,146,.4); background: var(--risk-soft); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 12px; }
+.confirm-box p { margin: 0; font-size: 14px; }
+.confirm-box b { color: var(--risk); }
 .error-msg { color: var(--risk); background: var(--risk-soft); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
 
 /* Main layout */
@@ -430,8 +438,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
   </div>
 
   <div class="sheet stack" id="historyDetail" hidden>
-    <div class="actions">
+    <div class="detail-actions">
       <button class="btn btn-ghost" type="button" id="detailBackBtn">목록으로</button>
+      <button class="btn btn-danger-ghost" type="button" id="deleteBtn">로그 삭제</button>
+    </div>
+    <div class="confirm-box" id="deleteConfirm" hidden>
+      <p><b>이 로그를 삭제할까요?</b> <span id="deleteTarget"></span><br>삭제한 로그는 되돌릴 수 없습니다.</p>
+      <div class="error-msg" id="deleteError" hidden></div>
+      <div class="actions">
+        <button class="btn btn-danger" type="button" id="deleteConfirmBtn">삭제</button>
+        <button class="btn btn-ghost" type="button" id="deleteCancelBtn">취소</button>
+      </div>
     </div>
     <div id="detailBody" class="stack"></div>
   </div>
@@ -758,11 +775,51 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); outline
     else if (!rows.length) { $('historyEmpty').textContent = '조건에 맞는 기록이 없습니다.'; show($('historyEmpty'), true); }
     else show($('historyEmpty'), false);
   }
+  var current = null;
   function openDetail(r) {
+    current = r;
     buildDetail($('detailBody'), r, false);
+    closeConfirm();
+    show($('deleteBtn'), !!r.id);
     show($('historyList'), false); show($('historyDetail'), true);
     window.scrollTo(0, 0);
   }
+  function closeConfirm() {
+    show($('deleteConfirm'), false); show($('deleteError'), false);
+    $('deleteConfirmBtn').disabled = false; $('deleteConfirmBtn').textContent = '삭제';
+  }
+  $('deleteBtn').addEventListener('click', function () {
+    if (!current) return;
+    $('deleteTarget').textContent = current.student + ' · ' + current.interview_date + ' ' + current.log_prefix;
+    show($('deleteConfirm'), true);
+    $('deleteCancelBtn').focus();
+  });
+  $('deleteCancelBtn').addEventListener('click', closeConfirm);
+  $('deleteConfirmBtn').addEventListener('click', function () {
+    if (!current) return;
+    var target = current;
+    $('deleteConfirmBtn').disabled = true; $('deleteConfirmBtn').textContent = '삭제 중';
+    show($('deleteError'), false);
+    post('delete', { token: state.token, logId: target.id }).then(function (d) {
+      if (d._status === 401) { logout('로그인이 만료되었습니다. 다시 로그인해 주세요.'); return; }
+      if (!d.ok || !d.deleted) {
+        $('deleteError').textContent = d.error || '삭제할 로그를 찾지 못했습니다. 새로고침 후 다시 시도해 주세요.';
+        show($('deleteError'), true);
+        $('deleteConfirmBtn').disabled = false; $('deleteConfirmBtn').textContent = '삭제';
+        return;
+      }
+      hist.items = (hist.items || []).filter(function (x) { return x.id !== target.id; });
+      current = null;
+      closeConfirm();
+      show($('historyDetail'), false); show($('historyList'), true);
+      renderHistory();
+      toast('로그를 삭제했습니다');
+    }).catch(function () {
+      $('deleteError').textContent = '서버에 연결하지 못했습니다. 다시 시도해 주세요.';
+      show($('deleteError'), true);
+      $('deleteConfirmBtn').disabled = false; $('deleteConfirmBtn').textContent = '삭제';
+    });
+  });
   $('detailBackBtn').addEventListener('click', function () { show($('historyDetail'), false); show($('historyList'), true); });
   $('refreshBtn').addEventListener('click', loadHistory);
   $('hSearch').addEventListener('input', renderHistory);
