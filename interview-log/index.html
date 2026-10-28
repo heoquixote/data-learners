@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Data Learners 면담 로그</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: 좌측 입력 시트 + 우측 면담 체크리스트, 결과는 로그 원문 중심의 단일 시트 */
+:root {
+  /* 데이터러너즈 홈페이지 브랜드 토큰 (다크 단일 테마) */
+  --bg: #050607;
+  --surface: #0b0d0e;
+  --ink: #f5f7f2;
+  --muted: #a1aaa5;
+  --line: rgba(255,255,255,.11);
+  --accent: #c8ff3d;
+  --accent-ink: #0d1006;
+  --accent-soft: rgba(200,255,61,.1);
+  --ok: #61db9c;
+  --ok-soft: rgba(97,219,156,.12);
+  --warn: #ffcf4a;
+  --warn-soft: rgba(255,207,74,.12);
+  --risk: #ff7a92;
+  --risk-soft: rgba(255,122,146,.12);
+  --log-bg: #121516;
+  --font-en: "Space Grotesk", "Pretendard Variable", sans-serif;
+  --font-body: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --radius: 12px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+  -webkit-font-smoothing: antialiased;
+}
+[hidden] { display: none !important; }
+h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.3; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.topbar {
+  max-width: 1120px; margin: 0 auto; padding-block: 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand { color: var(--ink); text-decoration: none; }
+.brand-mark { width: 38px; height: 38px; flex: 0 0 38px; background:url("data:image/webp;base64,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") center/contain no-repeat; }
+.brand-name { font: 700 16px/1 var(--font-en); letter-spacing: .01em; }
+.brand-sub { margin-top: 5px; color: var(--accent); font: 500 11px/1 var(--font-en); letter-spacing: .18em; }
+.home-link { color: var(--muted); font-size: 13px; text-decoration: none; }
+.home-link:hover { color: var(--ink); }
+.user-box { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); }
+.link-btn { background: none; border: 0; padding: 4px 0; color: var(--accent); cursor: pointer; font-weight: 500; }
+
+/* Login */
+.login-wrap { min-height: 78vh; display: grid; place-items: center; }
+.login-card {
+  width: 100%; max-width: 400px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 32px 28px; display: grid; gap: 22px;
+}
+.login-card h1 { font-size: 22px; }
+.login-card p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+
+/* Shared form */
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > label, .field > .label { font-size: 13px; font-weight: 600; }
+.req::after { content: " *"; color: var(--risk); }
+.hint { font-size: 12.5px; color: var(--muted); }
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], select, textarea {
+  width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; min-height: 42px;
+}
+textarea { resize: vertical; min-height: 84px; }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.btn {
+  border: 0; border-radius: 8px; padding: 12px 18px; font-weight: 600; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); min-height: 44px;
+}
+.btn:hover:not(:disabled) { background: #d6ff6a; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn-ghost:hover:not(:disabled) { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.22); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(255,255,255,.22); }
+.error-msg { color: var(--risk); background: var(--risk-soft); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+
+/* Main layout */
+.main { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; gap: 22px; min-width: 0; }
+@media (max-width: 520px) { .sheet { padding: 20px 16px; } }
+.sheet-head { display: grid; gap: 4px; }
+.sheet-head h1 { font-size: 22px; }
+.sheet-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: minmax(0, 1fr); } }
+
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 14px;
+  background: var(--surface); display: inline-flex; gap: 6px; align-items: baseline;
+}
+.seg label .mono { font-family: var(--font-mono); font-weight: 600; }
+.seg label small { color: var(--muted); font-size: 12px; }
+.seg input:checked + label { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.seg input:checked + label small { color: var(--accent); }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.prefix-chip label { font-family: var(--font-mono); }
+
+.drop {
+  border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 20px; text-align: center;
+  display: grid; gap: 6px; cursor: pointer; background: var(--log-bg);
+}
+.drop.drag { border-color: var(--accent); background: var(--accent-soft); }
+.drop strong { font-weight: 600; }
+.drop .file-name { font-family: var(--font-mono); font-size: 13px; color: var(--accent); word-break: break-all; }
+.drop input { display: none; }
+
+.actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+/* Guide panel */
+.guide { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0; position: sticky; top: max(16px, env(safe-area-inset-top, 0px)); }
+@media (max-width: 900px) { .guide { position: static; } }
+.guide h2 { font-size: 15px; }
+.eyebrow { font-family: var(--font-en); color: var(--accent) !important; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.qlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: q; }
+.qlist li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; font-size: 13.5px; }
+.qlist li::before {
+  counter-increment: q; content: counter(q); font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  color: var(--accent); background: var(--accent-soft); border-radius: 5px; height: 20px; display: grid; place-items: center; margin-top: 2px;
+}
+.qlist b { font-weight: 600; display: block; }
+.qlist span { color: var(--muted); }
+.time-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.time-table th, .time-table td { text-align: left; padding: 6px 0; border-top: 1px solid var(--line); }
+.time-table th { font-weight: 600; font-family: var(--font-mono); }
+.time-table td { color: var(--muted); }
+.note { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+
+/* Progress */
+.progress { display: grid; gap: 14px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.steps li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.steps li .dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--line); flex: none; }
+.steps li.active { color: var(--ink); font-weight: 600; }
+.steps li.active .dot { border-color: var(--accent); background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.steps li.done { color: var(--ink); }
+.steps li.done .dot { border-color: var(--ok); background: var(--ok); }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .steps li.active .dot { animation: none; } }
+.elapsed { font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Result */
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--log-bg); border: 1px solid var(--line); }
+.badge.prefix { font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.badge.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.badge.risk { background: var(--risk-soft); color: var(--risk); border-color: transparent; }
+.callout { border-radius: var(--radius); padding: 12px 14px; font-size: 14px; display: grid; gap: 4px; }
+.callout b { font-weight: 600; }
+.callout.summary { background: var(--accent-soft); }
+.callout.ok { background: var(--ok-soft); color: var(--ok); }
+.callout.warn { background: var(--warn-soft); }
+.callout.warn b { color: var(--warn); }
+.callout.risk { background: var(--risk-soft); }
+.callout.risk b { color: var(--risk); }
+.log-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.log-head h2 { font-size: 16px; }
+.log {
+  margin: 0; background: var(--log-bg); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; overflow-x: auto;
+}
+.foot { font-size: 12.5px; color: var(--muted); }
+.stack { display: grid; gap: 18px; min-width: 0; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 4px; }
+.tab { border: 0; background: transparent; padding: 7px 14px; border-radius: 7px; cursor: pointer; font-weight: 500; color: var(--muted); font-size: 14px; }
+.tab[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+@media (max-width: 560px) { .tabs { order: 3; width: 100%; } .tab { flex: 1; } }
+
+/* History */
+.history { max-width: 1120px; margin: 0 auto; }
+.history-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.history-tools { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+.history-tools .search { flex: 1 1 260px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+.htable { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+.htable th { text-align: left; font-size: 12.5px; font-weight: 600; color: var(--muted); padding: 10px 12px; background: var(--log-bg); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.htable td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.htable tbody tr { cursor: pointer; }
+.htable tbody tr:hover td, .htable tbody tr:focus-visible td { background: var(--accent-soft); }
+.htable tbody tr:last-child td { border-bottom: 0; }
+.htable .date { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.htable .who { font-weight: 600; white-space: nowrap; }
+.htable .pfx { font-family: var(--font-mono); font-size: 12.5px; white-space: nowrap; }
+.htable .flags { display: flex; gap: 4px; flex-wrap: wrap; }
+.htable .sum { color: var(--muted); max-width: 420px; }
+.empty { color: var(--muted); text-align: center; padding: 28px 0; margin: 0; }
+
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; font-size: 14px; z-index: 20;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/" aria-label="데이터러너즈 홈으로">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span>
+      <span class="brand-name" style="display:block">DATA LEARNERS</span>
+      <span class="brand-sub" style="display:block">INTERVIEW LOG</span>
+    </span>
+  </a>
+  <nav class="tabs" id="tabs" hidden aria-label="화면 전환">
+    <button type="button" class="tab" id="tabNew" aria-current="page">새 면담</button>
+    <button type="button" class="tab" id="tabHistory">면담 기록</button>
+  </nav>
+  <div class="user-box" id="userBox" hidden>
+    <span id="userName"></span>
+    <button class="link-btn" id="logoutBtn" type="button">로그아웃</button>
+  </div>
+</header>
+
+<!-- 로그인 -->
+<section class="login-wrap" id="viewLogin">
+  <form class="login-card" id="loginForm" novalidate>
+    <div>
+      <h1>튜터 로그인</h1>
+      <p>면담 녹음이나 자막을 올리면 운영 양식에 맞춘 면담 로그를 작성합니다.</p>
+    </div>
+    <div class="field">
+      <label for="loginEmail">이메일</label>
+      <input type="email" id="loginEmail" autocomplete="username" placeholder="tutor@data-learners.com" required>
+    </div>
+    <div class="field">
+      <label for="loginPassword">비밀번호</label>
+      <input type="password" id="loginPassword" autocomplete="current-password" required>
+    </div>
+    <div class="error-msg" id="loginError" hidden></div>
+    <button class="btn" type="submit" id="loginBtn">로그인</button>
+    <a class="home-link" href="/">← 데이터러너즈 홈으로</a>
+  </form>
+</section>
+
+<!-- 앱 -->
+<main class="main" id="viewApp" hidden>
+  <div class="sheet" id="sheet">
+
+    <!-- 입력 -->
+    <form id="interviewForm" novalidate>
+      <div style="display:grid;gap:22px">
+        <div class="sheet-head">
+          <h1>면담 로그 작성</h1>
+          <p>Zoom 자막(.vtt)을 올리면 화자 구분이 정확하고 빠릅니다. 녹음 파일(.m4a, .mp3, .wav)도 받습니다.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="fStudent" class="req">수강생명</label>
+            <input type="text" id="fStudent" placeholder="예: 김민지" required>
+          </div>
+          <div class="field">
+            <label for="fDate" class="req">면담일</label>
+            <input type="date" id="fDate" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label req">면담 구분 (로그 말머리)</span>
+          <div class="seg prefix-chip" role="radiogroup" aria-label="면담 구분">
+            <input type="radio" name="logPrefix" id="pAll" value="[전수면담]" checked><label for="pAll">[전수면담]</label>
+            <input type="radio" name="logPrefix" id="pReq" value="[요청 면담]"><label for="pReq">[요청 면담]</label>
+          </div>
+          <span class="hint">말머리가 빠지면 면담을 진행해도 미이행으로 집계됩니다.</span>
+        </div>
+
+        <div class="field">
+          <span class="label req">이탈 위험 등급</span>
+          <div class="seg" role="radiogroup" aria-label="이탈 위험 등급">
+            <input type="radio" name="riskGrade" id="g0" value="P0"><label for="g0"><span class="mono">P0</span><small>D+2</small></label>
+            <input type="radio" name="riskGrade" id="g1" value="P1"><label for="g1"><span class="mono">P1</span><small>D+3</small></label>
+            <input type="radio" name="riskGrade" id="g2" value="P2"><label for="g2"><span class="mono">P2</span><small>D+4</small></label>
+            <input type="radio" name="riskGrade" id="gS" value="안정권"><label for="gS">안정권<small>D+4</small></label>
+            <input type="radio" name="riskGrade" id="gX" value="확인 불가"><label for="gX">확인 불가</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label req">베이스캠프 참여 여부</span>
+          <div class="seg" role="radiogroup" aria-label="베이스캠프 참여 여부">
+            <input type="radio" name="basecamp" id="b1" value="참여"><label for="b1">참여</label>
+            <input type="radio" name="basecamp" id="b2" value="부분 참여"><label for="b2">부분 참여</label>
+            <input type="radio" name="basecamp" id="b3" value="미참여"><label for="b3">미참여</label>
+            <input type="radio" name="basecamp" id="b4" value="중간합류"><label for="b4">중간합류</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fPre">사전 정보 (선택)</label>
+          <textarea id="fPre" placeholder="매니저 링크의 지원 동기, 특이사항. 맥락 참고용이며 로그에는 면담에서 확인된 내용만 기록됩니다."></textarea>
+        </div>
+
+        <div class="field">
+          <span class="label req">녹음 또는 자막 파일</span>
+          <label class="drop" id="drop" for="fFile">
+            <strong>파일을 끌어다 놓거나 눌러서 선택</strong>
+            <span class="hint">.vtt .txt .m4a .mp3 .wav · 녹음은 16MB 이하 권장</span>
+            <span class="file-name" id="fileName" hidden></span>
+            <input type="file" id="fFile" accept=".vtt,.txt,.m4a,.mp3,.wav">
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="fMemo">튜터 메모 (선택)</label>
+          <textarea id="fMemo" placeholder="면담 후 안내 사항, 후속 조치 메모. 로그 7번, 8번 작성에 반영됩니다."></textarea>
+        </div>
+
+        <div class="error-msg" id="formError" hidden></div>
+        <div class="actions">
+          <button class="btn" type="submit" id="submitBtn">면담 로그 생성</button>
+          <span class="hint">녹음 파일은 1~3분, 자막 파일은 30초 안팎 걸립니다.</span>
+        </div>
+      </div>
+    </form>
+
+    <!-- 진행 -->
+    <div class="progress" id="viewProgress" hidden>
+      <div class="sheet-head">
+        <h1 id="progressTitle">면담 로그 작성 중</h1>
+        <p>창을 닫지 말고 기다려 주세요. 결과는 데이터 테이블에도 저장됩니다.</p>
+      </div>
+      <ol class="steps" id="steps">
+        <li data-step="0"><span class="dot"></span>파일 업로드</li>
+        <li data-step="1"><span class="dot"></span>전사본 준비</li>
+        <li data-step="2"><span class="dot"></span>8개 항목 로그 작성</li>
+        <li data-step="3"><span class="dot"></span>저장 및 결과 정리</li>
+      </ol>
+      <div class="elapsed" id="elapsed">00:00</div>
+      <div class="error-msg" id="progressError" hidden></div>
+      <div class="actions" id="progressActions" hidden>
+        <button class="btn btn-ghost" type="button" id="backBtn">입력 화면으로</button>
+      </div>
+    </div>
+
+    <!-- 결과 -->
+    <div id="viewResult" hidden class="stack">
+      <div id="resultBody" class="stack"></div>
+      <div class="actions">
+        <button class="btn btn-ghost" type="button" id="newBtn">새 면담 작성</button>
+        <button class="btn btn-ghost" type="button" id="toHistoryBtn">면담 기록 보기</button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="guide">
+    <div>
+      <div class="eyebrow">1주차 전수면담</div>
+      <h2>필수 확인 항목</h2>
+    </div>
+    <ol class="qlist">
+      <li><div><b>지원 동기와 최종 목표</b><span>캠프에 들어온 이유, 도달하려는 지점</span></div></li>
+      <li><div><b>캠프 기대사항</b><span>이 캠프에 기대하는 바</span></div></li>
+      <li><div><b>관련 경험</b><span>코딩, 통계, 업무 경험으로 본 출발점</span></div></li>
+      <li><div><b>요즘 가장 걱정되는 것</b><span>열린 질문으로 이탈 신호 포착</span></div></li>
+      <li><div><b>기대와 달랐던 부분</b><span>베이스캠프와 본과정을 겪어본 소감</span></div></li>
+      <li><div><b>학습 환경과 시간 확보</b><span>장비, 공간, 하루 학습 시간</span></div></li>
+    </ol>
+    <table class="time-table">
+      <thead><tr><th>등급</th><th>기한</th><th>권장 시간</th></tr></thead>
+      <tbody>
+        <tr><th>P0</th><td>D+2</td><td>20~25분</td></tr>
+        <tr><th>P1</th><td>D+3</td><td>20~25분</td></tr>
+        <tr><th>P2</th><td>D+4</td><td>10~15분</td></tr>
+        <tr><th>안정권</th><td>D+4</td><td>10~15분</td></tr>
+      </tbody>
+    </table>
+    <p class="note">면담 일정을 바꾸면 학습관리 매니저에게 변경된 요일과 시간을 꼭 공유해 주세요.</p>
+  </aside>
+</main>
+
+<!-- 면담 기록 -->
+<section class="history" id="viewHistory" hidden>
+  <div class="sheet stack" id="historyList">
+    <div class="history-head">
+      <div class="sheet-head">
+        <h1>면담 기록</h1>
+        <p id="historyCount">불러오는 중</p>
+      </div>
+      <button class="btn btn-ghost" type="button" id="refreshBtn">새로고침</button>
+    </div>
+    <div class="history-tools">
+      <div class="field search">
+        <label for="hSearch">수강생 또는 내용 검색</label>
+        <input type="text" id="hSearch" placeholder="예: 김민지, 시간 부족">
+      </div>
+      <div class="seg" role="radiogroup" aria-label="기록 필터">
+        <input type="radio" name="hFilter" id="hfAll" value="all" checked><label for="hfAll">전체</label>
+        <input type="radio" name="hFilter" id="hfRisk" value="risk"><label for="hfRisk">이탈 신호</label>
+        <input type="radio" name="hFilter" id="hfFollow" value="follow"><label for="hfFollow">후속 조치</label>
+        <input type="radio" name="hFilter" id="hfMissing" value="missing"><label for="hfMissing">항목 누락</label>
+      </div>
+    </div>
+    <div class="error-msg" id="historyError" hidden></div>
+    <div class="table-wrap">
+      <table class="htable">
+        <thead>
+          <tr><th>면담일</th><th>수강생</th><th>말머리</th><th>등급</th><th>상태</th><th>한 줄 요약</th></tr>
+        </thead>
+        <tbody id="historyRows"></tbody>
+      </table>
+    </div>
+    <p class="empty" id="historyEmpty" hidden></p>
+  </div>
+
+  <div class="sheet stack" id="historyDetail" hidden>
+    <div class="actions">
+      <button class="btn btn-ghost" type="button" id="detailBackBtn">목록으로</button>
+    </div>
+    <div id="detailBody" class="stack"></div>
+  </div>
+</section>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  var API = 'https://hote.app.n8n.cloud/webhook/dl/';
+  var MAX_MB = 16;
+  var POLL_MS = 4000;
+  var TIMEOUT_MS = 8 * 60 * 1000;
+
+  var state = { token: null, name: '', email: '', file: null, timer: null, poll: null, started: 0 };
+
+  function $(id) { return document.getElementById(id); }
+  function store(key, val) {
+    try { if (val === null) sessionStorage.removeItem(key); else sessionStorage.setItem(key, val); } catch (e) {}
+  }
+  function load(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
+
+  function show(el, on) { el.hidden = !on; }
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 2200);
+  }
+
+  function post(path, fields, file) {
+    var fd = new FormData();
+    Object.keys(fields).forEach(function (k) { fd.append(k, fields[k] == null ? '' : fields[k]); });
+    if (file) fd.append('file', file, file.name);
+    return fetch(API + path, { method: 'POST', body: fd }).then(function (res) {
+      return res.text().then(function (txt) {
+        var data = {};
+        try { data = txt ? JSON.parse(txt) : {}; } catch (e) { data = { ok: false, error: '서버 응답을 읽을 수 없습니다.' }; }
+        if (!res.ok && data.ok !== false) data = { ok: false, error: '요청이 실패했습니다 (' + res.status + ').' };
+        data._status = res.status;
+        return data;
+      });
+    });
+  }
+
+  /* ---------- 로그인 ---------- */
+  function enterApp() {
+    show($('viewLogin'), false);
+    show($('viewApp'), true);
+    show($('userBox'), true);
+    show($('tabs'), true);
+    $('userName').textContent = state.name + ' 튜터';
+    hist.items = null; hist.stale = true;
+    resetForm();
+    switchTab('new');
+  }
+  function logout(msg) {
+    state.token = null; store('dl_token', null); store('dl_name', null);
+    stopTimers();
+    hist.items = null; hist.stale = true;
+    show($('viewApp'), false); show($('viewHistory'), false); show($('tabs'), false);
+    show($('userBox'), false); show($('viewLogin'), true);
+    if (msg) { $('loginError').textContent = msg; show($('loginError'), true); }
+  }
+
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = $('loginEmail').value.trim();
+    var pw = $('loginPassword').value;
+    show($('loginError'), false);
+    if (!email || !pw) { $('loginError').textContent = '이메일과 비밀번호를 입력해 주세요.'; show($('loginError'), true); return; }
+    $('loginBtn').disabled = true; $('loginBtn').textContent = '확인 중';
+    post('login', { email: email, password: pw }).then(function (d) {
+      if (d.ok && d.token) {
+        state.token = d.token; state.name = d.name || email;
+        store('dl_token', d.token); store('dl_name', state.name);
+        $('loginPassword').value = '';
+        enterApp();
+      } else {
+        $('loginError').textContent = d.error || '이메일 또는 비밀번호가 맞지 않습니다.';
+        show($('loginError'), true);
+      }
+    }).catch(function () {
+      $('loginError').textContent = '서버에 연결하지 못했습니다. 네트워크를 확인하고 다시 시도해 주세요.';
+      show($('loginError'), true);
+    }).finally(function () {
+      $('loginBtn').disabled = false; $('loginBtn').textContent = '로그인';
+    });
+  });
+  $('logoutBtn').addEventListener('click', function () { logout(); });
+
+  /* ---------- 입력 폼 ---------- */
+  function today() {
+    var d = new Date(); var m = String(d.getMonth() + 1).padStart(2, '0'); var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  function resetForm() {
+    $('interviewForm').reset();
+    $('fDate').value = today();
+    state.file = null; $('fileName').hidden = true;
+    show($('formError'), false);
+    show($('interviewForm'), true); show($('viewProgress'), false); show($('viewResult'), false);
+  }
+  function radio(name) { var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ''; }
+
+  function setFile(f) {
+    if (!f) return;
+    var ext = (f.name.split('.').pop() || '').toLowerCase();
+    if (['vtt', 'txt', 'm4a', 'mp3', 'wav'].indexOf(ext) === -1) {
+      $('formError').textContent = '지원하지 않는 파일 형식입니다. .vtt .txt .m4a .mp3 .wav 중 하나를 올려 주세요.';
+      show($('formError'), true); return;
+    }
+    state.file = f;
+    var mb = (f.size / 1048576).toFixed(1);
+    $('fileName').textContent = f.name + ' (' + mb + 'MB)';
+    $('fileName').hidden = false;
+    show($('formError'), false);
+  }
+  $('fFile').addEventListener('change', function () { setFile(this.files[0]); });
+  var drop = $('drop');
+  ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('drag'); }); });
+  ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('drag'); }); });
+  drop.addEventListener('drop', function (e) { if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+
+  $('interviewForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var missing = [];
+    if (!$('fStudent').value.trim()) missing.push('수강생명');
+    if (!$('fDate').value) missing.push('면담일');
+    if (!radio('riskGrade')) missing.push('이탈 위험 등급');
+    if (!radio('basecamp')) missing.push('베이스캠프 참여 여부');
+    if (!state.file) missing.push('녹음 또는 자막 파일');
+    if (missing.length) { $('formError').textContent = '입력이 필요합니다: ' + missing.join(', '); show($('formError'), true); return; }
+    if (state.file.size > MAX_MB * 1048576) {
+      $('formError').textContent = '파일이 ' + MAX_MB + 'MB를 넘습니다. 자막 파일(.vtt)을 올리거나 녹음을 압축해 주세요.';
+      show($('formError'), true); return;
+    }
+    startProgress();
+    post('submit', {
+      token: state.token,
+      student: $('fStudent').value.trim(),
+      interviewDate: $('fDate').value,
+      logPrefix: radio('logPrefix'),
+      riskGrade: radio('riskGrade'),
+      basecamp: radio('basecamp'),
+      preInfo: $('fPre').value,
+      memo: $('fMemo').value
+    }, state.file).then(function (d) {
+      if (d._status === 401) { logout('로그인이 만료되었습니다. 다시 로그인해 주세요.'); return; }
+      if (!d.ok || !d.jobId) { failProgress(d.error || '제출에 실패했습니다.'); return; }
+      setStep(1);
+      pollJob(d.jobId);
+    }).catch(function () { failProgress('업로드 중 연결이 끊겼습니다. 파일 크기를 확인하고 다시 시도해 주세요.'); });
+  });
+
+  /* ---------- 진행 ---------- */
+  function setStep(n) {
+    Array.prototype.forEach.call($('steps').children, function (li) {
+      var i = Number(li.getAttribute('data-step'));
+      li.className = i < n ? 'done' : (i === n ? 'active' : '');
+    });
+  }
+  function stopTimers() { clearInterval(state.timer); clearTimeout(state.poll); state.timer = null; state.poll = null; }
+  function startProgress() {
+    show($('interviewForm'), false); show($('viewResult'), false); show($('viewProgress'), true);
+    show($('progressError'), false); show($('progressActions'), false);
+    $('progressTitle').textContent = '면담 로그 작성 중';
+    setStep(0);
+    state.started = Date.now();
+    stopTimers();
+    state.timer = setInterval(function () {
+      var s = Math.floor((Date.now() - state.started) / 1000);
+      $('elapsed').textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+      if (s > 25) setStepIfBelow(2);
+    }, 1000);
+  }
+  function setStepIfBelow(n) {
+    var active = document.querySelector('#steps li.active');
+    if (active && Number(active.getAttribute('data-step')) < n && Number(active.getAttribute('data-step')) >= 1) setStep(n);
+  }
+  function failProgress(msg) {
+    stopTimers();
+    $('progressTitle').textContent = '로그를 만들지 못했습니다';
+    $('progressError').textContent = msg; show($('progressError'), true);
+    show($('progressActions'), true);
+  }
+  $('backBtn').addEventListener('click', function () {
+    show($('viewProgress'), false); show($('interviewForm'), true);
+  });
+
+  function pollJob(jobId) {
+    if (Date.now() - state.started > TIMEOUT_MS) { failProgress('처리 시간이 8분을 넘었습니다. 잠시 후 데이터 테이블에서 결과를 확인하거나 자막 파일로 다시 시도해 주세요.'); return; }
+    state.poll = setTimeout(function () {
+      post('job', { token: state.token, jobId: jobId }).then(function (d) {
+        if (d._status === 401) { logout('로그인이 만료되었습니다. 다시 로그인해 주세요.'); return; }
+        if (d.status === 'done' && d.result) { setStep(4); stopTimers(); renderResult(d.result); return; }
+        if (d.status === 'failed') { failProgress(d.error || '처리 중 오류가 발생했습니다.'); return; }
+        pollJob(jobId);
+      }).catch(function () { pollJob(jobId); });
+    }, POLL_MS);
+  }
+
+  /* ---------- 결과 ---------- */
+  function badge(text, cls) { var s = document.createElement('span'); s.className = 'badge ' + (cls || ''); s.textContent = text; return s; }
+  function callout(cls, title, body) {
+    var d = document.createElement('div'); d.className = 'callout ' + cls;
+    var b = document.createElement('b'); b.textContent = title; d.appendChild(b);
+    if (body) { var sp = document.createElement('span'); sp.textContent = body; sp.style.whiteSpace = 'pre-wrap'; d.appendChild(sp); }
+    return d;
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function copyText(pre) {
+    var text = pre.textContent;
+    var done = function () { toast('로그를 복사했습니다'); };
+    var fallback = function () {
+      var range = document.createRange(); range.selectNodeContents(pre);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      try { document.execCommand('copy'); done(); } catch (e) { toast('로그를 선택했습니다. 복사 단축키를 눌러 주세요'); }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  }
+  function buildDetail(box, r, isNew) {
+    box.innerHTML = '';
+    var head = el('div', 'sheet-head');
+    head.appendChild(el('h1', null, r.student + ' 면담 로그'));
+    head.appendChild(el('p', null, (r.interview_date || '') + (r.file_name ? ' · ' + r.file_name : '')));
+    box.appendChild(head);
+    var grade = r.risk_grade || '';
+    var time = (grade === 'P0' || grade === 'P1') ? '권장 20~25분' : '권장 10~15분';
+    var bs = el('div', 'badges');
+    bs.appendChild(badge(r.log_prefix, 'prefix'));
+    bs.appendChild(badge('위험 등급 ' + grade + ' · ' + time));
+    if (r.basecamp) bs.appendChild(badge('베이스캠프 ' + r.basecamp));
+    bs.appendChild(r.risk_signal ? badge('이탈 신호 있음', 'risk') : badge('이탈 신호 없음', 'ok'));
+    if (r.followup_needed) bs.appendChild(badge('후속 조치 필요', 'warn'));
+    box.appendChild(bs);
+    if (r.one_line_summary) box.appendChild(callout('summary', '한 줄 요약', r.one_line_summary));
+    if (r.missing_items) box.appendChild(callout('warn', '필수 확인 항목 누락', r.missing_items.split(', ').join('\n') + '\n다음 면담에서 보완해 주세요.'));
+    else box.appendChild(callout('ok', '필수 확인 항목 6개 모두 기록됨'));
+    if (r.risk_signal) box.appendChild(callout('risk', '이탈 신호 근거', r.risk_evidence));
+    var lh = el('div', 'log-head');
+    lh.appendChild(el('h2', null, '로그 원문'));
+    var cb = el('button', 'btn', '로그 복사'); cb.type = 'button';
+    lh.appendChild(cb);
+    box.appendChild(lh);
+    var pre = el('pre', 'log', r.log_text || '');
+    box.appendChild(pre);
+    cb.addEventListener('click', function () { copyText(pre); });
+    if (isNew) box.appendChild(el('p', 'foot', '7번과 8번은 녹취와 튜터 메모를 바탕으로 한 초안입니다. 붙여넣기 전에 검토해 주세요. 말머리 ' + r.log_prefix + '가 빠지면 미이행으로 집계됩니다.'));
+  }
+  function renderResult(r) {
+    show($('viewProgress'), false); show($('viewResult'), true);
+    buildDetail($('resultBody'), r, true);
+    hist.stale = true;
+  }
+  $('newBtn').addEventListener('click', resetForm);
+  $('toHistoryBtn').addEventListener('click', function () { switchTab('history'); });
+
+  /* ---------- 탭 ---------- */
+  function switchTab(name) {
+    var isHistory = name === 'history';
+    show($('viewApp'), !isHistory);
+    show($('viewHistory'), isHistory);
+    if (isHistory) { $('tabHistory').setAttribute('aria-current', 'page'); $('tabNew').removeAttribute('aria-current'); }
+    else { $('tabNew').setAttribute('aria-current', 'page'); $('tabHistory').removeAttribute('aria-current'); }
+    if (isHistory) {
+      show($('historyList'), true); show($('historyDetail'), false);
+      if (hist.stale || !hist.items) loadHistory();
+    }
+  }
+  $('tabNew').addEventListener('click', function () { switchTab('new'); });
+  $('tabHistory').addEventListener('click', function () { switchTab('history'); });
+
+  /* ---------- 면담 기록 ---------- */
+  var hist = { items: null, stale: true };
+  function loadHistory() {
+    show($('historyError'), false);
+    $('historyCount').textContent = '불러오는 중';
+    $('historyRows').innerHTML = '';
+    show($('historyEmpty'), false);
+    post('history', { token: state.token }).then(function (d) {
+      if (d._status === 401) { logout('로그인이 만료되었습니다. 다시 로그인해 주세요.'); return; }
+      if (!d.ok) { $('historyError').textContent = d.error || '기록을 불러오지 못했습니다.'; show($('historyError'), true); $('historyCount').textContent = ''; return; }
+      hist.items = d.items || []; hist.stale = false;
+      renderHistory();
+    }).catch(function () {
+      $('historyError').textContent = '서버에 연결하지 못했습니다. 새로고침을 눌러 다시 시도해 주세요.';
+      show($('historyError'), true); $('historyCount').textContent = '';
+    });
+  }
+  function renderHistory() {
+    var q = $('hSearch').value.trim().toLowerCase();
+    var f = radio('hFilter');
+    var all = hist.items || [];
+    var rows = all.filter(function (r) {
+      if (f === 'risk' && !r.risk_signal) return false;
+      if (f === 'follow' && !r.followup_needed) return false;
+      if (f === 'missing' && !r.missing_items) return false;
+      if (!q) return true;
+      return (r.student + ' ' + r.one_line_summary + ' ' + r.log_text).toLowerCase().indexOf(q) !== -1;
+    });
+    var students = {};
+    all.forEach(function (r) { students[r.student] = true; });
+    $('historyCount').textContent = '총 ' + all.length + '건 · 수강생 ' + Object.keys(students).length + '명' + (rows.length !== all.length ? ' · 조건에 맞는 ' + rows.length + '건' : '');
+    var tb = $('historyRows'); tb.innerHTML = '';
+    rows.forEach(function (r) {
+      var tr = document.createElement('tr'); tr.tabIndex = 0;
+      tr.appendChild(el('td', 'date', r.interview_date));
+      tr.appendChild(el('td', 'who', r.student));
+      tr.appendChild(el('td', 'pfx', r.log_prefix));
+      tr.appendChild(el('td', 'date', r.risk_grade));
+      var tdf = el('td'); var fl = el('div', 'flags');
+      if (r.risk_signal) fl.appendChild(badge('이탈 신호', 'risk'));
+      if (r.followup_needed) fl.appendChild(badge('후속 조치', 'warn'));
+      if (r.missing_items) fl.appendChild(badge('누락 있음', 'warn'));
+      if (!fl.children.length) fl.appendChild(badge('정상', 'ok'));
+      tdf.appendChild(fl); tr.appendChild(tdf);
+      tr.appendChild(el('td', 'sum', r.one_line_summary || '요약 없음'));
+      var open = function () { openDetail(r); };
+      tr.addEventListener('click', open);
+      tr.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+      tb.appendChild(tr);
+    });
+    if (!all.length) { $('historyEmpty').textContent = '아직 저장된 면담 기록이 없습니다. 새 면담 탭에서 첫 로그를 만들어 보세요.'; show($('historyEmpty'), true); }
+    else if (!rows.length) { $('historyEmpty').textContent = '조건에 맞는 기록이 없습니다.'; show($('historyEmpty'), true); }
+    else show($('historyEmpty'), false);
+  }
+  function openDetail(r) {
+    buildDetail($('detailBody'), r, false);
+    show($('historyList'), false); show($('historyDetail'), true);
+    window.scrollTo(0, 0);
+  }
+  $('detailBackBtn').addEventListener('click', function () { show($('historyDetail'), false); show($('historyList'), true); });
+  $('refreshBtn').addEventListener('click', loadHistory);
+  $('hSearch').addEventListener('input', renderHistory);
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="hFilter"]'), function (i) { i.addEventListener('change', renderHistory); });
+
+  /* ---------- 시작 ---------- */
+  var saved = load('dl_token');
+  if (saved) { state.token = saved; state.name = load('dl_name') || ''; enterApp(); }
+})();
+</script>
+</body>
+</html>
