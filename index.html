@@ -401,6 +401,7 @@
     .nav-links .nav-more-menu a:hover,.nav-links .nav-more-menu a:focus-visible{background:rgba(255,255,255,.05)}
     .nav-more-menu b{font-size:15px;font-weight:700}
     .nav-more-menu small{color:var(--muted);font-size:12.5px;font-weight:500}
+    .nav-more-label{display:block;margin:6px 14px 0;padding:10px 0 4px;border-top:1px solid var(--line-strong);color:var(--muted);font:600 11px/1 var(--font-en);letter-spacing:.14em}
     .menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:transparent;position:relative}
     .menu-toggle span{position:absolute;left:12px;right:12px;height:2px;background:var(--text);transition:transform .25s var(--ease),opacity .2s}
     .menu-toggle span:nth-child(1){top:15px}.menu-toggle span:nth-child(2){top:21px}.menu-toggle span:nth-child(3){top:27px}
@@ -819,6 +820,7 @@
       .nav-more-menu:before{display:none}
       .nav-links .nav-more-menu a{padding:14px 0;border-radius:0}
       .nav-links .nav-more-menu a:hover{background:none}
+      .nav-more-label{margin:8px 0 0;padding:16px 0 2px}
       .hero{min-height:auto;padding:calc(var(--nav-h) + 48px) 0 0;display:block}
       .hero-layout{display:block}
       .hero-visual{top:auto;bottom:0;right:-10%;width:120%;height:440px;opacity:.7;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 86%,transparent);mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 86%,transparent)}
@@ -898,8 +900,10 @@
           <div class="nav-more-menu" id="navMore">
             <a href="https://data-learners.wikidocs.net/" target="_blank" rel="noopener"><b>위키독스</b><small>교재 · 강의 자료</small></a>
             <a href="/runners-buildup/"><b>러너즈빌드업</b><small>풀고 바로 채점받는 문제 풀이</small></a>
-            <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small></a>
             <a href="/interview-log/"><b>면담 로그</b><small>면담 녹음으로 로그 작성 · 기록 조회</small></a>
+            <span class="nav-more-label">대시보드</span>
+            <a href="/kdt-monitoring/"><b>KDT 모니터링</b><small>모집 중인 KDT 과정 탐색 · 추천</small></a>
+            <a href="/invest/"><b>투자 대시보드</b><small>국내외 시세 · 내 포트폴리오 관리</small></a>
           </div>
         </div>
         <a class="btn btn-sm" href="/assets/data-learners-brochure.pdf" download="데이터러너즈_기업소개서.pdf" data-open-brochure>기업소개서</a>
