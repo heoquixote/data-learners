@@ -41,7 +41,7 @@ GDELT_QUERIES = {
     "response": '"north korea" ("joint drills" OR "military exercise" OR "aircraft carrier" OR "strategic bomber")',
 }
 GDELT_TONE_QUERY = '"north korea"'
-PAGEVIEW_ARTICLES = ["북한", "전쟁", "민방위", "한국_전쟁", "핵무기"]
+PAGEVIEW_ARTICLES = ["조선민주주의인민공화국", "6·25_전쟁", "김정은", "전쟁", "핵무기", "민방위"]
 TICKERS = {"^KS11": "KOSPI", "012450.KS": "한화에어로스페이스", "079550.KS": "LIG넥스원",
            "064350.KS": "현대로템", "047810.KS": "한국항공우주"}
 STAGE_W = {"S1": 1, "S2": 3, "S3": 5, "S4": 8, "S5": 12, "S6": 20}
@@ -85,10 +85,11 @@ def gdelt_call(query: str, mode: str, s: date, e: date) -> list[dict]:
     params = {"query": query, "mode": mode, "format": "json",
               "startdatetime": s.strftime("%Y%m%d") + "000000",
               "enddatetime": e.strftime("%Y%m%d") + "235959"}
-    for attempt in range(4):
-        r = requests.get("https://api.gdeltproject.org/api/v2/doc/doc", params=params, headers=UA, timeout=60)
+    for attempt in range(6):
+        r = requests.get("https://api.gdeltproject.org/api/v2/doc/doc", params=params, headers=UA, timeout=90)
         if r.status_code == 429 or not r.text.strip().startswith("{"):
-            time.sleep(10 * (attempt + 1))
+            # 공용 러너 IP는 다른 사용자와 한도를 나눠 쓰므로 길게 물러남
+            time.sleep(30 * (attempt + 1))
             continue
         r.raise_for_status()
         tl = r.json().get("timeline", [])
@@ -104,13 +105,13 @@ def fetch_gdelt():
             ld = last_date(path)
             start = START if ld is None else ld - timedelta(days=10)
             rows = []
-            for s, e in chunks(start, TODAY, 60):
+            for s, e in chunks(start, TODAY, 400):
                 mode = "timelinetone" if key == "tone" else "timelinevolraw"
                 data = gdelt_call(q, mode, s, e)
                 for d in data:
                     day = datetime.strptime(d["date"][:8], "%Y%m%d").date().isoformat()
                     rows.append({"date": day, "value": d.get("value"), "norm": d.get("norm")})
-                time.sleep(6)
+                time.sleep(8)
             if rows:
                 df = pd.DataFrame(rows)
                 if key == "tone":
@@ -234,7 +235,7 @@ def load(path: Path) -> pd.DataFrame | None:
 
 
 def compute():
-    weekly = pd.DataFrame()
+    cols: dict[str, pd.Series] = {}  # 소스마다 주 범위가 달라 dict로 모은 뒤 합침
     daily_media, daily_fin, daily_att = None, None, None
 
     # GDELT 비중
@@ -244,13 +245,13 @@ def compute():
             continue
         df["week"] = week_start(df["date"])
         w = df.groupby("week").agg(v=("value", "sum"), n=("norm", "sum"))
-        weekly[f"share_{key}"] = w["v"] / w["n"].replace(0, np.nan) * 1e4  # 만 건당
+        cols[f"share_{key}"] = w["v"] / w["n"].replace(0, np.nan) * 1e4  # 만 건당
         d = df.assign(share=df["value"] / df["norm"].replace(0, np.nan) * 1e4)[["date", "share"]].rename(columns={"share": key})
         daily_media = d if daily_media is None else daily_media.merge(d, on="date", how="outer")
     tone = load(RAW / "gdelt_tone.csv")
     if tone is not None and not tone.empty:
         tone["week"] = week_start(tone["date"])
-        weekly["tone"] = tone.groupby("week")["value"].mean()
+        cols["tone"] = tone.groupby("week")["value"].mean()
 
     # 금융
     fred, yh = load(RAW / "fred.csv"), load(RAW / "yahoo.csv")
@@ -264,7 +265,7 @@ def compute():
         beta = (cov / var).shift(1).fillna(1.0)
         ex = r["DEXKOUS"] - beta * r["DTWEXBGS"]
         w = ex.groupby(week_start(pd.Series(ex.index)).values).sum()
-        weekly["krw_excess"] = w * 100
+        cols["krw_excess"] = w * 100
         fin = pd.DataFrame({"date": fx.index.strftime("%Y-%m-%d"), "krw": fx["DEXKOUS"].values})
         fin = fin.merge(pd.DataFrame({"date": ex.index.strftime("%Y-%m-%d"), "krw_ex": (ex * 100).values}), on="date", how="left")
         daily_fin = fin
@@ -275,12 +276,12 @@ def compute():
         if "^KS11" in rets:
             k = rets["^KS11"].dropna()
             wk = week_start(pd.Series(k.index)).values
-            weekly["kospi_vol"] = k.groupby(wk).std() * math.sqrt(252) * 100
+            cols["kospi_vol"] = k.groupby(wk).std() * math.sqrt(252) * 100
             defs = [c for c in TICKERS if c != "^KS11" and c in rets]
             if defs:
                 dex = rets[defs].mean(axis=1) - rets["^KS11"]
                 dex = dex.dropna()
-                weekly["defense_excess"] = dex.groupby(week_start(pd.Series(dex.index)).values).sum() * 100
+                cols["defense_excess"] = dex.groupby(week_start(pd.Series(dex.index)).values).sum() * 100
                 rel = (np.exp(dex.cumsum()) * 100)
             yfin = pd.DataFrame({"date": px.index.strftime("%Y-%m-%d"), "kospi": px["^KS11"].values})
             if defs:
@@ -292,7 +293,7 @@ def compute():
     if pv is not None and not pv.empty:
         tot = pv.groupby("date", as_index=False)["views"].sum()
         tot["week"] = week_start(tot["date"])
-        weekly["views"] = tot.groupby("week")["views"].mean()  # 일평균 (진행 중인 주 왜곡 방지)
+        cols["views"] = tot.groupby("week")["views"].mean()  # 일평균 (진행 중인 주 왜곡 방지)
         daily_att = pv.pivot_table(index="date", columns="article", values="views", aggfunc="sum").reset_index()
 
     # 이벤트
@@ -301,9 +302,10 @@ def compute():
     q = pd.to_numeric(ev["qty"], errors="coerce")
     ev["score"] = ev["weight"] * np.sqrt(q.fillna(2).clip(lower=1))
     ev["week"] = week_start(ev["date"])
-    weekly["event_score"] = ev.groupby("week")["score"].sum()
-    weekly["max_stage_w"] = ev.groupby("week")["weight"].max()
+    cols["event_score"] = ev.groupby("week")["score"].sum()
+    cols["max_stage_w"] = ev.groupby("week")["weight"].max()
 
+    weekly = pd.concat(cols, axis=1)
     weekly = weekly.sort_index()
     weekly = weekly[(weekly.index >= pd.Timestamp(START)) & (weekly.index <= pd.Timestamp(TODAY))]
     full_idx = pd.date_range(weekly.index.min(), pd.Timestamp(TODAY) - pd.Timedelta(days=TODAY.weekday()), freq="W-MON")
@@ -321,7 +323,11 @@ def compute():
         return robust_z(s)[0]
 
     z = pd.DataFrame(index=weekly.index)
-    z["military"] = zc("share_military")
+    # 군사 = GDELT 군사 기사 비중 z와 큐레이션 이벤트 z(4주 합계, 직전 52주 평균·표준편차)의 평균
+    ev4 = weekly["event_score"].rolling(4, min_periods=1).sum()
+    ref = ev4.shift(4).rolling(52, min_periods=26)
+    z_ev = ((ev4 - ref.mean()) / ref.std().clip(lower=1.0)).clip(-5, 5)
+    z["military"] = pd.concat([zc("share_military"), z_ev], axis=1).mean(axis=1)
     z["statement"] = pd.concat([zc("share_threat"), zc("tone", -1.0)], axis=1).mean(axis=1)
     z["response"] = zc("share_response")
     z["finance"] = pd.concat([zc("krw_excess", transform=lambda s: s.abs()), zc("kospi_vol"), zc("defense_excess")], axis=1).mean(axis=1)
