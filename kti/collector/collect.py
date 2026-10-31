@@ -34,6 +34,8 @@ START = date(2023, 1, 1)
 TODAY = datetime.now(timezone.utc).date()
 UA = {"User-Agent": "DataLearners-KTI/1.0 (https://www.data-learners.com/kti/; heoquixote@gmail.com)"}
 STATUS: dict[str, dict] = {}
+GDELT_BUDGET_SEC = 15 * 60  # GDELT 전체 시간 상한 (다른 소스와 커밋이 막히지 않도록)
+T0 = time.time()
 
 GDELT_QUERIES = {
     "military": '"north korea" (missile OR artillery OR ballistic OR "military demarcation")',
@@ -85,11 +87,13 @@ def gdelt_call(query: str, mode: str, s: date, e: date) -> list[dict]:
     params = {"query": query, "mode": mode, "format": "json",
               "startdatetime": s.strftime("%Y%m%d") + "000000",
               "enddatetime": e.strftime("%Y%m%d") + "235959"}
-    for attempt in range(6):
+    for attempt in range(4):
+        if time.time() - T0 > GDELT_BUDGET_SEC:
+            raise RuntimeError("GDELT 시간 상한 초과 (다음 실행에서 이어서 수집)")
         r = requests.get("https://api.gdeltproject.org/api/v2/doc/doc", params=params, headers=UA, timeout=90)
         if r.status_code == 429 or not r.text.strip().startswith("{"):
             # 공용 러너 IP는 다른 사용자와 한도를 나눠 쓰므로 길게 물러남
-            time.sleep(30 * (attempt + 1))
+            time.sleep(20 * (attempt + 1))
             continue
         r.raise_for_status()
         tl = r.json().get("timeline", [])
@@ -108,17 +112,19 @@ def fetch_gdelt():
             for s, e in chunks(start, TODAY, 400):
                 mode = "timelinetone" if key == "tone" else "timelinevolraw"
                 data = gdelt_call(q, mode, s, e)
+                chunk = []
                 for d in data:
                     day = datetime.strptime(d["date"][:8], "%Y%m%d").date().isoformat()
-                    rows.append({"date": day, "value": d.get("value"), "norm": d.get("norm")})
+                    chunk.append({"date": day, "value": d.get("value"), "norm": d.get("norm")})
+                if chunk:
+                    df = pd.DataFrame(chunk)
+                    if key == "tone":
+                        df = df.groupby("date", as_index=False)["value"].mean()
+                    else:
+                        df = df.groupby("date", as_index=False)[["value", "norm"]].sum()
+                    merge_store(path, df, ["date"])
+                rows += chunk
                 time.sleep(8)
-            if rows:
-                df = pd.DataFrame(rows)
-                if key == "tone":
-                    df = df.groupby("date", as_index=False)["value"].mean()
-                else:
-                    df = df.groupby("date", as_index=False)[["value", "norm"]].sum()
-                df = merge_store(path, df, ["date"])
             STATUS[name] = {"ok": True, "last": str(last_date(path)), "label": f"GDELT 기사 {key}"}
             log("gdelt", key, "rows", len(rows))
         except Exception as ex:  # noqa: BLE001
