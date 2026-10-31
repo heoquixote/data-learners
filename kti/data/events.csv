@@ -1,0 +1,57 @@
+date,type,stage,site,lat,lon,sea,range_class,qty,note,source
+2023-01-01,단거리 탄도미사일,S1,평양 일대,39.02,125.75,동해,srbm,1,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-02-18,ICBM 화성-15,S2,평양 순안,39.22,125.67,동해,icbm,1,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-02-19,단거리 탄도미사일(KN-25),S1,평남 숙천,39.40,125.62,동해,srbm,2,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-02-24,전략순항미사일 화살-2,S1,함북 김책,40.67,129.20,동해,cruise,4,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-09,단거리 탄도미사일,S1,남포 일대,38.73,125.40,서해,srbm,6,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-12,잠수함발사 순항미사일,S1,함남 신포,40.03,128.18,동해,cruise,2,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-17,ICBM 화성-17,S2,평양 순안,39.22,125.67,동해,icbm,1,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-19,단거리 탄도미사일(KN-23),S1,평북 동창리,39.66,124.70,동해,srbm,1,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-22,전략순항미사일,S1,함남 함흥,39.92,127.54,동해,cruise,4,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-03-27,단거리 탄도미사일(KN-23),S1,황북 중화,38.86,125.80,동해,srbm,2,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-04-13,ICBM 화성-18,S2,평양 일대,39.02,125.75,동해,icbm,1,,https://missilethreat.csis.org/north-korea-missile-launches-1984-present/
+2023-05-31,군사정찰위성 발사(실패),S2,평북 동창리,39.66,124.70,서해,sat,1,2단 오작동으로 서해 추락,https://www.wikiwand.com/en/2023_in_North_Korea
+2023-07-12,ICBM 화성-18,S2,평양 일대,39.02,125.75,동해,icbm,1,,https://www.wikiwand.com/en/2023_in_North_Korea
+2023-08-31,전술핵 타격 모의 미사일 훈련,S1,평양 순안,39.22,125.67,동해,srbm,,수량 미상,https://www.wikiwand.com/en/2023_in_North_Korea
+2024-01-05,연평도 인근 해안포 사격,S3,황남 강령,37.90,125.50,,,200,약 200발 / 연평도 주민 대피,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-01-19,핵무기 수중드론 시험 주장,S3,동해 해역,39.80,128.60,동해,,1,북한 발표,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-01-24,전략순항미사일 불화살-3-31,S1,서해 해역,38.90,125.10,서해,cruise,,수량 미상,https://www.38north.org/2024/05/north-korea-emphasizes-theater-strike-missiles-in-the-first-third-of-2024/
+2024-01-28,잠수함발사 순항미사일,S1,함남 신포,40.03,128.18,동해,cruise,2,,https://www.38north.org/2024/05/north-korea-emphasizes-theater-strike-missiles-in-the-first-third-of-2024/
+2024-01-30,순항미사일 화살-2,S1,서해 해역,38.90,125.10,서해,cruise,,여러 발,https://www.38north.org/2024/05/north-korea-emphasizes-theater-strike-missiles-in-the-first-third-of-2024/
+2024-03-18,단거리 탄도미사일(KN-25),S1,평양 일대,39.02,125.75,동해,srbm,7,,https://www.38north.org/2024/05/north-korea-emphasizes-theater-strike-missiles-in-the-first-third-of-2024/
+2024-04-02,중거리 탄도미사일,S2,평양 일대,39.02,125.75,동해,irbm,1,,https://www.diplomatie.gouv.fr/en/country-files/north-korea/events/article/north-korea-missile-launch-2-apr-2024
+2024-04-22,단거리 탄도미사일(KN-25) 핵반격 훈련,S1,평양 일대,39.02,125.75,동해,srbm,4,,https://www.38north.org/2024/05/north-korea-emphasizes-theater-strike-missiles-in-the-first-third-of-2024/
+2024-05-27,군사정찰위성 발사(실패),S2,평북 동창리,39.66,124.70,서해,sat,1,공중 폭발,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-05-29,오물풍선 살포,S1,접경 지역,38.10,126.60,,,260,약 260개,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-05-30,단거리 탄도미사일 일제 사격,S1,평양 순안,39.22,125.67,동해,srbm,,여러 발,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-06-09,북한군 MDL 침범 후 경고사격에 복귀,S3,중부전선,38.30,127.30,,,1,,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-06-18,북한군 MDL 침범 후 경고사격에 복귀,S3,중부전선,38.30,127.40,,,1,,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-06-20,북한군 MDL 침범 후 경고사격에 복귀,S3,중부전선,38.30,127.50,,,1,,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-10-15,경의선·동해선 연결도로 폭파,S3,개성 일대,37.95,126.65,,,2,,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-10-31,ICBM 시험발사,S2,평양 일대,39.02,125.75,동해,icbm,1,역대 최장 비행시간,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2024-11-09,서해 GPS 교란,S1,황남 해주,38.04,125.71,,,1,해주·개성 일대,https://en.wikipedia.org/wiki/2024_in_North_Korea
+2025-01-06,중거리 탄도미사일,S2,평양 일대,39.02,125.75,동해,irbm,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-02-28,전략순항미사일,S1,서해 해역,38.90,125.10,서해,cruise,,북한 발표,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-04-08,북한군 동부전선 MDL 침범 후 경고사격에 복귀,S3,동부전선,38.55,128.20,,,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-05-08,단거리 탄도미사일,S1,강원 원산,39.15,127.44,동해,srbm,,여러 발,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-05-22,순항미사일,S1,함남 선덕,39.75,127.47,동해,cruise,,여러 발,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-08-19,북한군 중부전선 MDL 침범 후 경고사격에 복귀,S3,중부전선,38.30,127.40,,,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-08-23,신형 지대공미사일 시험,S1,북한 내륙,39.50,126.20,,,,북한 발표,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-09-26,북한 상선 NLL 월선 후 경고사격에 복귀,S1,서해 NLL,37.75,125.10,,,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-10-23,극초음속 미사일 시험,S2,평양 역포,39.05,125.92,,,2,내륙 목표(괘상봉) 비행,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-10-23,북한군 약 20명 MDL 침범 후 경고사격에 복귀,S3,접경 지역,38.25,127.20,,,20,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-11-07,단거리 탄도미사일,S1,평북 대관,40.22,125.23,동해,srbm,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2025-11-19,북한군 MDL 침범 후 경고사격에 복귀,S3,접경 지역,38.30,127.00,,,1,,https://en.wikipedia.org/wiki/2025_in_North_Korea
+2026-01-04,탄도미사일,S1,평양 일대,39.02,125.75,동해,srbm,,여러 발,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-01-27,탄도미사일,S1,평양 일대,39.02,125.75,동해,srbm,2,,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-03-14,탄도미사일 일제 사격,S1,평양 순안,39.22,125.67,동해,srbm,10,약 10발,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-04-19,전술탄도미사일(집속탄두),S1,북한 동해안,39.40,127.30,동해,srbm,,수량 미상,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-05-25,근거리 탄도미사일,S1,서해안 일대,38.90,125.30,서해,srbm,,여러 발,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-08-06,단거리 탄도미사일,S1,북한 동해안,39.40,127.30,동해,srbm,1,,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-08-12,탄도미사일,S1,강원 원산,39.15,127.44,동해,srbm,,한미 연합훈련 직전,https://www.aljazeera.com/news/2026/8/12/n-korea-launches-ballistic-missile-as-s-korea-us-plan-military-drills
+2026-09-20,탄도미사일 2발(3시간 간격),S1,북한 동해안,39.40,127.30,동해,srbm,2,,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-09-21,DMZ 지뢰 폭발 장병 3명 부상,S4,비무장지대,38.30,127.10,,,1,한·유엔사 조사 결과 북한 매설 결론 / 북측 부인,https://www.aljazeera.com/news/2026/10/29/north-korea-fires-missiles-as-row-over-landmine-blast-intensifies
+2026-10-03,중거리 탄도미사일,S2,평양 일대,39.02,125.75,동해,irbm,1,김여정 발표,https://www.euronews.com/2026/10/04/north-korea-fires-intermediate-range-missile-claiming-evasive-flight-and-ai-features
+2026-10-12,탄도미사일 여러 발,S1,평양 인근,39.02,125.75,동해,srbm,,수량 미상,https://en.wikipedia.org/wiki/2026_in_North_Korea
+2026-10-27,접경 지역 곡사포 배치·철책 공사 포착,S3,접경 지역,38.20,126.90,,,1,,https://www.aljazeera.com/news/2026/10/29/north-korea-fires-missiles-as-row-over-landmine-blast-intensifies
+2026-10-29,단거리 탄도미사일 약 10발,S1,강원 원산,39.15,127.44,동해,srbm,10,일본 EEZ 밖 낙하,https://www.aljazeera.com/news/2026/10/29/north-korea-fires-missiles-as-row-over-landmine-blast-intensifies
